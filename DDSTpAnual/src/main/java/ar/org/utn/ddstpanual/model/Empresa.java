@@ -1,17 +1,17 @@
 package ar.org.utn.ddstpanual.model;
 
-import java.util.List;
+import java.util.Map;
 
 public class Empresa {
 
-  List<Cuenta> cuentas;
+  Map<String, Cuenta> cuentas;
   String nombre;
   
-  public List<Cuenta> getCuentas() {
+  public Map<String, Cuenta> getCuentas() {
     return cuentas;
   }
 
-  public void setCuentas(List<Cuenta> cuentas) {
+  public void setCuentas(Map<String, Cuenta> cuentas) {
     this.cuentas = cuentas;
   }
   
@@ -21,6 +21,14 @@ public class Empresa {
   
   public void setNombre(String nombre){
 	  this.nombre = nombre;
+  }
+  
+  @Override
+  public String toString(){
+    StringBuilder builder = new StringBuilder();
+    builder.append("{\nnombre : " + nombre + ",\n");
+    builder.append("cuentas : " + cuentas.toString() + "\n}");
+    return builder.toString();
   }
 
 }

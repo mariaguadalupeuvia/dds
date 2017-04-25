@@ -5,7 +5,7 @@ import java.util.Map;
 public class Cuenta {
 
   String nombre;
-  Map<Integer, Long> valores;
+  Map<String, Float> valores;
 
   public String getNombre() {
     return nombre;
@@ -15,12 +15,20 @@ public class Cuenta {
     this.nombre = nombre;
   }
 
-  public Map<Integer, Long> getValores() {
+  public Map<String, Float> getValores() {
     return valores;
   }
 
-  public void setValores(Map<Integer, Long> valores) {
+  public void setValores(Map<String, Float> valores) {
     this.valores = valores;
+  }
+  
+  @Override
+  public String toString(){
+    StringBuilder builder = new StringBuilder();
+    builder.append("{\n nombre : " + nombre + ", \n");
+    builder.append("valores : " + valores.toString() + "\n}");
+    return builder.toString();
   }
 
 }

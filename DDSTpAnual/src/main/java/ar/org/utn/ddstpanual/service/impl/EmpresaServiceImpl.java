@@ -1,79 +1,99 @@
 package ar.org.utn.ddstpanual.service.impl;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import ar.org.utn.ddstpanual.dao.EmpresaDao;
+import ar.org.utn.ddstpanual.dao.impl.EmpresaDaoImpl;
+import ar.org.utn.ddstpanual.exception.DaoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.model.Cuenta;
+import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 
 public class EmpresaServiceImpl implements EmpresaService {
 
+  EmpresaDao empresaDao;
+
   public void subirExcel(FileInputStream file) throws ServiceException {
 
+    Map<String, Empresa> empresas = new HashMap<String, Empresa>();
+    Map<String, Cuenta> cuentas;
+    Map<String, Float> valores;
+    Empresa empresa;
+    Cuenta cuenta;
+
     try {
+
       XSSFWorkbook workbook = new XSSFWorkbook(file);
-      /*
-       * Obtenemos la primera pestaña a la que se quiera procesar indicando el indice.
-       * 
-       * Una vez obtenida la hoja excel con las filas que se quieren leer obtenemos el iterator
-       * 
-       * que nos permite recorrer cada una de las filas que contiene.
-       */
       XSSFSheet sheet = workbook.getSheetAt(0);
       Iterator<Row> rowIterator = sheet.iterator();
       Row row;
 
-      // Recorremos todas las filas para mostrar el contenido de cada celda
+      rowIterator.next();
       while (rowIterator.hasNext()) {
         row = rowIterator.next();
-        // Obtenemos el iterator que permite recorres todas las celdas de una fila
-        Iterator<Cell> cellIterator = row.cellIterator();
-        Cell celda;
+        empresa = new Empresa();
+        cuenta = new Cuenta();
 
-        while (cellIterator.hasNext()) {
-          celda = cellIterator.next();
-          // Dependiendo del formato de la celda el valor se debe mostrar como String, Fecha,
-          // boolean,
-          // entero...
-          switch (celda.getCellTypeEnum()) {
-            case NUMERIC:// CELL_TYPE_NUMERIC:
-              if (DateUtil.isCellDateFormatted(celda)) {
-                System.out.println(celda.getDateCellValue());
-              } else {
-                System.out.println(celda.getNumericCellValue());
-              }
-              break;
-            case STRING:
-              System.out.println(celda.getStringCellValue());
-              break;
-            case BOOLEAN:
-              System.out.println(celda.getBooleanCellValue());
-              break;
-            case BLANK:
-              break;
-            case ERROR:
-              break;
-            case FORMULA:
-              break;
-            case _NONE:
-              break;
-            default:
-              break;
+        String nombreEmpresa = row.getCell(0).getStringCellValue();
+        String nombreCuenta = row.getCell(1).getStringCellValue();
+        String periodo = String.valueOf((float) row.getCell(2).getNumericCellValue());
+        Float valor = (float) row.getCell(3).getNumericCellValue();
+
+        if (empresas.containsKey(nombreEmpresa)) {
+          empresa = empresas.get(nombreEmpresa);
+
+          if (empresa.getCuentas().containsKey(nombreCuenta)) {
+            cuenta = empresa.getCuentas().get(nombreCuenta);
+            if (cuenta.getValores().containsKey(periodo)) {
+              System.out.println("Error, ya se ingreso un valor para este periodo");
+            } else {
+              empresas.get(nombreEmpresa).getCuentas().get(nombreCuenta).getValores().put(periodo,
+                  valor);
+            }
+          } else {
+            cuenta.setNombre(nombreCuenta);
+            valores = new HashMap<String, Float>();
+            valores.put(periodo, valor);
+            cuenta.setValores(valores);
+            empresas.get(nombreEmpresa).getCuentas().put(nombreCuenta, cuenta);
           }
+        } else {
+          valores = new HashMap<String, Float>();
+          cuentas = new HashMap<String, Cuenta>();
+          empresa.setNombre(nombreEmpresa);
+          cuenta.setNombre(nombreCuenta);
+          valores.put(periodo, valor);
+          cuenta.setValores(valores);
+          cuentas.put(nombreCuenta, cuenta);
+          empresa.setCuentas(cuentas);
+          empresas.put(nombreEmpresa, empresa);
         }
+
       }
-      // cerramos el libro excel
+      getEmpresaDao().saveEmpresas(empresas);
       workbook.close();
     } catch (IOException ex) {
       ex.printStackTrace();
+    } catch (DaoException e) {
+      e.printStackTrace();
     }
+  }
+
+  public EmpresaDao getEmpresaDao() {
+    if (empresaDao != null) {
+      return empresaDao;
+    }
+    empresaDao = new EmpresaDaoImpl();
+    return empresaDao;
   }
 
 }
