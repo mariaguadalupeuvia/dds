@@ -16,7 +16,7 @@ public class EmpresaServiceImplTest {
 	
 	@Before
 	public void init() throws FileNotFoundException {
-		file = new File("C:/Users/migue/workspace/git/2017-vn-group-24/DDSTpAnual/src/main/resources/Carga1.xlsx");
+		file = new File("C:\\Users\\Compumar\\git\\2017-vn-group-24\\DDSTpAnual\\src\\main\\resources\\Carga1.xlsx");
 		fileStream = new FileInputStream(file);
 		service = new EmpresaServiceImpl();
 	}

@@ -7,5 +7,5 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 public interface EmpresaService {
 
   void subirExcel(FileInputStream file) throws ServiceException;
-  
+
 }

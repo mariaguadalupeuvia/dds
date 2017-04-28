@@ -12,10 +12,9 @@ import java.util.Map;
 
 import ar.org.utn.ddstpanual.dao.EmpresaDao;
 import ar.org.utn.ddstpanual.dao.impl.EmpresaDaoImpl;
+import ar.org.utn.ddstpanual.dto.EmpresaDto;
 import ar.org.utn.ddstpanual.exception.DaoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
-import ar.org.utn.ddstpanual.model.Cuenta;
-import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 
 public class EmpresaServiceImpl implements EmpresaService {
@@ -24,11 +23,9 @@ public class EmpresaServiceImpl implements EmpresaService {
 
   public void subirExcel(FileInputStream file) throws ServiceException {
 
-    Map<String, Empresa> empresas = new HashMap<String, Empresa>();
-    Map<String, Cuenta> cuentas;
-    Map<String, Float> valores;
-    Empresa empresa;
-    Cuenta cuenta;
+    Map<String, EmpresaDto> empresas = new HashMap<String, EmpresaDto>();
+    EmpresaDto empresaDto = new EmpresaDto();
+    String key;
 
     try {
 
@@ -36,46 +33,24 @@ public class EmpresaServiceImpl implements EmpresaService {
       XSSFSheet sheet = workbook.getSheetAt(0);
       Iterator<Row> rowIterator = sheet.iterator();
       Row row;
-
       rowIterator.next();
       while (rowIterator.hasNext()) {
         row = rowIterator.next();
-        empresa = new Empresa();
-        cuenta = new Cuenta();
 
-        String nombreEmpresa = row.getCell(0).getStringCellValue();
-        String nombreCuenta = row.getCell(1).getStringCellValue();
-        String periodo = String.valueOf((float) row.getCell(2).getNumericCellValue());
-        Float valor = (float) row.getCell(3).getNumericCellValue();
+        System.out.println("RowNum: " + row.getRowNum());
+        empresaDto = new EmpresaDto();
+        empresaDto.setNombreEmpresa(row.getCell(0).getStringCellValue());
+        empresaDto.setNombreCuenta(row.getCell(1).getStringCellValue());
+        empresaDto.setFecha(String.valueOf((float) row.getCell(2).getNumericCellValue()));
+        empresaDto.setValor((float) row.getCell(3).getNumericCellValue());
+        key = empresaDto.getNombreEmpresa() + "-" + empresaDto.getNombreCuenta() + "-"
+            + empresaDto.getFecha();
 
-        if (empresas.containsKey(nombreEmpresa)) {
-          empresa = empresas.get(nombreEmpresa);
-
-          if (empresa.getCuentas().containsKey(nombreCuenta)) {
-            cuenta = empresa.getCuentas().get(nombreCuenta);
-            if (cuenta.getValores().containsKey(periodo)) {
-              System.out.println("Error, ya se ingreso un valor para este periodo");
-            } else {
-              empresas.get(nombreEmpresa).getCuentas().get(nombreCuenta).getValores().put(periodo,
-                  valor);
-            }
-          } else {
-            cuenta.setNombre(nombreCuenta);
-            valores = new HashMap<String, Float>();
-            valores.put(periodo, valor);
-            cuenta.setValores(valores);
-            empresas.get(nombreEmpresa).getCuentas().put(nombreCuenta, cuenta);
-          }
+        if (!empresas.containsKey(key)) {
+          empresas.put(key, empresaDto);
         } else {
-          valores = new HashMap<String, Float>();
-          cuentas = new HashMap<String, Cuenta>();
-          empresa.setNombre(nombreEmpresa);
-          cuenta.setNombre(nombreCuenta);
-          valores.put(periodo, valor);
-          cuenta.setValores(valores);
-          cuentas.put(nombreCuenta, cuenta);
-          empresa.setCuentas(cuentas);
-          empresas.put(nombreEmpresa, empresa);
+          System.out.println(
+              row.getRowNum() + ": Ya se ingreso un valor para este periodo en el archivo.");
         }
 
       }
@@ -84,7 +59,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     } catch (IOException ex) {
       ex.printStackTrace();
     } catch (DaoException e) {
-      e.printStackTrace();
+      throw new ServiceException(e.getMessage());
     }
   }
 
