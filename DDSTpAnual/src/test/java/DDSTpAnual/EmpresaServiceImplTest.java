@@ -1,5 +1,6 @@
 package DDSTpAnual;
 
+import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.junit.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,21 +16,40 @@ public class EmpresaServiceImplTest {
 	EmpresaServiceImpl service = null;
 	
 	@Before
-	public void init() throws FileNotFoundException {
-		file = new File("C:\\Users\\Compumar\\git\\2017-vn-group-24\\DDSTpAnual\\src\\main\\resources\\Carga1.xlsx");
-		fileStream = new FileInputStream(file);
+	public void init() {
 		service = new EmpresaServiceImpl();
 	}
-
-	@Test 
-	public void testSubirExcel() {
+	
+	public void iniciarArchivo(String nombreArchivo){
+		file = new File("C:/Users/migue/workspace/git/2017-vn-group-24/DDSTpAnual/src/main/resources/" + nombreArchivo);
 		try {
-			service.subirExcel(fileStream);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
+			fileStream = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
+	// Test sobre la carga del archivo
+	@Test
+	public void testSubirExcel() throws ServiceException {
+			iniciarArchivo("Carga1.xlsx");
+			service.subirExcel(fileStream);
+	}
+	
+	@Test (expected = NullPointerException.class)
+	public void testSubirArchivoInexistente() throws ServiceException {
+		iniciarArchivo("Caso1");
+		service.subirExcel(fileStream);
+	}
+	
+	@Test (expected = NotOfficeXmlFileException.class)
+	public void testSubirArchivoNoExcel() throws ServiceException {
+		iniciarArchivo("CargaCSV.csv");
+		service.subirExcel(fileStream);
+	}
+	
+	// Test sobre los datos del archivo
+	
+	
 	
 	@After
 	public void finish (){
