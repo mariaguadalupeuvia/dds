@@ -3,6 +3,7 @@ package ar.org.utn.ddstpanual;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
 
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.service.EmpresaService;
@@ -12,9 +13,9 @@ public class Main {
 
   public static void main(String[] args){
     EmpresaService empresaService = new EmpresaServiceImpl();
+    URL resource = Main.class.getClassLoader().getResource("Carga1.xlsx");
     
-
-    File archivo = new File("C:\\Users\\Compumar\\git\\2017-vn-group-24\\DDSTpAnual\\src\\main\\resources\\Carga1.xlsx");
+    File archivo = new File(resource.getPath());
     try {
       FileInputStream file = new FileInputStream(archivo);
       empresaService.subirExcel(file);
