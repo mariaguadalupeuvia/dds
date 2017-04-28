@@ -11,10 +11,10 @@ import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
 
 public class Main {
 
-  public static void main(String[] args){
+  public static void main(String[] args) {
     EmpresaService empresaService = new EmpresaServiceImpl();
     URL resource = Main.class.getClassLoader().getResource("Carga1.xlsx");
-    
+
     File archivo = new File(resource.getPath());
     try {
       FileInputStream file = new FileInputStream(archivo);
@@ -25,5 +25,5 @@ public class Main {
       ex.printStackTrace();
     }
   }
-  
+
 }

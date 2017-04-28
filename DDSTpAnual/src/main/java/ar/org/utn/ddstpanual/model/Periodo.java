@@ -2,21 +2,22 @@ package ar.org.utn.ddstpanual.model;
 
 public class Periodo {
 
-	private String fecha;
-	private float valor;
-	public String getFecha() {
-		return fecha;
-	}
+  private String fecha;
+  private float valor;
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
+  public String getFecha() {
+    return fecha;
+  }
 
-	public float getValor() {
-		return valor;
-	}
+  public void setFecha(String fecha) {
+    this.fecha = fecha;
+  }
 
-	public void setValor(float valor) {
-		this.valor = valor;
-	}
+  public float getValor() {
+    return valor;
+  }
+
+  public void setValor(float valor) {
+    this.valor = valor;
+  }
 }
