@@ -1,34 +1,34 @@
 package ar.org.utn.ddstpanual.model;
 
-import java.util.Map;
+import java.util.List;
 
 public class Cuenta {
 
-  String nombre;
-  Map<String, Float> valores;
+	String nombre;
+	List<Periodo> periodos;
 
-  public String getNombre() {
-    return nombre;
-  }
+	public String getNombre() {
+		return nombre;
+	}
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-  public Map<String, Float> getValores() {
-    return valores;
-  }
+	public List<Periodo> getPeriodos() {
+		return periodos;
+	}
 
-  public void setValores(Map<String, Float> valores) {
-    this.valores = valores;
-  }
-  
-  @Override
-  public String toString(){
-    StringBuilder builder = new StringBuilder();
-    builder.append("{\n nombre : " + nombre + ", \n");
-    builder.append("valores : " + valores.toString() + "\n}");
-    return builder.toString();
-  }
+	public void setPeriodos(List<Periodo> periodos) {
+		this.periodos = periodos;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\n nombre : " + nombre + ", \n");
+		builder.append("valores : " + periodos.toString() + "\n}");
+		return builder.toString();
+	}
 
 }

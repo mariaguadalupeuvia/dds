@@ -1,12 +1,12 @@
 package ar.org.utn.ddstpanual.dao;
 
-import java.util.Map;
+import java.util.List;
 
+import ar.org.utn.ddstpanual.dto.EmpresaDto;
 import ar.org.utn.ddstpanual.exception.DaoException;
-import ar.org.utn.ddstpanual.model.Empresa;
 
 public interface EmpresaDao {
 
-  public void saveEmpresas(Map<String, Empresa> empresas) throws DaoException;
+	public void saveEmpresas(List<EmpresaDto> empresas) throws DaoException;
 
 }

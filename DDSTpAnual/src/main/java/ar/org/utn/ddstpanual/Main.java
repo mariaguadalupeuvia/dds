@@ -14,7 +14,7 @@ public class Main {
     EmpresaService empresaService = new EmpresaServiceImpl();
     
 
-    File archivo = new File("C:\\Users\\Ivan\\git\\2017-vn-group-24\\DDSTpAnual\\src\\main\\resources\\Carga1.xlsx");
+    File archivo = new File("C:\\Users\\Compumar\\git\\2017-vn-group-24\\DDSTpAnual\\src\\main\\resources\\Carga1.xlsx");
     try {
       FileInputStream file = new FileInputStream(archivo);
       empresaService.subirExcel(file);
