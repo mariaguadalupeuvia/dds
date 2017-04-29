@@ -15,6 +15,7 @@ import ar.org.utn.ddstpanual.dao.impl.EmpresaDaoImpl;
 import ar.org.utn.ddstpanual.dto.EmpresaDto;
 import ar.org.utn.ddstpanual.exception.DaoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.log.LogData;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 
 public class EmpresaServiceImpl implements EmpresaService {
@@ -37,7 +38,6 @@ public class EmpresaServiceImpl implements EmpresaService {
       while (rowIterator.hasNext()) {
         row = rowIterator.next();
 
-        System.out.println("RowNum: " + row.getRowNum());
         empresaDto = new EmpresaDto();
         empresaDto.setNombreEmpresa(row.getCell(0).getStringCellValue());
         empresaDto.setNombreCuenta(row.getCell(1).getStringCellValue());
@@ -49,8 +49,7 @@ public class EmpresaServiceImpl implements EmpresaService {
         if (!empresas.containsKey(key)) {
           empresas.put(key, empresaDto);
         } else {
-          System.out.println(
-              row.getRowNum() + ": Ya se ingreso un valor para este periodo en el archivo.");
+          LogData.EscribirLogText(row.getRowNum() + ": Ya se ingreso un valor para este periodo en el archivo.");
         }
 
       }
