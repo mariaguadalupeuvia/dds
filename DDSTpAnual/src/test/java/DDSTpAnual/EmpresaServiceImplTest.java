@@ -1,14 +1,15 @@
 package DDSTpAnual;
 
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 
-import ar.org.utn.ddstpanual.Main;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
 
@@ -23,8 +24,8 @@ public class EmpresaServiceImplTest {
   }
 
   public void iniciarArchivo(String nombreArchivo) {
-    URL resource = Main.class.getClassLoader().getResource(nombreArchivo);
-    file = new File(resource.getPath());
+    String path = System.getProperty("user.dir");
+    file = new File(path + "\\src\\main\\resources\\test\\" + nombreArchivo);
     try {
       fileStream = new FileInputStream(file);
     } catch (FileNotFoundException e) {

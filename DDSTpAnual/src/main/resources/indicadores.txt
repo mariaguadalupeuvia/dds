@@ -1,0 +1,5 @@
+Ingreso Neto=2*2+2
+peron=2+2*2
+peron=2+2*2
+asd=1231
+asd=asd
