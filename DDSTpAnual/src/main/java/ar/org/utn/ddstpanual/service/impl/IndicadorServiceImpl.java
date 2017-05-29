@@ -3,15 +3,11 @@ package ar.org.utn.ddstpanual.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
+import ar.org.utn.ddstpanual.archivo.impl.IndicadorArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.service.IndicadorService;
@@ -23,67 +19,59 @@ public class IndicadorServiceImpl implements IndicadorService {
   private String nombre;
   private String formula;
   private String error;
+  private IndicadorArchivo indicadorArchivo;
 
   @Override
   public void guardarIndicador() throws ServiceException {
-    String path = System.getProperty("user.dir");
-    FileWriter filewriter = null;
-    PrintWriter printwriten = null;
-    try {
-      filewriter = new FileWriter(path + "\\src\\main\\resources\\indicadores.txt", true);
-      printwriten = new PrintWriter(filewriter);
-      String linea = nombre + "=" + formula;
-      printwriten.println(linea);
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        if (null != filewriter) {
-          filewriter.close();
-        }
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
+    Indicador indicador = new Indicador(nombre, formula);
+    if (validarIndicador()) {
+      getIndicadorArchivo().guardarIndicador(indicador);
     }
-
   }
 
   @Override
   public List<Indicador> obtenerIndicadores() throws ServiceException {
-    String path = System.getProperty("user.dir");
-    File file = new File(path + "\\src\\main\\resources\\indicadores.txt");
-    FileReader filereader = null;
-    BufferedReader buffer = null;
-    String linea = "";
-    indicadores = new ArrayList<Indicador>();
-    try {
-      filereader = new FileReader(file);
-      buffer = new BufferedReader(filereader);
-      while ((linea = buffer.readLine()) != null) {
-        Indicador indicador = new Indicador();
-        indicador.setNombre(StringUtils.split(linea, "=")[0]);
-        indicador.setFormula(StringUtils.split(linea, "=")[1]);
-        indicadores.add(indicador);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        if (null != filereader) {
-          filereader.close();
-        }
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
-    }
+    indicadores = getIndicadorArchivo().obtenerIndicadores();
     return indicadores;
   }
 
   @Override
   public void eliminarIndicador() throws ServiceException {
     // TODO Auto-generated method stub
+  }
 
+  public boolean validarIndicador() {
+    boolean valido = true;
+    error = "";
+    // TODO: Definir Regular Expression
+    Pattern pattern = Pattern.compile("-?\\w+|[-+*%/()]");
+
+    if (StringUtils.isEmpty(nombre)) {
+      error = "Debe ingresar un nombre.\n";
+      valido = false;
+    }
+
+    if (StringUtils.isEmpty(formula)) {
+      error = "Debe ingresar una formula.\n";
+      valido = false;
+    }
+
+    if (!pattern.matcher(formula).matches()) {
+      error = "La formula ingresada tiene un error de sintaxis.";
+      valido = false;
+    }
+
+    // TODO: Validacion sobre existencia de Indicadores/Cuentas existentes
+
+    return valido;
+  }
+
+  public IndicadorArchivo getIndicadorArchivo() {
+    if (indicadorArchivo != null) {
+      return indicadorArchivo;
+    }
+    indicadorArchivo = new IndicadorArchivoImpl();
+    return indicadorArchivo;
   }
 
   public List<Indicador> getIndicadores() {

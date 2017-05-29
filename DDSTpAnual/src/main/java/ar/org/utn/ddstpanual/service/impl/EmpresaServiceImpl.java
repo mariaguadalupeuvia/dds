@@ -6,30 +6,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
-import ar.org.utn.ddstpanual.dao.EmpresaDao;
-import ar.org.utn.ddstpanual.dao.impl.EmpresaDaoImpl;
-import ar.org.utn.ddstpanual.dto.EmpresaDto;
-import ar.org.utn.ddstpanual.exception.DaoException;
+import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
+import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.log.LogData;
+import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 
 public class EmpresaServiceImpl implements EmpresaService {
 
-  EmpresaDao empresaDao;
+  EmpresaArchivo empresaArchivo;
 
   public void subirExcel(FileInputStream file) throws ServiceException {
 
-    Map<String, EmpresaDto> empresas = new HashMap<String, EmpresaDto>();
-    EmpresaDto empresaDto = new EmpresaDto();
-    String key;
-
+    EmpresaExcel empresaExcel = new EmpresaExcel();
     try {
-
       XSSFWorkbook workbook = new XSSFWorkbook(file);
       XSSFSheet sheet = workbook.getSheetAt(0);
       Iterator<Row> rowIterator = sheet.iterator();
@@ -37,37 +30,29 @@ public class EmpresaServiceImpl implements EmpresaService {
       rowIterator.next();
       while (rowIterator.hasNext()) {
         row = rowIterator.next();
-
-        empresaDto = new EmpresaDto();
-        empresaDto.setNombreEmpresa(row.getCell(0).getStringCellValue());
-        empresaDto.setNombreCuenta(row.getCell(1).getStringCellValue());
-        empresaDto.setFecha(String.valueOf((float) row.getCell(2).getNumericCellValue()));
-        empresaDto.setValor((float) row.getCell(3).getNumericCellValue());
-        key = empresaDto.getNombreEmpresa() + "-" + empresaDto.getNombreCuenta() + "-"
-            + empresaDto.getFecha();
-
-        if (!empresas.containsKey(key)) {
-          empresas.put(key, empresaDto);
+        empresaExcel = new EmpresaExcel();
+        empresaExcel.setNombreEmpresa(row.getCell(0).getStringCellValue());
+        empresaExcel.setNombreCuenta(row.getCell(1).getStringCellValue());
+        empresaExcel.setFecha(String.valueOf((float) row.getCell(2).getNumericCellValue()));
+        empresaExcel.setValor((float) row.getCell(3).getNumericCellValue());
+        if (!getEmpresaArchivo().exists(empresaExcel)) {
+          getEmpresaArchivo().guardarEmpresa(empresaExcel);
         } else {
-          LogData.EscribirLogText(row.getRowNum() + ": Ya se ingreso un valor para este periodo en el archivo.");
+          LogData.EscribirLogText(
+              row.getRowNum() + ": Ya se ingreso un valor para este periodo en el archivo.");
         }
-
       }
-      getEmpresaDao().saveEmpresas(empresas);
       workbook.close();
     } catch (IOException ex) {
       ex.printStackTrace();
-    } catch (DaoException e) {
-      throw new ServiceException(e.getMessage());
     }
   }
 
-  public EmpresaDao getEmpresaDao() {
-    if (empresaDao != null) {
-      return empresaDao;
+  public EmpresaArchivo getEmpresaArchivo() {
+    if (empresaArchivo != null) {
+      return empresaArchivo;
     }
-    empresaDao = new EmpresaDaoImpl();
-    return empresaDao;
+    empresaArchivo = new EmpresaArchivoImpl();
+    return empresaArchivo;
   }
-
 }

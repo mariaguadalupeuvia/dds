@@ -42,7 +42,6 @@ public class AbmIndicadoresWindow extends SimpleWindow<IndicadorServiceImpl> {
         e.printStackTrace();
       }
     }).setAsDefault().disableOnError();
-
   }
 
   @Override
@@ -67,7 +66,6 @@ public class AbmIndicadoresWindow extends SimpleWindow<IndicadorServiceImpl> {
     super.createMainTemplate(mainPanel);
 
     this.createResultsGridIndicadores(mainPanel);
-
   }
 
   protected void createResultsGridIndicadores(Panel mainPanel) {

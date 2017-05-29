@@ -8,6 +8,13 @@ public class Indicador {
   String nombre;
   String formula;
 
+  public Indicador() {}
+
+  public Indicador(String nombre, String formula) {
+    this.nombre = nombre;
+    this.formula = formula;
+  }
+
   public String getNombre() {
     return nombre;
   }
