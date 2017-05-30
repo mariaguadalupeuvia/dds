@@ -13,7 +13,8 @@ public class LogData{
    
     // Set
     public static void setFileStream() throws IOException{
-    	String ruta = "C:\\Users\\Ivan\\git\\2017-vn-group-24\\logs"; // Ruta de la carpeta a loguea - archivo de configuracion
+        String path = System.getProperty("user.dir");
+    	String ruta = path + "\\logs"; // Ruta de la carpeta a loguea - archivo de configuracion
         Date fechaActual = new Date();
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd");
         fileName = ruta + "\\LogTP_" + formatoFecha.format(fechaActual) + ".log";
