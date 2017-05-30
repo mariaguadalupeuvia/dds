@@ -7,11 +7,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
 
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.log.LogData;
+import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 
@@ -19,6 +21,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
   EmpresaArchivo empresaArchivo;
 
+  @Override
   public void subirExcel(FileInputStream file) throws ServiceException {
 
     EmpresaExcel empresaExcel = new EmpresaExcel();
@@ -46,6 +49,12 @@ public class EmpresaServiceImpl implements EmpresaService {
     } catch (IOException ex) {
       ex.printStackTrace();
     }
+  }
+  
+  @Override
+  public Map<String, Empresa> obtenerEmpresas() throws ServiceException {
+    Map<String, Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
+    return empresas;
   }
 
   public EmpresaArchivo getEmpresaArchivo() {
