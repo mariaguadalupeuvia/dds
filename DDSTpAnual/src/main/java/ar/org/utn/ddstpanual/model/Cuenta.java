@@ -1,11 +1,11 @@
 package ar.org.utn.ddstpanual.model;
 
-import java.util.List;
+import java.util.Map;
 
 public class Cuenta {
 
   String nombre;
-  List<Periodo> periodos;
+  Map<String, Periodo> periodos;
 
   public String getNombre() {
     return nombre;
@@ -15,11 +15,11 @@ public class Cuenta {
     this.nombre = nombre;
   }
 
-  public List<Periodo> getPeriodos() {
+  public Map<String, Periodo> getPeriodos() {
     return periodos;
   }
 
-  public void setPeriodos(List<Periodo> periodos) {
+  public void setPeriodos(Map<String, Periodo> periodos) {
     this.periodos = periodos;
   }
 
