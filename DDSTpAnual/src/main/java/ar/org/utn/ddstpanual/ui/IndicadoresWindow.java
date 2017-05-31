@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import ar.org.utn.ddspanual.controller.IndicadoresController;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
+import ar.org.utn.ddstpanual.model.Indicador;
 
 @SuppressWarnings("serial")
 public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
@@ -41,6 +42,8 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
     inputFormPanel.setLayout(new ColumnLayout(2));
 
     new Label(inputFormPanel).setText("Indicador").setForeground(Color.BLUE);
+    new Selector<Indicador>(inputFormPanel).allowNull(false).bindItemsToProperty("nombre");
+
     new Selector<String>(inputFormPanel).setWidth(150).bindValueToProperty("indicadores");
     new Label(inputFormPanel).setText("Empresa").setForeground(Color.BLUE);
     new Selector<String>(inputFormPanel).setWidth(150).bindValueToProperty("empresasCheckbox");

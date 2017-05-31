@@ -8,6 +8,7 @@ import java.util.Map;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
+import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
@@ -18,7 +19,7 @@ public class IndicadoresController {
 
   IndicadorService indicadorService;
   EmpresaService empresaService;
-  List<String> indicadores;
+  List<Indicador> indicadores;
   Map<String, Empresa> empresas;
   List<String> empresasCheckbox;
   List<String> cuentasCheckbox;
@@ -35,9 +36,9 @@ public class IndicadoresController {
     return empresas;
   }
 
-  public List<String> obtenerIndicadores() {
+  public List<Indicador> obtenerIndicadores() {
     try {
-      indicadores = getIndicadorService().obtenerNombresIndicadores();
+      indicadores = getIndicadorService().obtenerIndicadores();
     } catch (ServiceException e) {
       error = "Se produjo un error al obtener los indicadores.";
     }
@@ -60,11 +61,11 @@ public class IndicadoresController {
     return empresaService;
   }
 
-  public List<String> getIndicadores() {
+  public List<Indicador> getIndicadores() {
     return indicadores;
   }
 
-  public void setIndicadores(List<String> indicadores) {
+  public void setIndicadores(List<Indicador> indicadores) {
     this.indicadores = indicadores;
   }
 
