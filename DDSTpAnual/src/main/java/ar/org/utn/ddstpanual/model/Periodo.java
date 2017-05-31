@@ -1,5 +1,8 @@
 package ar.org.utn.ddstpanual.model;
 
+import org.uqbar.commons.utils.Observable;
+
+@Observable
 public class Periodo {
 
   private String fecha;

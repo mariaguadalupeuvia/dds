@@ -1,7 +1,10 @@
 package ar.org.utn.ddstpanual.model;
 
+import org.uqbar.commons.utils.Observable;
+
 import java.util.List;
 
+@Observable
 public class Empresa {
 
   List<Cuenta> cuentas;
