@@ -10,5 +10,7 @@ public interface IndicadorArchivo {
   public void guardarIndicador(Indicador indicador) throws ServiceException;
 
   public List<Indicador> obtenerIndicadores() throws ServiceException;
+  
+  public List<String> obtenerNombresIndicadores() throws ServiceException;
 
 }

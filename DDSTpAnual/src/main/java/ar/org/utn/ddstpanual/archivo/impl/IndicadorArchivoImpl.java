@@ -71,4 +71,32 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
     return indicadores;
   }
 
+  @Override
+  public List<String> obtenerNombresIndicadores() throws ServiceException {
+    String path = System.getProperty("user.dir");
+    File file = new File(path + "\\src\\main\\resources\\indicadores.txt");
+    FileReader filereader = null;
+    BufferedReader buffer = null;
+    String linea = "";
+    List<String> indicadores = new ArrayList<String>();
+    try {
+      filereader = new FileReader(file);
+      buffer = new BufferedReader(filereader);
+      while ((linea = buffer.readLine()) != null) {
+        indicadores.add(StringUtils.split(linea, "=")[0]);
+      }
+    } catch (IOException e) {
+      throw new ServiceException("Error al abrir el archivo");
+    } finally {
+      try {
+        if (null != filereader) {
+          filereader.close();
+        }
+      } catch (Exception ex) {
+        throw new ServiceException("Error al intentar cerrar el archivo.");
+      }
+    }
+    return indicadores;
+  }
+
 }

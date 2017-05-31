@@ -50,7 +50,7 @@ public class EmpresaServiceImpl implements EmpresaService {
       ex.printStackTrace();
     }
   }
-  
+
   @Override
   public Map<String, Empresa> obtenerEmpresas() throws ServiceException {
     Map<String, Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();

@@ -4,9 +4,11 @@ import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.commons.utils.ApplicationContext;
 
+import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.IndicadorService;
+import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
-import ar.org.utn.ddstpanual.ui.AbmIndicadoresWindow;
+import ar.org.utn.ddstpanual.ui.IndicadoresWindow;
 
 public class DondeInviertoApplication extends Application {
 
@@ -18,6 +20,9 @@ public class DondeInviertoApplication extends Application {
   protected Window<?> createMainWindow() {
     ApplicationContext.getInstance().configureSingleton(IndicadorService.class,
         new IndicadorServiceImpl());
-    return new AbmIndicadoresWindow(this);
+    ApplicationContext.getInstance().configureSingleton(EmpresaService.class,
+        new EmpresaServiceImpl());
+    // return new AbmIndicadoresWindow(this);
+    return new IndicadoresWindow(this);
   }
 }

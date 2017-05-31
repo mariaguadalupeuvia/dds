@@ -12,35 +12,24 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import java.awt.Color;
 
-import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddspanual.controller.AbmIndicadoresController;
 import ar.org.utn.ddstpanual.model.Indicador;
-import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 
 
 @SuppressWarnings("serial")
-public class AbmIndicadoresWindow extends SimpleWindow<IndicadorServiceImpl> {
+public class AbmIndicadoresWindow extends SimpleWindow<AbmIndicadoresController> {
 
   public AbmIndicadoresWindow(WindowOwner parent) {
-    super(parent, new IndicadorServiceImpl());
+    super(parent, new AbmIndicadoresController());
     this.getModelObject().setFormula("");
     this.getModelObject().setNombre("");
-    try {
-      getModelObject().obtenerIndicadores();
-    } catch (ServiceException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    getModelObject().obtenerIndicadores();
   }
 
   @Override
   protected void addActions(Panel actionsPanel) {
     new Button(actionsPanel).setCaption("Guardar").onClick(() -> {
-      try {
-        getModelObject().guardarIndicador();
-      } catch (ServiceException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+      getModelObject().guardarIndicador();
     }).setAsDefault().disableOnError();
   }
 
@@ -53,7 +42,6 @@ public class AbmIndicadoresWindow extends SimpleWindow<IndicadorServiceImpl> {
     new TextBox(inputFormPanel).setWidth(150).bindValueToProperty("nombre");
     new Label(inputFormPanel).setText("Formula").setForeground(Color.BLUE);
     new TextBox(inputFormPanel).setWidth(150).bindValueToProperty("formula");
-
   }
 
   @Override

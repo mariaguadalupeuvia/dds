@@ -7,10 +7,14 @@ import ar.org.utn.ddstpanual.model.Indicador;
 
 public interface IndicadorService {
 
-  public void guardarIndicador() throws ServiceException;
-  
+  public void guardarIndicador(Indicador indicador) throws ServiceException;
+
   public List<Indicador> obtenerIndicadores() throws ServiceException;
-  
-  public void eliminarIndicador() throws ServiceException;
-  
+
+  public List<String> obtenerNombresIndicadores() throws ServiceException;
+
+  public void eliminarIndicador(Indicador indicador) throws ServiceException;
+
+  public boolean validarFormula(String formula) throws ServiceException;
+
 }
