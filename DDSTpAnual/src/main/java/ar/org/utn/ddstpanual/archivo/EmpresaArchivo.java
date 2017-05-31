@@ -1,6 +1,6 @@
 package ar.org.utn.ddstpanual.archivo;
 
-import java.util.Map;
+import java.util.List;
 
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -12,6 +12,6 @@ public interface EmpresaArchivo {
 
   public boolean exists(EmpresaExcel empresa) throws ServiceException;
 
-  public Map<String,Empresa> obtenerEmpresas() throws ServiceException;
+  public List<Empresa> obtenerEmpresas() throws ServiceException;
 
 }

@@ -1,17 +1,17 @@
 package ar.org.utn.ddstpanual.model;
 
-import java.util.Map;
+import java.util.List;
 
 public class Empresa {
 
-  Map<String, Cuenta> cuentas;
+  List<Cuenta> cuentas;
   String nombre;
 
-  public Map<String, Cuenta> getCuentas() {
+  public List<Cuenta> getCuentas() {
     return cuentas;
   }
 
-  public void setCuentas(Map<String, Cuenta> cuentas) {
+  public void setCuentas(List<Cuenta> cuentas) {
     this.cuentas = cuentas;
   }
 

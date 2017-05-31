@@ -7,7 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
@@ -52,8 +52,8 @@ public class EmpresaServiceImpl implements EmpresaService {
   }
 
   @Override
-  public Map<String, Empresa> obtenerEmpresas() throws ServiceException {
-    Map<String, Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
+  public List<Empresa> obtenerEmpresas() throws ServiceException {
+    List<Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
     return empresas;
   }
 
@@ -64,4 +64,5 @@ public class EmpresaServiceImpl implements EmpresaService {
     empresaArchivo = new EmpresaArchivoImpl();
     return empresaArchivo;
   }
+
 }

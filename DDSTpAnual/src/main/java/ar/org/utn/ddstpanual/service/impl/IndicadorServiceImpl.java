@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.IndicadorArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 
@@ -51,5 +52,11 @@ public class IndicadorServiceImpl implements IndicadorService {
     }
     indicadorArchivo = new IndicadorArchivoImpl();
     return indicadorArchivo;
+  }
+
+  @Override
+  public List<EmpresaExcel> ejecutarIndicador() throws ServiceException {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

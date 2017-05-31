@@ -3,12 +3,13 @@ package ar.org.utn.ddspanual.controller;
 import org.uqbar.commons.utils.Observable;
 
 import java.util.List;
-import java.util.Map;
 
 import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
@@ -20,14 +21,15 @@ public class IndicadoresController {
   IndicadorService indicadorService;
   EmpresaService empresaService;
   List<Indicador> indicadores;
-  Map<String, Empresa> empresas;
-  List<String> empresasCheckbox;
-  List<String> cuentasCheckbox;
-  List<String> periodosCheckbox;
+  Indicador indicador;
+  List<Empresa> empresas;
+  Empresa empresaCheckbox;
+  Cuenta cuentaCheckbox;
+  Periodo periodoCheckbox;
   List<EmpresaExcel> tabla;
   String error;
 
-  public Map<String, Empresa> obtenerEmpresas() {
+  public List<Empresa> obtenerEmpresas() {
     try {
       empresas = getEmpresaService().obtenerEmpresas();
     } catch (ServiceException e) {
@@ -43,6 +45,15 @@ public class IndicadoresController {
       error = "Se produjo un error al obtener los indicadores.";
     }
     return indicadores;
+  }
+  
+  public List<EmpresaExcel> ejecutarIndicador(){
+    try {
+      tabla = getIndicadorService().ejecutarIndicador();
+    } catch (ServiceException e) {
+      error = "Se produjo un error al obtener los indicadores.";
+    }
+    return tabla;
   }
 
   public IndicadorService getIndicadorService() {
@@ -61,6 +72,14 @@ public class IndicadoresController {
     return empresaService;
   }
 
+  public Indicador getIndicador() {
+    return indicador;
+  }
+
+  public void setIndicador(Indicador indicador) {
+    this.indicador = indicador;
+  }
+
   public List<Indicador> getIndicadores() {
     return indicadores;
   }
@@ -69,36 +88,36 @@ public class IndicadoresController {
     this.indicadores = indicadores;
   }
 
-  public Map<String, Empresa> getEmpresas() {
+  public List<Empresa> getEmpresas() {
     return empresas;
   }
 
-  public void setEmpresas(Map<String, Empresa> empresas) {
+  public void setEmpresas(List<Empresa> empresas) {
     this.empresas = empresas;
   }
 
-  public List<String> getEmpresasCheckbox() {
-    return empresasCheckbox;
+  public Empresa getEmpresaCheckbox() {
+    return empresaCheckbox;
   }
 
-  public void setEmpresasCheckbox(List<String> empresasCheckbox) {
-    this.empresasCheckbox = empresasCheckbox;
+  public void setEmpresaCheckbox(Empresa empresaCheckbox) {
+    this.empresaCheckbox = empresaCheckbox;
   }
 
-  public List<String> getCuentasCheckbox() {
-    return cuentasCheckbox;
+  public Cuenta getCuentaCheckbox() {
+    return cuentaCheckbox;
   }
 
-  public void setCuentasCheckbox(List<String> cuentasCheckbox) {
-    this.cuentasCheckbox = cuentasCheckbox;
+  public void setCuentaCheckbox(Cuenta cuentaCheckbox) {
+    this.cuentaCheckbox = cuentaCheckbox;
   }
 
-  public List<String> getPeriodosCheckbox() {
-    return periodosCheckbox;
+  public Periodo getPeriodoCheckbox() {
+    return periodoCheckbox;
   }
 
-  public void setPeriodosCheckbox(List<String> periodosCheckbox) {
-    this.periodosCheckbox = periodosCheckbox;
+  public void setPeriodoCheckbox(Periodo periodoCheckbox) {
+    this.periodoCheckbox = periodoCheckbox;
   }
 
   public List<EmpresaExcel> getTabla() {

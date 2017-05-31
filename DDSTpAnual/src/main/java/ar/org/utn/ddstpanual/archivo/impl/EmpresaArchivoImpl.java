@@ -8,8 +8,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.exception.ServiceException;
@@ -78,17 +78,18 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
   }
 
   @Override
-  public Map<String, Empresa> obtenerEmpresas() throws ServiceException {
+  public List<Empresa> obtenerEmpresas() throws ServiceException {
     String path = System.getProperty("user.dir");
     File dir = new File(path + "\\src\\main\\resources\\empresas\\");
     String[] ficheros = dir.list();
-    Map<String,Empresa> empresas = new HashMap<String,Empresa>();
+    List<Empresa> empresas = new ArrayList<Empresa>();
     FileReader filereader = null;
     BufferedReader buffer = null;
     if (ficheros != null) {
       for (String fichero : ficheros) {
         Empresa empresa = new Empresa();
         empresa.setNombre(fichero);
+        empresa.setCuentas(new ArrayList<Cuenta>());
         File file = new File(path + "\\src\\main\\resources\\empresas\\" + fichero);
         String linea = "";
         try {
@@ -97,19 +98,27 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
           while ((linea = buffer.readLine()) != null) {
             Cuenta cuenta = new Cuenta();
             String[] registro = StringUtils.split(linea, "|");
-            if (empresa.getCuentas().containsKey(registro[0])){
-              cuenta = empresa.getCuentas().get(registro[0]);
+            cuenta.setNombre(registro[0]);
+            if (empresa.getCuentas().contains(cuenta)) {
+              // TODO: Pasarlo a lambda expression
+              for (Cuenta cuentaIter : empresa.getCuentas()) {
+                if (cuentaIter.getNombre().equals(registro[0])) {
+                  cuenta = cuentaIter;
+                }
+              }
               Periodo periodo = new Periodo();
               periodo.setFecha(registro[1]);
               periodo.setValor(Float.valueOf(registro[2]));
-              cuenta.getPeriodos().put(registro[1], periodo);
+              cuenta.getPeriodos().add(periodo);
+              empresa.getCuentas().remove(cuenta);
             } else {
+              cuenta.setPeriodos(new ArrayList<Periodo>());
               Periodo periodo = new Periodo();
               periodo.setFecha(registro[1]);
               periodo.setValor(Float.valueOf(registro[2]));
-              cuenta.getPeriodos().put(registro[1], periodo);
+              cuenta.getPeriodos().add(periodo);
             }
-            empresa.getCuentas().put(cuenta.getNombre(), cuenta);
+            empresa.getCuentas().add(cuenta);
           }
         } catch (IOException e) {
           throw new ServiceException("Error al abrir el archivo");
@@ -122,7 +131,7 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
             throw new ServiceException("Error al intentar cerrar el archivo.");
           }
         }
-        empresas.put(empresa.getNombre(), empresa);
+        empresas.add(empresa);
       }
     }
 
