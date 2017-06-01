@@ -18,13 +18,13 @@ public class CargaExcelController {
   EmpresaService empresaService;
 
   public void guardarArchivo() {
+    error = "";
     try {
       File archivo = new File(rutaArchivo);
       FileInputStream fileStream = new FileInputStream(archivo);
       getEmpresaService().subirExcel(fileStream);
     } catch (FileNotFoundException | ServiceException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      error = "Se produjo un error al intentar guardar el archivo. Intentelo nuevamente mas tarde.";
     }
   }
 

@@ -20,6 +20,7 @@ public class AbmIndicadoresController {
   private IndicadorService indicadorService;
 
   public void guardarIndicador() {
+    error = "";
     try {
       Indicador indicador = new Indicador(nombre, formula);
       if (validarIndicador()) {
@@ -31,6 +32,7 @@ public class AbmIndicadoresController {
   }
 
   public void obtenerIndicadores() {
+    error = "";
     try {
       indicadores = getIndicadorService().obtenerIndicadores();
     } catch (ServiceException ex) {

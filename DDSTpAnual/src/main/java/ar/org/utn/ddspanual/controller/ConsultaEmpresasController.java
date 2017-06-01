@@ -24,6 +24,7 @@ public class ConsultaEmpresasController {
   String error;
 
   public List<Empresa> obtenerEmpresas() {
+    error = "";
     try {
       empresas = getEmpresaService().obtenerEmpresas();
     } catch (ServiceException e) {
@@ -33,7 +34,6 @@ public class ConsultaEmpresasController {
   }
 
   public List<EmpresaExcel> buscar() {
-
     error = "";
     if (empresaCheckbox != null) {
       try {

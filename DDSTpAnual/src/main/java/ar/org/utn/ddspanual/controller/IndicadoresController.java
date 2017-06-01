@@ -30,6 +30,7 @@ public class IndicadoresController {
   String error;
 
   public List<Empresa> obtenerEmpresas() {
+    error = "";
     try {
       empresas = getEmpresaService().obtenerEmpresas();
     } catch (ServiceException e) {
@@ -39,6 +40,7 @@ public class IndicadoresController {
   }
 
   public List<Indicador> obtenerIndicadores() {
+    error = "";
     try {
       indicadores = getIndicadorService().obtenerIndicadores();
     } catch (ServiceException e) {
@@ -46,8 +48,9 @@ public class IndicadoresController {
     }
     return indicadores;
   }
-  
-  public List<EmpresaExcel> ejecutarIndicador(){
+
+  public List<EmpresaExcel> ejecutarIndicador() {
+    error = "";
     try {
       tabla = getIndicadorService().ejecutarIndicador();
     } catch (ServiceException e) {
