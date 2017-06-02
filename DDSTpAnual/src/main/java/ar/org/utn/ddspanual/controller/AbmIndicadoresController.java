@@ -26,8 +26,6 @@ public class AbmIndicadoresController {
       if (validarIndicador()) {
         getIndicadorService().guardarIndicador(indicador);
         indicadores = getIndicadorService().obtenerIndicadores();
-      } else{
-        error = "Los campos no pueden ser vacios.";
       }
     } catch (ServiceException ex) {
       error = ex.getMessage();
@@ -52,8 +50,18 @@ public class AbmIndicadoresController {
       valido = false;
     }
 
+    if (StringUtils.contains(nombre, " ")) {
+      error = "El nombre no puede contener espacios.";
+      valido = false;
+    }
+
     if (StringUtils.isEmpty(formula)) {
       error = "Debe ingresar una formula.\n";
+      valido = false;
+    }
+    
+    if (StringUtils.contains(formula, " ")) {
+      error = "La formula no puede contener espacios.";
       valido = false;
     }
 
