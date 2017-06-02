@@ -18,8 +18,13 @@ public class IndicadorServiceImpl implements IndicadorService {
   @Override
   public void guardarIndicador(Indicador indicador) throws ServiceException {
     try {
+
       if (validarFormula(indicador.getFormula())) {
-        getIndicadorArchivo().guardarIndicador(indicador);
+        if (!getIndicadorArchivo().exists(indicador)) {
+          getIndicadorArchivo().guardarIndicador(indicador);
+        } else {
+          throw new ServiceException("El nombre o la formula que ingreso ya existe.");
+        }
       } else {
         throw new ServiceException("La formula contiene errores de sintaxis.");
       }
@@ -32,15 +37,6 @@ public class IndicadorServiceImpl implements IndicadorService {
   public List<Indicador> obtenerIndicadores() throws ServiceException {
     try {
       return getIndicadorArchivo().obtenerIndicadores();
-    } catch (ArchivoException e) {
-      throw new ServiceException(e.getMessage());
-    }
-  }
-
-  @Override
-  public List<String> obtenerNombresIndicadores() throws ServiceException {
-    try {
-      return getIndicadorArchivo().obtenerNombresIndicadores();
     } catch (ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }

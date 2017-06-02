@@ -12,8 +12,6 @@ public interface IndicadorService {
 
   public List<Indicador> obtenerIndicadores() throws ServiceException;
 
-  public List<String> obtenerNombresIndicadores() throws ServiceException;
-
   public void eliminarIndicador(Indicador indicador) throws ServiceException;
 
   public boolean validarFormula(String formula) throws ServiceException;

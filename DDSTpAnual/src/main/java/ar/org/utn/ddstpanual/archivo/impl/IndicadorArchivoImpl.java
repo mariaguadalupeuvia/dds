@@ -71,19 +71,22 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
     return indicadores;
   }
 
-  @Override
-  public List<String> obtenerNombresIndicadores() throws ArchivoException {
+  public boolean exists(Indicador indicador) throws ArchivoException {
     String path = System.getProperty("user.dir");
     File file = new File(path + "\\src\\main\\resources\\indicadores.txt");
     FileReader filereader = null;
     BufferedReader buffer = null;
     String linea = "";
-    List<String> indicadores = new ArrayList<String>();
+    boolean existe = false;
     try {
       filereader = new FileReader(file);
       buffer = new BufferedReader(filereader);
       while ((linea = buffer.readLine()) != null) {
-        indicadores.add(StringUtils.split(linea, "=")[0]);
+        String[] indicadorArchivo = StringUtils.split(linea, "=");
+        if (indicadorArchivo[0].equals(indicador.getNombre())
+            || indicadorArchivo[1].equals(indicador.getFormula())) {
+          existe = true;
+        }
       }
     } catch (IOException e) {
       throw new ArchivoException("Error al abrir el archivo");
@@ -96,7 +99,8 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
         throw new ArchivoException("Error al intentar cerrar el archivo.");
       }
     }
-    return indicadores;
+
+    return existe;
   }
 
   @Override

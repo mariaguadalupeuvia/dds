@@ -13,6 +13,5 @@ public interface IndicadorArchivo {
 
   public List<Indicador> obtenerIndicadores() throws ArchivoException;
 
-  public List<String> obtenerNombresIndicadores() throws ArchivoException;
-
+  public boolean exists(Indicador indicador) throws ArchivoException;
 }
