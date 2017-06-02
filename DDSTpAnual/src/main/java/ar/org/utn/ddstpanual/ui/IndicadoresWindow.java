@@ -35,9 +35,9 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
 
   @Override
   protected void addActions(Panel actionsPanel) {
-     new Button(actionsPanel).setCaption("Ejecutar").onClick(() -> {
-     getModelObject().ejecutarIndicador();
-     }).setAsDefault().disableOnError();
+    new Button(actionsPanel).setCaption("Ejecutar").onClick(() -> {
+      getModelObject().ejecutarIndicador();
+    }).setAsDefault().disableOnError();
   }
 
 

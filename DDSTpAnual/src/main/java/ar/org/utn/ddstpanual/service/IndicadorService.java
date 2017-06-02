@@ -17,7 +17,7 @@ public interface IndicadorService {
   public void eliminarIndicador(Indicador indicador) throws ServiceException;
 
   public boolean validarFormula(String formula) throws ServiceException;
-  
+
   public List<EmpresaExcel> ejecutarIndicador() throws ServiceException;
 
 }

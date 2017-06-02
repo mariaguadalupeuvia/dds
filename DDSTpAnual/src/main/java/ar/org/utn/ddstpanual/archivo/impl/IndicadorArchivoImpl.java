@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
-import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Indicador;
 
 public class IndicadorArchivoImpl implements IndicadorArchivo {
 
   @Override
-  public void guardarIndicador(Indicador indicador) throws ServiceException {
+  public void guardarIndicador(Indicador indicador) throws ArchivoException {
     String path = System.getProperty("user.dir");
     FileWriter filewriter = null;
     PrintWriter printwriten = null;
@@ -28,20 +28,20 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
       String linea = indicador.getNombre() + "=" + indicador.getFormula();
       printwriten.println(linea);
     } catch (IOException e) {
-      throw new ServiceException("Error al abrir el archivo");
+      throw new ArchivoException("Error al abrir el archivo");
     } finally {
       try {
         if (null != filewriter) {
           filewriter.close();
         }
       } catch (Exception ex) {
-        throw new ServiceException("Error al intentar cerrar el archivo.");
+        throw new ArchivoException("Error al intentar cerrar el archivo.");
       }
     }
   }
 
   @Override
-  public List<Indicador> obtenerIndicadores() throws ServiceException {
+  public List<Indicador> obtenerIndicadores() throws ArchivoException {
     String path = System.getProperty("user.dir");
     File file = new File(path + "\\src\\main\\resources\\indicadores.txt");
     FileReader filereader = null;
@@ -58,21 +58,21 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
         indicadores.add(indicador);
       }
     } catch (IOException e) {
-      throw new ServiceException("Error al abrir el archivo");
+      throw new ArchivoException("Error al abrir el archivo");
     } finally {
       try {
         if (null != filereader) {
           filereader.close();
         }
       } catch (Exception ex) {
-        throw new ServiceException("Error al intentar cerrar el archivo.");
+        throw new ArchivoException("Error al intentar cerrar el archivo.");
       }
     }
     return indicadores;
   }
 
   @Override
-  public List<String> obtenerNombresIndicadores() throws ServiceException {
+  public List<String> obtenerNombresIndicadores() throws ArchivoException {
     String path = System.getProperty("user.dir");
     File file = new File(path + "\\src\\main\\resources\\indicadores.txt");
     FileReader filereader = null;
@@ -86,17 +86,16 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
         indicadores.add(StringUtils.split(linea, "=")[0]);
       }
     } catch (IOException e) {
-      throw new ServiceException("Error al abrir el archivo");
+      throw new ArchivoException("Error al abrir el archivo");
     } finally {
       try {
         if (null != filereader) {
           filereader.close();
         }
       } catch (Exception ex) {
-        throw new ServiceException("Error al intentar cerrar el archivo.");
+        throw new ArchivoException("Error al intentar cerrar el archivo.");
       }
     }
     return indicadores;
   }
-
 }

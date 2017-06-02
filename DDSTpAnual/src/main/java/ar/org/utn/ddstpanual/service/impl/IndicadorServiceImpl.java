@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.IndicadorArchivoImpl;
+import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -16,19 +17,31 @@ public class IndicadorServiceImpl implements IndicadorService {
 
   @Override
   public void guardarIndicador(Indicador indicador) throws ServiceException {
-    if (validarFormula(indicador.getFormula())) {
-      getIndicadorArchivo().guardarIndicador(indicador);
+    try {
+      if (validarFormula(indicador.getFormula())) {
+        getIndicadorArchivo().guardarIndicador(indicador);
+      }
+    } catch (ArchivoException e) {
+      throw new ServiceException(e.getMessage());
     }
   }
 
   @Override
   public List<Indicador> obtenerIndicadores() throws ServiceException {
-    return getIndicadorArchivo().obtenerIndicadores();
+    try {
+      return getIndicadorArchivo().obtenerIndicadores();
+    } catch (ArchivoException e) {
+      throw new ServiceException(e.getMessage());
+    }
   }
 
   @Override
   public List<String> obtenerNombresIndicadores() throws ServiceException {
-    return getIndicadorArchivo().obtenerNombresIndicadores();
+    try {
+      return getIndicadorArchivo().obtenerNombresIndicadores();
+    } catch (ArchivoException e) {
+      throw new ServiceException(e.getMessage());
+    }
   }
 
   @Override

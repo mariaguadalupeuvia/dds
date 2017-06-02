@@ -2,10 +2,6 @@ package ar.org.utn.ddspanual.controller;
 
 import org.uqbar.commons.utils.Observable;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
@@ -20,10 +16,8 @@ public class CargaExcelController {
   public void guardarArchivo() {
     error = "";
     try {
-      File archivo = new File(rutaArchivo);
-      FileInputStream fileStream = new FileInputStream(archivo);
-      getEmpresaService().subirExcel(fileStream);
-    } catch (FileNotFoundException | ServiceException e) {
+      getEmpresaService().subirExcel(rutaArchivo);
+    } catch (ServiceException e) {
       error = "Se produjo un error al intentar guardar el archivo. Intentelo nuevamente mas tarde.";
     }
   }

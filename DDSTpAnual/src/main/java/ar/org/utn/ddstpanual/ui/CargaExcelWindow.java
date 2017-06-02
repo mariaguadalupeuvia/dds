@@ -1,7 +1,6 @@
 package ar.org.utn.ddstpanual.ui;
 
 import org.uqbar.arena.layout.ColumnLayout;
-import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.FileSelector;
 import org.uqbar.arena.widgets.Label;
@@ -29,25 +28,6 @@ public class CargaExcelWindow extends SimpleWindow<CargaExcelController> {
     error.setForeground(Color.RED).bindValueToProperty("error");
 
     super.createMainTemplate(mainPanel);
-
-    this.createMenuActions(mainPanel);
-  }
-
-  private void createMenuActions(Panel mainPanel) {
-    Panel actions = new Panel(mainPanel);
-    actions.setLayout(new HorizontalLayout());
-
-    Button crearIndicador = new Button(actions);
-    crearIndicador.setCaption("Crear Indicador");
-    crearIndicador.onClick(this::crearIndicador);
-
-    Button abmIndicador = new Button(actions);
-    abmIndicador.setCaption("ABM Indicadores");
-    abmIndicador.onClick(this::abmIndicadores);
-
-    Button consultaEmpresa = new Button(actions);
-    consultaEmpresa.setCaption("Consulta Empresas");
-    consultaEmpresa.onClick(this::consultaEmpresas);
   }
 
   @Override
@@ -73,22 +53,5 @@ public class CargaExcelWindow extends SimpleWindow<CargaExcelController> {
     fileselector.bindValueToProperty("rutaArchivo");
     fileselector.extensions("*.xlsx");
   }
-
-  // ********************************************************
-  // ** Acciones
-  // ********************************************************
-
-  public void crearIndicador() {
-    new IndicadoresWindow(this).open();
-  }
-
-  public void abmIndicadores() {
-    new AbmIndicadoresWindow(this).open();
-  }
-
-  public void consultaEmpresas() {
-    new ConsultaEmpresasWindow(this).open();
-  }
-
 
 }

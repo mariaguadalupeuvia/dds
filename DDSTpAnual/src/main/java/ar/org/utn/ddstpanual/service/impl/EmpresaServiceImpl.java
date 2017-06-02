@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
+import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.log.LogData;
 import ar.org.utn.ddstpanual.model.Cuenta;
@@ -26,11 +28,12 @@ public class EmpresaServiceImpl implements EmpresaService {
   EmpresaArchivo empresaArchivo;
 
   @Override
-  public void subirExcel(FileInputStream file) throws ServiceException {
-
-    EmpresaExcel empresaExcel = new EmpresaExcel();
+  public void subirExcel(String rutaArchivo) throws ServiceException {
     try {
-      XSSFWorkbook workbook = new XSSFWorkbook(file);
+      File file = new File(rutaArchivo);
+      FileInputStream fileStream = new FileInputStream(file);
+      EmpresaExcel empresaExcel = new EmpresaExcel();
+      XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
       XSSFSheet sheet = workbook.getSheetAt(0);
       Iterator<Row> rowIterator = sheet.iterator();
       Row row;
@@ -52,15 +55,20 @@ public class EmpresaServiceImpl implements EmpresaService {
       workbook.close();
     } catch (IOException ex) {
       ex.printStackTrace();
+    } catch (ArchivoException e) {
+      throw new ServiceException(e.getMessage());
     }
   }
 
   @Override
   public List<Empresa> obtenerEmpresas() throws ServiceException {
-    List<Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
-    return empresas;
+    try {
+      List<Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
+      return empresas;
+    } catch (ArchivoException e) {
+      throw new ServiceException(e.getMessage());
+    }
   }
-
 
   @Override
   public List<EmpresaExcel> buscar(Empresa empresa, Cuenta cuenta, Periodo periodo)

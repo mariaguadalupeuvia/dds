@@ -8,7 +8,7 @@ import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
-import ar.org.utn.ddstpanual.ui.CargaExcelWindow;
+import ar.org.utn.ddstpanual.ui.MenuPrincipalWindow;
 
 public class DondeInviertoApplication extends Application {
 
@@ -22,6 +22,6 @@ public class DondeInviertoApplication extends Application {
         new IndicadorServiceImpl());
     ApplicationContext.getInstance().configureSingleton(EmpresaService.class,
         new EmpresaServiceImpl());
-    return new CargaExcelWindow(this);
+    return new MenuPrincipalWindow(this);
   }
 }

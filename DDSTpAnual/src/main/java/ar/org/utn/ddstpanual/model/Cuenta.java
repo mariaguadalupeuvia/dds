@@ -39,12 +39,12 @@ public class Cuenta {
 
     return cuenta.nombre.equals(nombre);
   }
-  
+
   @Override
   public int hashCode() {
-      int result = 17;
-      result = 31 * result + nombre.hashCode();
-      return result;
+    int result = 17;
+    result = 31 * result + nombre.hashCode();
+    return result;
   }
 
   @Override
