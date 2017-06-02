@@ -23,8 +23,10 @@ public class AbmIndicadoresController {
     error = "";
     try {
       Indicador indicador = new Indicador(nombre, formula);
-      if (validarIndicador()) {
+      if (validarIndicador() && getIndicadorService().validarFormula(indicador.getFormula())) {
         getIndicadorService().guardarIndicador(indicador);
+      } else{
+        error = "Los datos ingresados son incorrectos.";
       }
     } catch (ServiceException ex) {
       error = "La formula tiene un error de sintaxis.";
