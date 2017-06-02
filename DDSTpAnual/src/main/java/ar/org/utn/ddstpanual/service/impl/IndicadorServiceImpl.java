@@ -1,7 +1,6 @@
 package ar.org.utn.ddstpanual.service.impl;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
 import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
@@ -21,6 +20,8 @@ public class IndicadorServiceImpl implements IndicadorService {
     try {
       if (validarFormula(indicador.getFormula())) {
         getIndicadorArchivo().guardarIndicador(indicador);
+      } else {
+        throw new ServiceException("La formula contiene errores de sintaxis.");
       }
     } catch (ArchivoException e) {
       throw new ServiceException(e.getMessage());

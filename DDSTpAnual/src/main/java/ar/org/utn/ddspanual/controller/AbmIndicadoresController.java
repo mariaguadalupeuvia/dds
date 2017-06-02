@@ -23,13 +23,14 @@ public class AbmIndicadoresController {
     error = "";
     try {
       Indicador indicador = new Indicador(nombre, formula);
-      if (validarIndicador() && getIndicadorService().validarFormula(indicador.getFormula())) {
+      if (validarIndicador()) {
         getIndicadorService().guardarIndicador(indicador);
+        indicadores = getIndicadorService().obtenerIndicadores();
       } else{
-        error = "Los datos ingresados son incorrectos.";
+        error = "Los campos no pueden ser vacios.";
       }
     } catch (ServiceException ex) {
-      error = "La formula tiene un error de sintaxis.";
+      error = ex.getMessage();
     }
   }
 
