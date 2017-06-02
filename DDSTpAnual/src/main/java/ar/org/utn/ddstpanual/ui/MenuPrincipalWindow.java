@@ -28,8 +28,8 @@ public class MenuPrincipalWindow extends SimpleWindow {
     consultarEmpresa.onClick(this::consultaIndicadores);
 
     Button crearIndicador = new Button(actions);
-    crearIndicador.setCaption("Crear Indicador");
-    crearIndicador.onClick(this::crearIndicador);
+    crearIndicador.setCaption("Ejecutar Indicador");
+    crearIndicador.onClick(this::ejecutarIndicador);
 
     Button abmIndicador = new Button(actions);
     abmIndicador.setCaption("ABM Indicadores");
@@ -47,7 +47,7 @@ public class MenuPrincipalWindow extends SimpleWindow {
   // ********************************************************
   // ** Acciones
   // ********************************************************
-  public void crearIndicador() {
+  public void ejecutarIndicador() {
     new IndicadoresWindow(this).open();
   }
 

@@ -16,9 +16,10 @@ public class CargaExcelController {
   public void guardarArchivo() {
     error = "";
     try {
-      getEmpresaService().subirExcel(rutaArchivo);
+      String ruta = rutaArchivo + "";
+      getEmpresaService().subirExcel(ruta);
     } catch (ServiceException e) {
-      error = "Se produjo un error al intentar guardar el archivo. Intentelo nuevamente mas tarde.";
+      error = "Se produjo un error al intentar guardar el archivo. Intentelo nuevamente.";
     }
   }
 

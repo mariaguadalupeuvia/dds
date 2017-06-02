@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -63,6 +64,8 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
           existe = true;
         }
       }
+    } catch (FileNotFoundException fnfe) {
+      existe = false;
     } catch (IOException e) {
       throw new ArchivoException("Error al abrir el archivo");
     } finally {
