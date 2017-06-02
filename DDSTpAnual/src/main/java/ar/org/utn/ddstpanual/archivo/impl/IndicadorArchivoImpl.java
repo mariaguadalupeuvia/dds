@@ -98,4 +98,10 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
     }
     return indicadores;
   }
+
+  @Override
+  public void eliminarIndicador(Indicador indicador) throws ArchivoException {
+    // Existe el indicador y si esta devolver la posicion
+    // Despues borrar la linea
+  }
 }

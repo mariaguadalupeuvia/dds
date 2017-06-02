@@ -48,7 +48,11 @@ public class IndicadorServiceImpl implements IndicadorService {
 
   @Override
   public void eliminarIndicador(Indicador indicador) throws ServiceException {
-
+    try {
+      getIndicadorArchivo().eliminarIndicador(indicador);
+    } catch (ArchivoException e) {
+      throw new ServiceException(e.getMessage());
+    }
   }
 
   @Override

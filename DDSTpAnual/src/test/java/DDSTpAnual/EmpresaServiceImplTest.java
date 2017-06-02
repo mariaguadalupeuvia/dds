@@ -27,7 +27,7 @@ public class EmpresaServiceImplTest {
 		service.subirExcel(iniciarArchivo("Carga1.xlsx"));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = ServiceException.class)
 	public void testSubirArchivoInexistente() throws ServiceException {
 		service.subirExcel(iniciarArchivo("Caso1"));
 	}
@@ -36,12 +36,14 @@ public class EmpresaServiceImplTest {
 	public void testSubirArchivoNoExcel() throws ServiceException {
 		service.subirExcel(iniciarArchivo("CargaCSV.csv"));
 	}
-
-	// Test sobre el guardado de datos 
-	// convertToEmpresaExcel ()
 	
 	// Test sobre la obtencion de datos del archivo
 	// buscar ()
 	// obtenerEmpresas ()
+	
+	@Test
+	public void testObtenerIndicadores() throws ServiceException {
+	  service.obtenerEmpresas();
+	}
 
 }

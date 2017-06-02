@@ -54,7 +54,7 @@ public class EmpresaServiceImpl implements EmpresaService {
       }
       workbook.close();
     } catch (IOException ex) {
-      ex.printStackTrace();
+      throw new ServiceException("Error al abrir el archivo.");
     } catch (ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }

@@ -49,12 +49,17 @@ public class IndicadorServiceImplTest {
   
   // Test sobre la obtencion de Indicadores 
   // obtenerIndicadores
-  // obtenerNombresIndicador
+  @Test
+  public void testObtenerIndicadores() throws ServiceException {
+    service.obtenerIndicadores();
+  }
   
   // Test sobre la ejecucion de los indicadores 
   // ejecutarIndicador
-  
-  // Test sobre la eliminacion del indicador
-  // eliminarIndicador
+  @Test
+  public void testEjecutarIndicador() throws ServiceException {
+    service.ejecutarIndicador();
+  }
+ 
   
 }
