@@ -3,6 +3,7 @@ package ar.org.utn.ddstpanual.service.impl;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
 import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.IndicadorArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
@@ -51,12 +52,8 @@ public class IndicadorServiceImpl implements IndicadorService {
 
   @Override
   public boolean validarFormula(String formula) {
-    // TODO: Definir Regular Expression
-    Pattern pattern = Pattern.compile("-?\\w+|[-+*%/()]");
-
-    return pattern.matcher(formula).matches();
-
-    // TODO: Validacion sobre existencia de Indicadores/Cuentas existentes
+    AntlrFormulaListener entrada = new AntlrFormulaListener();
+    return entrada.validarFormula(formula);
   }
 
   public IndicadorArchivo getIndicadorArchivo() {
