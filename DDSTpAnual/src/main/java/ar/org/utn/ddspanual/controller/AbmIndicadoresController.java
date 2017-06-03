@@ -45,6 +45,9 @@ public class AbmIndicadoresController {
     boolean valido = true;
     error = "";
 
+    nombre = StringUtils.trim(nombre);
+    formula = StringUtils.trim(formula);
+    
     if (StringUtils.isEmpty(nombre)) {
       error = "Debe ingresar un nombre.\n";
       valido = false;

@@ -1,8 +1,8 @@
 package ar.org.utn.ddstpanual.service.impl;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,8 +33,8 @@ public class EmpresaServiceImpl implements EmpresaService {
       File file = new File(rutaArchivo);
       FileInputStream fileStream = new FileInputStream(file);
       EmpresaExcel empresaExcel = new EmpresaExcel();
-      XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
-      XSSFSheet sheet = workbook.getSheetAt(0);
+      HSSFWorkbook workbook = new HSSFWorkbook(fileStream);
+      HSSFSheet sheet = workbook.getSheetAt(0);
       Iterator<Row> rowIterator = sheet.iterator();
       Row row;
       rowIterator.next();

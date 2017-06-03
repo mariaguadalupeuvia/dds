@@ -18,7 +18,7 @@ public class IndicadorServiceImpl implements IndicadorService {
   @Override
   public void guardarIndicador(Indicador indicador) throws ServiceException {
     try {
-
+      indicador.sacarEspacios();
       if (validarFormula(indicador.getFormula())) {
         if (!getIndicadorArchivo().exists(indicador)) {
           getIndicadorArchivo().guardarIndicador(indicador);

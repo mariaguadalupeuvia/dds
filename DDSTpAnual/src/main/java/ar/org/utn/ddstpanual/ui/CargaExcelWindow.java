@@ -51,7 +51,7 @@ public class CargaExcelWindow extends SimpleWindow<CargaExcelController> {
     FileSelector fileselector =
         (FileSelector) new FileSelector(inputFormPanel).setCaption("Examinar");
     fileselector.bindValueToProperty("rutaArchivo");
-    fileselector.extensions("*.xlsx");
+    fileselector.extensions("*.xls");
   }
 
 }

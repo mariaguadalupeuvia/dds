@@ -1,5 +1,6 @@
 package ar.org.utn.ddstpanual.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -29,6 +30,11 @@ public class Indicador {
 
   public void setFormula(String formula) {
     this.formula = formula;
+  }
+
+  public void sacarEspacios() {
+    nombre = StringUtils.remove(nombre, " ");
+    formula = StringUtils.remove(formula, " ");
   }
 
   @Override
