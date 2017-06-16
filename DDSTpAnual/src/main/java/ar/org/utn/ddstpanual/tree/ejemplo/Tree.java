@@ -8,8 +8,8 @@ public class Tree {
   }
 
   public void insert(String s) {
-    Conversion c = new Conversion(s);
-    s = c.inToPost();
+    Conversion conversion = new Conversion(s);
+    s = conversion.inToPost();
     Stack1 stk = new Stack1(s.length());
     s = s + "#";
     int i = 0;
