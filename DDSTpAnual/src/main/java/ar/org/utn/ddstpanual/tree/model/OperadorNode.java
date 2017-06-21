@@ -6,6 +6,11 @@ public class OperadorNode extends Node {
   private Node rigthNode;
   private String operador;
 
+  public OperadorNode(String operador) {
+    this.setTypeNode(Node.OPERADOR);
+    this.operador = operador;
+  }
+
   @Override
   public Integer obtenerValor(Integer periodo) {
     if (operador.equals("+")) {

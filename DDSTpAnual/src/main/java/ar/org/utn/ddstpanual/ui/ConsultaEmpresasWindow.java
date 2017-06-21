@@ -16,7 +16,7 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 
 import java.awt.Color;
 
-import ar.org.utn.ddspanual.controller.ConsultaEmpresasController;
+import ar.org.utn.ddstpanual.controller.ConsultaEmpresasController;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;

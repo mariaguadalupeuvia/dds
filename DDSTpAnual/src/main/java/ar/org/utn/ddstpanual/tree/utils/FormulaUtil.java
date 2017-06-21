@@ -1,68 +1,104 @@
 package ar.org.utn.ddstpanual.tree.utils;
 
-import ar.org.utn.ddstpanual.tree.PilaData;
+import java.util.Stack;
+
+import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.tree.model.CuentaNode;
+import ar.org.utn.ddstpanual.tree.model.IndicadorNode;
+import ar.org.utn.ddstpanual.tree.model.Node;
+import ar.org.utn.ddstpanual.tree.model.OperadorNode;
+import ar.org.utn.ddstpanual.tree.model.ValorNode;
 
 public class FormulaUtil {
-  private static PilaData pilaData;
-  private static String output = "";
 
-  public static String inToPost(String formula) {
-    pilaData = new PilaData(formula.length());
-    for (int i = 0; i < formula.length(); i++) {
-      char ch = formula.charAt(i);
-      switch (ch) {
-        case '+':
-        case '-':
-          gotOperator(ch, 1);
-          break;
-        case '*':
-        case '/':
-          gotOperator(ch, 2);
-          break;
-        case '(':
-          pilaData.push(ch);
-          break;
-        case ')':
-          gotParenthesis();
-          break;
-        default:
-          output = output + ch;
+  public static Stack<Node> inToPost(String formula) throws ServiceException {
+    try {
+      Stack<Node> salida = new Stack<Node>();
+
+      // Depurar la expresion algebraica
+      String expr = depurar(formula);
+      String[] arrayInfix = expr.split(" ");
+
+      // Declaración de las pilas
+      Stack<String> entrada = new Stack<String>(); // Pila entrada
+      Stack<String> operadores = new Stack<String>(); // Pila temporal para operadores
+
+      // Añadir la array a la Pila de entrada
+      for (int i = arrayInfix.length - 1; i >= 0; i--) {
+        entrada.push(arrayInfix[i]);
       }
-    }
-    while (!pilaData.isEmpty())
-      output = output + pilaData.pop();
-    return output;
-  }
 
-  private static void gotOperator(char opThis, int prec1) {
-    while (!pilaData.isEmpty()) {
-      char opTop = pilaData.pop();
-      if (opTop == '(') {
-        pilaData.push(opTop);
-        break;
-      } else {
-        int prec2;
-        if (opTop == '+' || opTop == '-')
-          prec2 = 1;
-        else
-          prec2 = 2;
-        if (prec2 < prec1) {
-          pilaData.push(opTop);
-          break;
-        } else
-          output = output + opTop;
+      // Algoritmo Infijo a Postfijo
+      while (!entrada.isEmpty()) {
+        switch (pref(entrada.peek())) {
+          case 1:
+            operadores.push(entrada.pop());
+            break;
+          case 3:
+          case 4:
+            while (pref(operadores.peek()) >= pref(entrada.peek())) {
+              salida.push(new OperadorNode(operadores.pop()));
+            }
+            operadores.push(entrada.pop());
+            break;
+          case 2:
+            while (!operadores.peek().equals("(")) {
+              salida.push(new OperadorNode(operadores.pop()));
+            }
+            operadores.pop();
+            entrada.pop();
+            break;
+          case 6:
+            salida.push(new IndicadorNode(entrada.pop()));
+            break;
+          case 7:
+            salida.push(new CuentaNode(entrada.pop()));
+            break;
+          default:
+            salida.push(new ValorNode(entrada.pop()));
+        }
       }
+      return salida;
+    } catch (Exception ex) {
+      throw new ServiceException("Error en la expresión algebraica.");
     }
-    pilaData.push(opThis);
   }
 
-  private static void gotParenthesis() {
-    while (!pilaData.isEmpty()) {
-      char ch = pilaData.pop();
-      if (ch == '(')
-        break;
-      else
-        output = output + ch;
+  // Depurar expresión algebraica
+  private static String depurar(String s) {
+    s = s.replaceAll("\\s+", ""); // Elimina espacios en blanco
+    s = "(" + s + ")";
+    String simbols = "+-*/()";
+    String str = "";
+
+    // Deja espacios entre operadores
+    for (int i = 0; i < s.length(); i++) {
+      if (simbols.contains("" + s.charAt(i))) {
+        str += " " + s.charAt(i) + " ";
+      } else
+        str += s.charAt(i);
     }
+    return str.replaceAll("\\s+", " ").trim();
   }
+
+  // Jerarquia de los operadores
+  private static int pref(String op) {
+    int prf = 99;
+    if (op.contains("["))
+      prf = 7;
+    if (op.contains("{"))
+      prf = 6;
+    if (op.equals("^"))
+      prf = 5;
+    if (op.equals("*") || op.equals("/"))
+      prf = 4;
+    if (op.equals("+") || op.equals("-"))
+      prf = 3;
+    if (op.equals(")"))
+      prf = 2;
+    if (op.equals("("))
+      prf = 1;
+    return prf;
+  }
+
 }

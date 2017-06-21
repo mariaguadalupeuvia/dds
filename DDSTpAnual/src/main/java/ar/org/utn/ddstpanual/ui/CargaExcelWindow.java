@@ -11,7 +11,7 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import java.awt.Color;
 
-import ar.org.utn.ddspanual.controller.CargaExcelController;
+import ar.org.utn.ddstpanual.controller.CargaExcelController;
 
 @SuppressWarnings("serial")
 public class CargaExcelWindow extends SimpleWindow<CargaExcelController> {

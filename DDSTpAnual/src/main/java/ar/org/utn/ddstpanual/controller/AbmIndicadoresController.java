@@ -1,4 +1,4 @@
-package ar.org.utn.ddspanual.controller;
+package ar.org.utn.ddstpanual.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
