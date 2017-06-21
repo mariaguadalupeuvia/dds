@@ -20,7 +20,7 @@ public class ArbolUtil {
       ((OperadorNode) root).setRigthNode(obtenerSiguienteNodo(formulaPost));
       ((OperadorNode) root).setLeftNode(obtenerSiguienteNodo(formulaPost));
     }
-
+    arbol.setRoot(root);
     return arbol;
   }
 
@@ -41,7 +41,8 @@ public class ArbolUtil {
     System.out.println("*Escribe una expresión algebraica: ");
     Scanner leer = new Scanner(System.in);
     try {
-      Stack<Node> formulaPost = FormulaUtil.inToPost(leer.nextLine());
+      Arbol arbol = convertFormulaToArbol(leer.nextLine());
+      int i = 0;
     } catch (ServiceException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
