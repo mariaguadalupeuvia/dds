@@ -14,6 +14,8 @@ import java.util.List;
 import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.tree.model.Arbol;
+import ar.org.utn.ddstpanual.tree.utils.IndicadorUtil;
 
 public class IndicadorArchivoImpl implements IndicadorArchivo {
 
@@ -107,5 +109,11 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
   public void eliminarIndicador(Indicador indicador) throws ArchivoException {
     // Existe el indicador y si esta devolver la posicion
     // Despues borrar la linea
+    
+  }
+
+  public Arbol obtenerArbolPorIdicador(String nombreIndicador) {
+    // Llamar al objeto de la clase estatico
+    return IndicadorUtil.obtenerIndicador(nombreIndicador).getArbol();
   }
 }
