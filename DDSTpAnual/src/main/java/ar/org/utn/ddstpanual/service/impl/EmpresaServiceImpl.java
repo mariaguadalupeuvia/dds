@@ -117,4 +117,14 @@ public class EmpresaServiceImpl implements EmpresaService {
     return empresaArchivo;
   }
 
+@Override
+  public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ServiceException {
+    try {
+        List<Periodo> periodos = getEmpresaArchivo().obtenerPeriodos(nombreEmpresa);
+        return periodos;
+      } catch (ArchivoException e) {
+        throw new ServiceException(e.getMessage());
+      } 
+  }
+
 }

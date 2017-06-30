@@ -79,7 +79,7 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     }
     return existe;
   }
-
+  
   @Override
   public List<Empresa> obtenerEmpresas() throws ArchivoException {
     String path = System.getProperty("user.dir");
@@ -107,6 +107,7 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
               for (Cuenta cuentaIter : empresa.getCuentas()) {
                 if (cuentaIter.getNombre().equals(registro[0])) {
                   cuenta = cuentaIter;
+                  break;
                 }
               }
               Periodo periodo = new Periodo();
@@ -139,5 +140,44 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     }
     return empresas;
   }
+
+
+	@Override
+  public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ArchivoException {
+		String path = System.getProperty("user.dir");
+	    File dir = new File(path + "\\src\\main\\resources\\empresas\\" + nombreEmpresa);
+	    FileReader filereader = null;
+	    BufferedReader buffer = null;
+	    String linea = "";
+	    List<Periodo> periodos = new ArrayList<Periodo>();
+	    try {
+	        filereader = new FileReader(dir);
+	        buffer = new BufferedReader(filereader);
+	        while ((linea = buffer.readLine()) != null) {
+	          String[] registro = StringUtils.split(linea, "|");
+	          if(periodos.stream().allMatch(p -> !p.getFecha().equals(registro[1]))){
+	        	  periodos.add(new Periodo(registro[1]));
+	          }
+	        }
+	      } catch (FileNotFoundException fnfe) {
+	        throw new ArchivoException("No existe una empresa con ese nombre");
+	      } catch (IOException e) {
+	        throw new ArchivoException("Error al abrir el archivo");
+	      } finally {
+	        try {
+	          if (null != filereader) {
+	            filereader.close();
+	          }
+	        } catch (Exception ex) {
+	          throw new ArchivoException("Error al intentar cerrar el archivo.");
+	        }
+	      }
+	    /*int i = 0;
+	    while(!periodos.isEmpty()){
+	    	System.out.println(periodos.get(i).getFecha() + "  " + periodos.get(i).getValor() +  "\n");
+	    	i++;
+	    }*/
+		return periodos;
+	}
 
 }

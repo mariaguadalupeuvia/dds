@@ -116,4 +116,35 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
     // Llamar al objeto de la clase estatico
     return IndicadorUtil.obtenerIndicador(nombreIndicador).getArbol();
   }
+  
+  @Override
+  public String obtenerFormula(String nombre) throws ArchivoException {
+	    String path = System.getProperty("user.dir");
+	    File file = new File(path + "\\src\\main\\resources\\indicadores.txt");
+	    FileReader filereader = null;
+	    BufferedReader buffer = null;
+	    String linea = "";
+	    String formula = "";
+	    try {
+	      filereader = new FileReader(file);
+	      buffer = new BufferedReader(filereader);
+	      while ((linea = buffer.readLine()) != null) {
+	        String[] indicadorArchivo = StringUtils.split(linea, "=");
+	        if (indicadorArchivo[0].equals(nombre)){
+	            formula = indicadorArchivo[1];	        
+	        }
+	      }
+	    } catch (IOException e) {
+	      throw new ArchivoException("Error al abrir el archivo");
+	    } finally {
+	      try {
+	        if (null != filereader) {
+	          filereader.close();
+	        }
+	      } catch (Exception ex) {
+	        throw new ArchivoException("Error al intentar cerrar el archivo.");
+	      }
+	    }
+	    return formula;
+  }
 }

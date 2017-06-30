@@ -1,5 +1,6 @@
 package ar.org.utn.ddstpanual.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
@@ -9,11 +10,15 @@ import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.service.IndicadorService;
+import ar.org.utn.ddstpanual.tree.model.Arbol;
+import ar.org.utn.ddstpanual.tree.utils.ArbolUtil;
 
 public class IndicadorServiceImpl implements IndicadorService {
 
   IndicadorArchivo indicadorArchivo;
+  List<FormulaIndicador> lista;
 
   @Override
   public void guardarIndicador(Indicador indicador) throws ServiceException {
@@ -66,8 +71,19 @@ public class IndicadorServiceImpl implements IndicadorService {
   }
 
   @Override
-  public List<EmpresaExcel> ejecutarIndicador() throws ServiceException {
-    // TODO Auto-generated method stub
-    return null;
+  public List<FormulaIndicador> ejecutarIndicador(String nombre) throws ServiceException {
+  //Arbol arbol = new ArbolUtil().convertFormulaToArbol(obtenerFormula(nombre)); 
+	  //lista.add(0, new IndicadorXPeriodo("Indicador falopa", "12/10/2010", 5005));
+	  return null;
+
+  }
+
+  @Override
+  public String obtenerFormula(String nombre) throws ServiceException {
+    try {
+        return getIndicadorArchivo().obtenerFormula(nombre);
+      } catch (ArchivoException e) {
+        throw new ServiceException(e.getMessage());
+      }
   }
 }

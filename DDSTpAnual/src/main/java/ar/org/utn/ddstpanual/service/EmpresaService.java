@@ -16,5 +16,7 @@ public interface EmpresaService {
 
   public List<EmpresaExcel> buscar(Empresa empresa, Cuenta cuenta, Periodo periodo)
       throws ServiceException;
+  
+  public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ServiceException;
 
 }

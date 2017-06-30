@@ -5,3 +5,4 @@ peron={asd}
 asd={asdasd}
 gjhg={pepe}+5
 JUANconJUAN={JUAN}+{JUAN}
+IndicadorCorrecto=[Cuenta]+12

@@ -22,6 +22,7 @@ public class IndicadorServiceImplTest {
       indicadorSimpleCorrecto = "[Cuenta]+12";
       indicadorSimpleIncorrecto = "Cuenta+ 3";
   }
+
   
   // Test sobre el guardado de indicadores
   @Test
@@ -58,7 +59,7 @@ public class IndicadorServiceImplTest {
   // ejecutarIndicador
   @Test
   public void testEjecutarIndicador() throws ServiceException {
-    service.ejecutarIndicador();
+    service.ejecutarIndicador("IndicadorA");
   }
  
   

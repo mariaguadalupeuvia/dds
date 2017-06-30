@@ -3,9 +3,9 @@ package ar.org.utn.ddstpanual.tree.model;
 public abstract class Node {
 
   public static final Integer OPERADOR = 1;
-  public static final Integer VALOR = 2;
-  public static final Integer INDICADOR = 3;
-  public static final Integer CUENTA = 4;
+  public static final Integer VALOR = 1;
+  public static final Integer INDICADOR = 1;
+  public static final Integer CUENTA = 1;
 
   private Integer typeNode;
 

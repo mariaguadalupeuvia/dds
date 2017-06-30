@@ -9,6 +9,7 @@ import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.IndicadorService;
@@ -24,9 +25,11 @@ public class IndicadoresController {
   Indicador indicador;
   List<Empresa> empresas;
   Empresa empresaCheckbox;
-  Cuenta cuentaCheckbox;
+  List<Periodo> periodos;
+//Cuenta cuentaCheckbox;
   Periodo periodoCheckbox;
-  List<EmpresaExcel> tabla;
+  //List<EmpresaExcel> tabla;
+  List<FormulaIndicador> formulaIndicador;
   String error;
 
   public List<Empresa> obtenerEmpresas() {
@@ -38,7 +41,26 @@ public class IndicadoresController {
     }
     return empresas;
   }
-
+  
+  public List<Periodo> obtenerPeriodos(){
+    error = "";
+    if(periodoCheckbox != null){
+    try {
+      periodos = getEmpresaService().obtenerPeriodos(empresaCheckbox.getNombre());
+    } catch (ServiceException e) {
+      error = "Se produjo un error al obtener las empresas.";
+    }
+     catch (NullPointerException e){
+    	 error = "No hay una empresa asignada";
+    	 System.out.println(error);
+     }
+    }
+    else {
+        error = "Debe seleccionar al menos una Empresa.";
+    }
+    return periodos;
+  }
+  
   public List<Indicador> obtenerIndicadores() {
     error = "";
     try {
@@ -49,14 +71,14 @@ public class IndicadoresController {
     return indicadores;
   }
 
-  public List<EmpresaExcel> ejecutarIndicador() {
+  public List<FormulaIndicador> ejecutarIndicador() {
     error = "";
     try {
-      tabla = getIndicadorService().ejecutarIndicador();
-    } catch (ServiceException e) {
+    	formulaIndicador = getIndicadorService().ejecutarIndicador("Nombre");
+       } catch (ServiceException e) {
       error = "Se produjo un error al obtener los indicadores.";
     }
-    return tabla;
+    return formulaIndicador;
   }
 
   public IndicadorService getIndicadorService() {
@@ -78,7 +100,7 @@ public class IndicadoresController {
   public Indicador getIndicador() {
     return indicador;
   }
-
+  
   public void setIndicador(Indicador indicador) {
     this.indicador = indicador;
   }
@@ -106,7 +128,7 @@ public class IndicadoresController {
   public void setEmpresaCheckbox(Empresa empresaCheckbox) {
     this.empresaCheckbox = empresaCheckbox;
   }
-
+/*
   public Cuenta getCuentaCheckbox() {
     return cuentaCheckbox;
   }
@@ -114,7 +136,7 @@ public class IndicadoresController {
   public void setCuentaCheckbox(Cuenta cuentaCheckbox) {
     this.cuentaCheckbox = cuentaCheckbox;
   }
-
+*/
   public Periodo getPeriodoCheckbox() {
     return periodoCheckbox;
   }
@@ -123,14 +145,14 @@ public class IndicadoresController {
     this.periodoCheckbox = periodoCheckbox;
   }
 
-  public List<EmpresaExcel> getTabla() {
+  /*public List<EmpresaExcel> getTabla() {
     return tabla;
   }
 
   public void setTabla(List<EmpresaExcel> tabla) {
     this.tabla = tabla;
   }
-
+*/
   public String getError() {
     return error;
   }
@@ -138,5 +160,18 @@ public class IndicadoresController {
   public void setError(String error) {
     this.error = error;
   }
+  public List<FormulaIndicador> getIndXPer() {
+	return formulaIndicador;
+}
 
+  public void setInd(List<FormulaIndicador> indXPer) {
+	this.formulaIndicador = indXPer;
+}
+  public List<Periodo> getPeriodos() {
+	return periodos;
+}
+
+  public void setPeriodos(List<Periodo> periodos) {
+  	this.periodos = periodos;
+  }
 }
