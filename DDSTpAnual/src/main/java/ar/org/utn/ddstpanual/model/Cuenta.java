@@ -10,6 +10,23 @@ public class Cuenta {
   String nombre;
   List<Periodo> periodos;
 
+  public Cuenta(){}
+  
+  public Cuenta(String nombre, List<Periodo> periodos){
+	  this.nombre = nombre;
+	  this.periodos = periodos;
+  }
+  
+  
+  public double obtenerValor(String fecha){
+	  double valor = 0;
+	  for(Periodo p : periodos){
+		  if(p.getFecha().equals(fecha)) 
+			  valor = p.getValor();
+	  }
+	  return valor;
+  }
+  
   public String getNombre() {
     return nombre;
   }

@@ -6,12 +6,17 @@ import org.uqbar.commons.utils.Observable;
 public class Periodo {
 
   private String fecha;
-  private float valor;
+  private double valor;
   
   public Periodo(){}
   public Periodo(String fecha){
 	  this.fecha = fecha;
 	  valor = 0;
+  }
+  
+  public Periodo(String fecha, float valor){
+	  this.fecha = fecha;
+	  this.valor = valor;
   }
 
   public String getFecha() {
@@ -22,11 +27,11 @@ public class Periodo {
     this.fecha = fecha;
   }
 
-  public float getValor() {
+  public double getValor() {
     return valor;
   }
 
-  public void setValor(float valor) {
+  public void setValor(double valor) {
     this.valor = valor;
   }
 }
