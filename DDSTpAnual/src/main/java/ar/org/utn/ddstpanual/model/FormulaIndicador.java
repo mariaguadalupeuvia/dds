@@ -7,11 +7,11 @@ public class FormulaIndicador {
 
 	private String nombre;
 	private String fecha;
-	private float valor;
+	private double valor;
 	
 	public FormulaIndicador(){}
 	
-	public FormulaIndicador(String nombre, String fecha, float valor){
+	public FormulaIndicador(String nombre, String fecha, double valor){
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.valor = valor;
@@ -29,10 +29,10 @@ public class FormulaIndicador {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public float getValor() {
+	public double getValor() {
 		return valor;
 	}
-	public void setValor(float valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}	
 }
