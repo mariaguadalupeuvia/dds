@@ -32,6 +32,7 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
     getModelObject().setError("");
     getModelObject().obtenerIndicadores();
     getModelObject().obtenerEmpresas();
+    getModelObject().obtenerPeriodos();
   }
 
   @Override
@@ -113,7 +114,7 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
     table.setNumberVisibleRows(4);
     table.setWidth(450);
 
-    table.bindItemsToProperty("indXPer");
+    table.bindItemsToProperty("formulaIndicador");
 
     this.describeResultsGridIndicador(table);
   }
