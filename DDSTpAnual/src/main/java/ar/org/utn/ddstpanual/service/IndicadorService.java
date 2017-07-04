@@ -3,8 +3,10 @@ package ar.org.utn.ddstpanual.service;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 
 public interface IndicadorService {
@@ -17,7 +19,7 @@ public interface IndicadorService {
 
   public boolean validarFormula(String formula) throws ServiceException;
 
-  public List<FormulaIndicador> ejecutarIndicador(String nombre) throws ServiceException;
+  public List<FormulaIndicador> ejecutarIndicador(String nombre, Periodo periodo, Empresa empresa) throws ServiceException;
 
   public String obtenerFormula(String nombre) throws ServiceException;
 

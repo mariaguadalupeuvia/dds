@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
+import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.IndicadorArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.tree.model.Arbol;
@@ -18,6 +21,7 @@ import ar.org.utn.ddstpanual.tree.utils.ArbolUtil;
 public class IndicadorServiceImpl implements IndicadorService {
 
   IndicadorArchivo indicadorArchivo;
+  EmpresaArchivo empresaArchivo;
   List<FormulaIndicador> lista;
 
   @Override
@@ -71,10 +75,24 @@ public class IndicadorServiceImpl implements IndicadorService {
   }
 
   @Override
-  public List<FormulaIndicador> ejecutarIndicador(String nombre) throws ServiceException {
-  //Arbol arbol = new ArbolUtil().convertFormulaToArbol(obtenerFormula(nombre)); 
-	  //lista.add(0, new IndicadorXPeriodo("Indicador falopa", "12/10/2010", 5005));
-	  return null;
+  public List<FormulaIndicador> ejecutarIndicador(String nombre, Periodo periodo, Empresa empresa) throws ServiceException {
+	  List<FormulaIndicador> result = new ArrayList<FormulaIndicador>();
+	  ArbolUtil arbol = new ArbolUtil();
+	  if(periodo != null)
+		  result.add(new FormulaIndicador(periodo.getFecha(),nombre,arbol.obtenerValor(obtenerFormula(nombre), periodo, empresa)));
+	  else{
+		  List<Periodo> periodos = new ArrayList<Periodo>();
+		try {
+			periodos = empresaArchivo.obtenerPeriodos(empresa.getNombre());
+		} catch (ArchivoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  for(Periodo per : periodos){
+			  result.add(new FormulaIndicador(periodo.getFecha(),nombre,arbol.obtenerValor(obtenerFormula(nombre), periodo, empresa)));
+		  }
+	  }
+	  return result;
 
   }
 
