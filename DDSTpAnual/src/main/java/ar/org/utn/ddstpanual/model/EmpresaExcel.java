@@ -7,7 +7,7 @@ public class EmpresaExcel {
   private String nombreEmpresa;
   private String nombreCuenta;
   private String fecha;
-  private float valor;
+  private double valor;
 
   public String getNombreEmpresa() {
     return nombreEmpresa;
@@ -33,11 +33,11 @@ public class EmpresaExcel {
     this.fecha = fecha;
   }
 
-  public float getValor() {
+  public double getValor() {
     return valor;
   }
 
-  public void setValor(float valor) {
+  public void setValor(double valor) {
     this.valor = valor;
   }
 
