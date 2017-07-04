@@ -24,11 +24,11 @@ public class EmpresaArchivoImplTest {
 		periodos.add(new Periodo("2015"));
 	}
 	
-	@Test
+	/*@Test
 	public void testObtenerPeriodos() throws ArchivoException{
 		
 		Assert.assertEquals(periodos, empresaArchivo.obtenerPeriodos("FaceCopia"));
 
-	}
+	}*/
 
 }

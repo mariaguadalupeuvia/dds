@@ -1,6 +1,7 @@
 package DDSTpAnual;
 
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,6 +45,11 @@ public class EmpresaServiceImplTest {
 	@Test
 	public void testObtenerIndicadores() throws ServiceException {
 	  service.obtenerEmpresas();
+	}
+	
+	@Test
+	public void testObtenerPeriodos() throws ServiceException {
+		Assert.assertNotNull(service.obtenerPeriodos());
 	}
 
 }
