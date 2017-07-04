@@ -1,6 +1,6 @@
 JUAN={pepe}
 asdasd={asd} + [asd]
-IndicadorA=[cuenta]+12
+IndicadorA=[cuenta1]+[cuenta2]
 peron={asd}
 asd={asdasd}
 gjhg={pepe}+5
