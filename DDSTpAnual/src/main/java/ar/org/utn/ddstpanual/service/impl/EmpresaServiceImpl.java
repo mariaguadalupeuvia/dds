@@ -91,6 +91,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     return empresas;
   }
+  
 
   public List<EmpresaExcel> convertToEmpresaExcel(Empresa empresa) {
     List<EmpresaExcel> empresas = new ArrayList<EmpresaExcel>();
@@ -118,11 +119,21 @@ public class EmpresaServiceImpl implements EmpresaService {
   }
 
 @Override
-  public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ServiceException {
+  public List<Periodo> obtenerPeriodos() throws ServiceException {
     try {
-        List<Periodo> periodos = getEmpresaArchivo().obtenerPeriodos(nombreEmpresa);
+    	List<Empresa> empresas = this.obtenerEmpresas();
+		List<Periodo> periodos = new ArrayList<Periodo>();
+    	for(Empresa e : empresas){
+    		for(Cuenta c : e.getCuentas()){
+    			for(Periodo per : c.getPeriodos()){
+    		          if(periodos.stream().allMatch(p -> !p.getFecha().equals(per.getFecha()))){
+    		        	  periodos.add(new Periodo(per.getFecha()));
+    		          }
+    			}
+    		}
+    	}
         return periodos;
-      } catch (ArchivoException e) {
+      } catch (ServiceException e) {
         throw new ServiceException(e.getMessage());
       } 
   }
