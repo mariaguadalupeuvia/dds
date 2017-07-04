@@ -44,19 +44,14 @@ public class IndicadoresController {
   
   public List<Periodo> obtenerPeriodos(){
     error = "";
-    if(periodoCheckbox != null){
     try {
-      periodos = getEmpresaService().obtenerPeriodos(empresaCheckbox.getNombre());
+    	periodos = getEmpresaService().obtenerPeriodos();
     } catch (ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
     }
      catch (NullPointerException e){
-    	 error = "No hay una empresa asignada";
+    	 error = "No existen períodos para estas empresas";
     	 System.out.println(error);
-     }
-    }
-    else {
-        error = "Debe seleccionar al menos una Empresa.";
     }
     return periodos;
   }
@@ -74,9 +69,13 @@ public class IndicadoresController {
   public List<FormulaIndicador> ejecutarIndicador() {
     error = "";
     try {
-    	formulaIndicador = getIndicadorService().ejecutarIndicador("Nombre");
-       } catch (ServiceException e) {
+    	formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getNombre(), periodoCheckbox, empresaCheckbox);
+       } 
+    catch (ServiceException e) {
       error = "Se produjo un error al obtener los indicadores.";
+    }
+    catch(NullPointerException e){
+    	error = "Se produjo un error al calcular el valor de los indicadores.";
     }
     return formulaIndicador;
   }
@@ -160,15 +159,16 @@ public class IndicadoresController {
   public void setError(String error) {
     this.error = error;
   }
-  public List<FormulaIndicador> getIndXPer() {
+  public List<FormulaIndicador> getFormulaIndicador() {
 	return formulaIndicador;
 }
 
-  public void setInd(List<FormulaIndicador> indXPer) {
-	this.formulaIndicador = indXPer;
+  public void setFormulaIndicador(List<FormulaIndicador> formulaIndicador) {
+	this.formulaIndicador = formulaIndicador;
 }
   public List<Periodo> getPeriodos() {
 	return periodos;
+		
 }
 
   public void setPeriodos(List<Periodo> periodos) {
