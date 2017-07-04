@@ -1,21 +1,25 @@
 package ar.org.utn.ddstpanual.tree.model;
 
+import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.Periodo;
+
 public class ValorNode extends Node {
 
-  private Integer valor;
+  private double valor;
 
   public ValorNode(String valor) {
     this.setTypeNode(Node.VALOR);
-    this.valor = Integer.valueOf(valor);
+    this.valor = Double.valueOf(valor);
+  }
+
+  public void setValor(double valor) {
+    this.valor = valor;
   }
 
   @Override
-  public Integer obtenerValor(Integer periodo) {
-    return valor;
-  }
-
-  public void setValor(Integer valor) {
-    this.valor = valor;
+  public double obtenerValor(Periodo periodo, Empresa empresa) {
+	  // TODO Auto-generated method stub
+	  return valor;
   }
 
 }

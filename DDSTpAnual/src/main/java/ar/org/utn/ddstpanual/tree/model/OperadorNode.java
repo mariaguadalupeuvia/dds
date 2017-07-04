@@ -1,5 +1,8 @@
 package ar.org.utn.ddstpanual.tree.model;
 
+import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.Periodo;
+
 public class OperadorNode extends Node {
 
   private Node leftNode;
@@ -12,20 +15,21 @@ public class OperadorNode extends Node {
   }
 
   @Override
-  public Integer obtenerValor(Integer periodo) {
+  public double obtenerValor(Periodo periodo, Empresa empresa) {
+	double valor = 0;
     if (operador.equals("+")) {
-      return (leftNode.obtenerValor(periodo) + rigthNode.obtenerValor(periodo));
+      valor = (leftNode.obtenerValor(periodo, empresa) + rigthNode.obtenerValor(periodo, empresa));
     }
     if (operador.equals("-")) {
-      return (leftNode.obtenerValor(periodo) - rigthNode.obtenerValor(periodo));
+      valor = (leftNode.obtenerValor(periodo, empresa) - rigthNode.obtenerValor(periodo, empresa));
     }
     if (operador.equals("*")) {
-      return (leftNode.obtenerValor(periodo) * rigthNode.obtenerValor(periodo));
+      valor = (leftNode.obtenerValor(periodo, empresa) * rigthNode.obtenerValor(periodo, empresa));
     }
     if (operador.equals("/")) {
-      return (leftNode.obtenerValor(periodo) / rigthNode.obtenerValor(periodo));
+      valor = (leftNode.obtenerValor(periodo, empresa) / rigthNode.obtenerValor(periodo, empresa));
     }
-    return null;
+    return valor;
   }
 
 
