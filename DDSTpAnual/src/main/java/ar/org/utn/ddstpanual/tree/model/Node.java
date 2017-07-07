@@ -1,5 +1,10 @@
 package ar.org.utn.ddstpanual.tree.model;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
+import ar.org.utn.ddstpanual.exception.NoEncuentraFormulaException;
+import ar.org.utn.ddstpanual.exception.NoSeEncuentraCuentaException;
+import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 
@@ -12,7 +17,7 @@ public abstract class Node {
 
   private Integer typeNode;
 
-  public abstract double obtenerValor(Periodo periodo, Empresa empresa);
+  public abstract double obtenerValor(Periodo periodo, Empresa empresa) throws ServiceException, ArbolException, NoEncuentraFormulaException, NoSeEncuentraCuentaException, FormulaInfinitaException;
 
   public Integer getTypeNode() {
     return typeNode;
