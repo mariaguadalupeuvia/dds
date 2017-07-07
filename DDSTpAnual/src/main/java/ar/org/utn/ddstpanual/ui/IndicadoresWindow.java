@@ -15,8 +15,13 @@ import org.uqbar.lacar.ui.model.ListBuilder;
 import org.uqbar.lacar.ui.model.bindings.Binding;
 
 import java.awt.Color;
+import java.util.List;
 
 import ar.org.utn.ddstpanual.controller.IndicadoresController;
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.NoEncuentraFormulaException;
+import ar.org.utn.ddstpanual.exception.NoSeEncuentraCuentaException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
@@ -27,7 +32,9 @@ import ar.org.utn.ddstpanual.model.Periodo;
 @SuppressWarnings("serial")
 public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
 
-  public IndicadoresWindow(WindowOwner parent) {
+  private List<FormulaIndicador> ejecutarIndicador;
+
+public IndicadoresWindow(WindowOwner parent) {
     super(parent, new IndicadoresController());
     getModelObject().setError("");
     getModelObject().obtenerIndicadores();
@@ -38,7 +45,7 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
   @Override
   protected void addActions(Panel actionsPanel) {
     new Button(actionsPanel).setCaption("Ejecutar").onClick(() -> {
-      getModelObject().ejecutarIndicador();
+		getModelObject().ejecutarIndicador();
     }).setAsDefault().disableOnError();
   }
 
@@ -120,10 +127,10 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
   }
 
   protected void describeResultsGridIndicador(Table<FormulaIndicador> table) {
-    new Column<FormulaIndicador>(table).setTitle("Nombre").setFixedSize(100)
-        .bindContentsToProperty("nombre");
-    new Column<FormulaIndicador>(table).setTitle("Periodo").setFixedSize(150)
+    new Column<FormulaIndicador>(table).setTitle("Periodo").setFixedSize(100)
         .bindContentsToProperty("fecha");
+    new Column<FormulaIndicador>(table).setTitle("Indicador").setFixedSize(150)
+        .bindContentsToProperty("nombre");
     new Column<FormulaIndicador>(table).setTitle("Valor").setFixedSize(150)
         .bindContentsToProperty("valor");
   }
