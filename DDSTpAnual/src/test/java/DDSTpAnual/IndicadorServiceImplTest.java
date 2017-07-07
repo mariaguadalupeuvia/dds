@@ -9,6 +9,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
+import ar.org.utn.ddstpanual.exception.NoEncuentraFormulaException;
+import ar.org.utn.ddstpanual.exception.NoSeEncuentraCuentaException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
@@ -49,11 +53,12 @@ public class IndicadorServiceImplTest {
 
   
 @Test
-  public void testEjecutarIndicador(){
+  public void testEjecutarIndicador() throws ServiceException, ArbolException, NoEncuentraFormulaException, NoSeEncuentraCuentaException, FormulaInfinitaException{
 	/*List<FormulaIndicador> lista = new ArrayList<FormulaIndicador>();
 	lista.add(new FormulaIndicador("2010","IndicadorA",2000));*/
 	System.out.println(periodos.get(0).getFecha());
 	Assert.assertEquals(1000.0,arbol.obtenerValor("[cuenta1]+[cuenta2]", periodos.get(0), ejemplo),0);
+
   }
   
   // Test sobre el guardado de indicadores
