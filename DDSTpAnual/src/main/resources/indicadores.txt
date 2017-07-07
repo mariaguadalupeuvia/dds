@@ -1,8 +1,11 @@
-JUAN={pepe}
 asdasd={asd} + [asd]
 IndicadorA=[cuenta1]+[cuenta2]
+IndicadorB={IndicadorA}/50
 peron={asd}
 asd={asdasd}
-gjhg={pepe}+5
-JUANconJUAN={JUAN}+{JUAN}
 IndicadorCorrecto=[Cuenta]+12
+ROE=([beneficioNeto]/[patrimonioNeto])*100
+ROA=({activoTotal}/[patrimonioNeto])*100
+activoTotal=[activoCorriente]+[activoNoCorriente]
+pasivoTotal=[pasivoCorriente]+[pasivoNoCorriente]
+solvencia={activoTotal}/{pasivoTotal}
