@@ -28,6 +28,18 @@ public class Empresa {
 	  
   }
   
+  public List<Periodo> obtenerPeriodos(){
+	  List<Periodo> periodos = new ArrayList<Periodo>();
+	  for(Cuenta c : cuentas){
+		  for(Periodo per : c.getPeriodos()){
+			  if(!periodos.stream().anyMatch(p -> p.getFecha().equals(per.getFecha()))){
+				  periodos.add(per);
+			  }
+		  }
+	  }
+	  return periodos;
+  }
+  
   public List<Cuenta> getCuentas() {
     return cuentas;
   }
