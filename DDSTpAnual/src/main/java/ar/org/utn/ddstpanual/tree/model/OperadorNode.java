@@ -1,5 +1,10 @@
 package ar.org.utn.ddstpanual.tree.model;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
+import ar.org.utn.ddstpanual.exception.NoEncuentraFormulaException;
+import ar.org.utn.ddstpanual.exception.NoSeEncuentraCuentaException;
+import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 
@@ -15,7 +20,7 @@ public class OperadorNode extends Node {
   }
 
   @Override
-  public double obtenerValor(Periodo periodo, Empresa empresa) {
+  public double obtenerValor(Periodo periodo, Empresa empresa) throws ServiceException, ArbolException, NoEncuentraFormulaException, NoSeEncuentraCuentaException, FormulaInfinitaException {
 	double valor = 0;
     if (operador.equals("+")) {
       valor = (leftNode.obtenerValor(periodo, empresa) + rigthNode.obtenerValor(periodo, empresa));
