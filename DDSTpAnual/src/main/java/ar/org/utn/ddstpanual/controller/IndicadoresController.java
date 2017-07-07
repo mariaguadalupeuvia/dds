@@ -4,6 +4,11 @@ import org.uqbar.commons.utils.Observable;
 
 import java.util.List;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
+import ar.org.utn.ddstpanual.exception.NoEncuentraFormulaException;
+import ar.org.utn.ddstpanual.exception.NoSeEncuentraCuentaException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -66,7 +71,7 @@ public class IndicadoresController {
     return indicadores;
   }
 
-  public List<FormulaIndicador> ejecutarIndicador() {
+  public List<FormulaIndicador> ejecutarIndicador(){
     error = "";
     try {
     	formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getNombre(), periodoCheckbox, empresaCheckbox);
@@ -74,8 +79,23 @@ public class IndicadoresController {
     catch (ServiceException e) {
       error = "Se produjo un error al obtener los indicadores.";
     }
-    catch(NullPointerException e){
-    	error = "Se produjo un error al calcular el valor de los indicadores.";
+    catch (ArchivoException e1){
+    	error = e1.getMessage();
+    }
+    catch (ArbolException e2){
+    	error = e2.getMessage();
+    }
+    catch (NoEncuentraFormulaException e3){
+    	error = e3.getMessage();
+    }
+    catch (NoSeEncuentraCuentaException e4){
+    	error = e4.getMessage();
+    }
+    catch (NullPointerException e5){
+    	error = "No se encuentran las cuentas necesarias para calcular el indicador.";
+    }
+    catch (FormulaInfinitaException e6){
+    	error = e6.getMessage();
     }
     return formulaIndicador;
   }
