@@ -13,7 +13,7 @@ public class EmpresaExcel {
     return nombreEmpresa;
   }
 
-  public void setNombreEmpresa(String nombreEmpresa) {
+  public void setNombreEmpresa(final String nombreEmpresa) {
     this.nombreEmpresa = nombreEmpresa;
   }
 
@@ -21,7 +21,7 @@ public class EmpresaExcel {
     return nombreCuenta;
   }
 
-  public void setNombreCuenta(String nombreCuenta) {
+  public void setNombreCuenta(final String nombreCuenta) {
     this.nombreCuenta = nombreCuenta;
   }
 
@@ -29,7 +29,7 @@ public class EmpresaExcel {
     return fecha;
   }
 
-  public void setFecha(String fecha) {
+  public void setFecha(final String fecha) {
     this.fecha = fecha;
   }
 
@@ -37,13 +37,13 @@ public class EmpresaExcel {
     return valor;
   }
 
-  public void setValor(double valor) {
+  public void setValor(final double valor) {
     this.valor = valor;
   }
 
   @Override
   public String toString() {
-    StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder();
     builder.append("Empresa: " + nombreEmpresa + "\n");
     builder.append("Cuenta: " + nombreCuenta + "\n");
     builder.append("Fecha: " + fecha + "\n");

@@ -25,14 +25,14 @@ import ar.org.utn.ddstpanual.model.Periodo;
 @SuppressWarnings("serial")
 public class ConsultaEmpresasWindow extends SimpleWindow<ConsultaEmpresasController> {
 
-  public ConsultaEmpresasWindow(WindowOwner parent) {
+  public ConsultaEmpresasWindow(final WindowOwner parent) {
     super(parent, new ConsultaEmpresasController());
     getModelObject().setError("");
     getModelObject().obtenerEmpresas();
   }
 
   @Override
-  protected void addActions(Panel actionsPanel) {
+  protected void addActions(final Panel actionsPanel) {
     new Button(actionsPanel).setCaption("Buscar").onClick(() -> {
       getModelObject().buscar();
     }).setAsDefault().disableOnError();
@@ -40,43 +40,43 @@ public class ConsultaEmpresasWindow extends SimpleWindow<ConsultaEmpresasControl
 
 
   @Override
-  protected void createFormPanel(Panel mainPanel) {
-    Panel inputFormPanel = new Panel(mainPanel);
+  protected void createFormPanel(final Panel mainPanel) {
+    final Panel inputFormPanel = new Panel(mainPanel);
     inputFormPanel.setLayout(new ColumnLayout(2));
 
     new Label(inputFormPanel).setText("Empresa").setForeground(Color.BLUE);
-    Selector<Empresa> selectorEmpresa = new Selector<Empresa>(inputFormPanel).allowNull(false);
+    final Selector<Empresa> selectorEmpresa = new Selector<Empresa>(inputFormPanel).allowNull(false);
     selectorEmpresa.bindValueToProperty("empresaCheckbox");
     selectorEmpresa.setWidth(150);
     @SuppressWarnings({"unchecked", "rawtypes"})
-    Binding<Empresa, Selector<Empresa>, ListBuilder<Empresa>> propiedadEmpresa =
+    final Binding<Empresa, Selector<Empresa>, ListBuilder<Empresa>> propiedadEmpresa =
         selectorEmpresa.bindItems(new ObservableProperty(getModelObject(), "empresas"));
     propiedadEmpresa.setAdapter(new PropertyAdapter(Empresa.class, "nombre"));
 
     new Label(inputFormPanel).setText("Cuenta").setForeground(Color.BLUE);
-    Selector<Cuenta> selectorCuenta = new Selector<Cuenta>(inputFormPanel).allowNull(false);
+    final Selector<Cuenta> selectorCuenta = new Selector<Cuenta>(inputFormPanel).allowNull(false);
     selectorCuenta.bindValueToProperty("cuentaCheckbox");
     selectorCuenta.setWidth(150);
     @SuppressWarnings({"unchecked", "rawtypes"})
-    Binding<Cuenta, Selector<Cuenta>, ListBuilder<Cuenta>> propiedadCuenta = selectorCuenta
-        .bindItems(new ObservableProperty(getModelObject(), "empresaCheckbox.cuentas"));
+    final Binding<Cuenta, Selector<Cuenta>, ListBuilder<Cuenta>> propiedadCuenta =
+        selectorCuenta.bindItems(new ObservableProperty(getModelObject(), "empresaCheckbox.cuentas"));
     propiedadCuenta.setAdapter(new PropertyAdapter(Cuenta.class, "nombre"));
 
     new Label(inputFormPanel).setText("Periodo").setForeground(Color.BLUE);
-    Selector<Periodo> selectorPeriodo = new Selector<Periodo>(inputFormPanel).allowNull(false);
+    final Selector<Periodo> selectorPeriodo = new Selector<Periodo>(inputFormPanel).allowNull(false);
     selectorPeriodo.bindValueToProperty("periodoCheckbox");
     selectorPeriodo.setWidth(150);
     @SuppressWarnings({"unchecked", "rawtypes"})
-    Binding<Periodo, Selector<Periodo>, ListBuilder<Periodo>> propiedadPeriodo = selectorPeriodo
-        .bindItems(new ObservableProperty(getModelObject(), "cuentaCheckbox.periodos"));
+    final Binding<Periodo, Selector<Periodo>, ListBuilder<Periodo>> propiedadPeriodo =
+        selectorPeriodo.bindItems(new ObservableProperty(getModelObject(), "cuentaCheckbox.periodos"));
     propiedadPeriodo.setAdapter(new PropertyAdapter(Periodo.class, "fecha"));
   }
 
   @Override
-  protected void createMainTemplate(Panel mainPanel) {
+  protected void createMainTemplate(final Panel mainPanel) {
     this.setTitle("Empresas");
 
-    Label error = new Label(mainPanel);
+    final Label error = new Label(mainPanel);
     error.setForeground(Color.RED).bindValueToProperty("error");
 
     super.createMainTemplate(mainPanel);
@@ -84,8 +84,8 @@ public class ConsultaEmpresasWindow extends SimpleWindow<ConsultaEmpresasControl
     this.createResultsGridEmpresas(mainPanel);
   }
 
-  protected void createResultsGridEmpresas(Panel mainPanel) {
-    Table<EmpresaExcel> table = new Table<EmpresaExcel>(mainPanel, EmpresaExcel.class);
+  protected void createResultsGridEmpresas(final Panel mainPanel) {
+    final Table<EmpresaExcel> table = new Table<EmpresaExcel>(mainPanel, EmpresaExcel.class);
     table.setNumberVisibleRows(4);
     table.setWidth(450);
 
@@ -94,13 +94,10 @@ public class ConsultaEmpresasWindow extends SimpleWindow<ConsultaEmpresasControl
     this.describeResultsGridEmpresa(table);
   }
 
-  protected void describeResultsGridEmpresa(Table<EmpresaExcel> table) {
-    new Column<EmpresaExcel>(table).setTitle("Cuenta").setFixedSize(100)
-        .bindContentsToProperty("nombreCuenta");
-    new Column<EmpresaExcel>(table).setTitle("Periodo").setFixedSize(150)
-        .bindContentsToProperty("fecha");
-    new Column<EmpresaExcel>(table).setTitle("Valor").setFixedSize(150)
-        .bindContentsToProperty("valor");
+  protected void describeResultsGridEmpresa(final Table<EmpresaExcel> table) {
+    new Column<EmpresaExcel>(table).setTitle("Cuenta").setFixedSize(100).bindContentsToProperty("nombreCuenta");
+    new Column<EmpresaExcel>(table).setTitle("Periodo").setFixedSize(150).bindContentsToProperty("fecha");
+    new Column<EmpresaExcel>(table).setTitle("Valor").setFixedSize(150).bindContentsToProperty("valor");
   }
 
 }

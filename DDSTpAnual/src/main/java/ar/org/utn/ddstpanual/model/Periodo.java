@@ -7,23 +7,24 @@ public class Periodo {
 
   private String fecha;
   private double valor;
-  
-  public Periodo(){}
-  public Periodo(String fecha){
-	  this.fecha = fecha;
-	  valor = 0;
+
+  public Periodo() {}
+
+  public Periodo(final String fecha) {
+    this.fecha = fecha;
+    valor = 0;
   }
-  
-  public Periodo(String fecha, float valor){
-	  this.fecha = fecha;
-	  this.valor = valor;
+
+  public Periodo(final String fecha, final float valor) {
+    this.fecha = fecha;
+    this.valor = valor;
   }
 
   public String getFecha() {
     return fecha;
   }
 
-  public void setFecha(String fecha) {
+  public void setFecha(final String fecha) {
     this.fecha = fecha;
   }
 
@@ -31,7 +32,7 @@ public class Periodo {
     return valor;
   }
 
-  public void setValor(double valor) {
+  public void setValor(final double valor) {
     this.valor = valor;
   }
 }

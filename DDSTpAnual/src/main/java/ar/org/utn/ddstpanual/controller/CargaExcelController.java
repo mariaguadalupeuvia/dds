@@ -16,9 +16,9 @@ public class CargaExcelController {
   public void guardarArchivo() {
     error = "";
     try {
-      String ruta = rutaArchivo + "";
+      final String ruta = rutaArchivo + "";
       getEmpresaService().subirExcel(ruta);
-    } catch (ServiceException e) {
+    } catch (final ServiceException e) {
       error = "Se produjo un error al intentar guardar el archivo. Intentelo nuevamente.";
     }
   }
@@ -35,7 +35,7 @@ public class CargaExcelController {
     return rutaArchivo;
   }
 
-  public void setRutaArchivo(String rutaArchivo) {
+  public void setRutaArchivo(final String rutaArchivo) {
     this.rutaArchivo = rutaArchivo;
   }
 
@@ -43,7 +43,7 @@ public class CargaExcelController {
     return error;
   }
 
-  public void setError(String error) {
+  public void setError(final String error) {
     this.error = error;
   }
 

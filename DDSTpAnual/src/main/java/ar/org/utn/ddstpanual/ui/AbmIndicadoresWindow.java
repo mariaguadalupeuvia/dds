@@ -19,7 +19,7 @@ import ar.org.utn.ddstpanual.model.Indicador;
 @SuppressWarnings("serial")
 public class AbmIndicadoresWindow extends SimpleWindow<AbmIndicadoresController> {
 
-  public AbmIndicadoresWindow(WindowOwner parent) {
+  public AbmIndicadoresWindow(final WindowOwner parent) {
     super(parent, new AbmIndicadoresController());
     this.getModelObject().setFormula("");
     this.getModelObject().setNombre("");
@@ -27,15 +27,15 @@ public class AbmIndicadoresWindow extends SimpleWindow<AbmIndicadoresController>
   }
 
   @Override
-  protected void addActions(Panel actionsPanel) {
+  protected void addActions(final Panel actionsPanel) {
     new Button(actionsPanel).setCaption("Guardar").onClick(() -> {
       getModelObject().guardarIndicador();
     }).setAsDefault().disableOnError();
   }
 
   @Override
-  protected void createFormPanel(Panel mainPanel) {
-    Panel inputFormPanel = new Panel(mainPanel);
+  protected void createFormPanel(final Panel mainPanel) {
+    final Panel inputFormPanel = new Panel(mainPanel);
     inputFormPanel.setLayout(new ColumnLayout(2));
 
     new Label(inputFormPanel).setText("Nombre").setForeground(Color.BLUE);
@@ -45,10 +45,10 @@ public class AbmIndicadoresWindow extends SimpleWindow<AbmIndicadoresController>
   }
 
   @Override
-  protected void createMainTemplate(Panel mainPanel) {
+  protected void createMainTemplate(final Panel mainPanel) {
     this.setTitle("Alta de Indicador");
 
-    Label error = new Label(mainPanel);
+    final Label error = new Label(mainPanel);
     error.setForeground(Color.RED).bindValueToProperty("error");
 
     super.createMainTemplate(mainPanel);
@@ -56,8 +56,8 @@ public class AbmIndicadoresWindow extends SimpleWindow<AbmIndicadoresController>
     this.createResultsGridIndicadores(mainPanel);
   }
 
-  protected void createResultsGridIndicadores(Panel mainPanel) {
-    Table<Indicador> table = new Table<Indicador>(mainPanel, Indicador.class);
+  protected void createResultsGridIndicadores(final Panel mainPanel) {
+    final Table<Indicador> table = new Table<Indicador>(mainPanel, Indicador.class);
     table.setNumberVisibleRows(4);
     table.setWidth(450);
 
@@ -66,7 +66,7 @@ public class AbmIndicadoresWindow extends SimpleWindow<AbmIndicadoresController>
     this.describeResultsGridIndicador(table);
   }
 
-  protected void describeResultsGridIndicador(Table<Indicador> table) {
+  protected void describeResultsGridIndicador(final Table<Indicador> table) {
     new Column<Indicador>(table) //
         .setTitle("Nombre").setFixedSize(100).bindContentsToProperty("nombre");
 

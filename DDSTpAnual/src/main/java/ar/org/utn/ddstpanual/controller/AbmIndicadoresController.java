@@ -22,12 +22,12 @@ public class AbmIndicadoresController {
   public void guardarIndicador() {
     error = "";
     try {
-      Indicador indicador = new Indicador(nombre, formula);
+      final Indicador indicador = new Indicador(nombre, formula);
       if (validarIndicador()) {
         getIndicadorService().guardarIndicador(indicador);
         indicadores = getIndicadorService().obtenerIndicadores();
       }
-    } catch (ServiceException ex) {
+    } catch (final ServiceException ex) {
       error = ex.getMessage();
     }
   }
@@ -36,7 +36,7 @@ public class AbmIndicadoresController {
     error = "";
     try {
       indicadores = getIndicadorService().obtenerIndicadores();
-    } catch (ServiceException ex) {
+    } catch (final ServiceException ex) {
       error = "Se produjo un error al obtener los indicadores.";
     }
   }
@@ -47,7 +47,7 @@ public class AbmIndicadoresController {
 
     nombre = StringUtils.trim(nombre);
     formula = StringUtils.trim(formula);
-    
+
     if (StringUtils.isEmpty(nombre)) {
       error = "Debe ingresar un nombre.\n";
       valido = false;
@@ -62,7 +62,7 @@ public class AbmIndicadoresController {
       error = "Debe ingresar una formula.\n";
       valido = false;
     }
-    
+
     if (StringUtils.contains(formula, " ")) {
       error = "La formula no puede contener espacios.";
       valido = false;
@@ -84,7 +84,7 @@ public class AbmIndicadoresController {
     return indicadores;
   }
 
-  public void setIndicadores(List<Indicador> indicadores) {
+  public void setIndicadores(final List<Indicador> indicadores) {
     this.indicadores = indicadores;
   }
 
@@ -92,7 +92,7 @@ public class AbmIndicadoresController {
     return error;
   }
 
-  public void setError(String error) {
+  public void setError(final String error) {
     this.error = error;
   }
 
@@ -100,7 +100,7 @@ public class AbmIndicadoresController {
     return nombre;
   }
 
-  public void setNombre(String nombre) {
+  public void setNombre(final String nombre) {
     this.nombre = nombre;
   }
 
@@ -108,7 +108,7 @@ public class AbmIndicadoresController {
     return formula;
   }
 
-  public void setFormula(String formula) {
+  public void setFormula(final String formula) {
     this.formula = formula;
   }
 }

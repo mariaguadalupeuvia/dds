@@ -10,28 +10,28 @@ public class Cuenta {
   String nombre;
   List<Periodo> periodos;
 
-  public Cuenta(){}
-  
-  public Cuenta(String nombre, List<Periodo> periodos){
-	  this.nombre = nombre;
-	  this.periodos = periodos;
+  public Cuenta() {}
+
+  public Cuenta(final String nombre, final List<Periodo> periodos) {
+    this.nombre = nombre;
+    this.periodos = periodos;
   }
-  
-  
-  public double obtenerValor(String fecha){
-	  double valor = 0;
-	  for(Periodo p : periodos){
-		  if(p.getFecha().equals(fecha)) 
-			  valor = p.getValor();
-	  }
-	  return valor;
+
+
+  public double obtenerValor(final String fecha) {
+    double valor = 0;
+    for (final Periodo p : periodos) {
+      if (p.getFecha().equals(fecha))
+        valor = p.getValor();
+    }
+    return valor;
   }
-  
+
   public String getNombre() {
     return nombre;
   }
 
-  public void setNombre(String nombre) {
+  public void setNombre(final String nombre) {
     this.nombre = nombre;
   }
 
@@ -39,12 +39,12 @@ public class Cuenta {
     return periodos;
   }
 
-  public void setPeriodos(List<Periodo> periodos) {
+  public void setPeriodos(final List<Periodo> periodos) {
     this.periodos = periodos;
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
 
     if (o == this)
       return true;
@@ -52,7 +52,7 @@ public class Cuenta {
       return false;
     }
 
-    Cuenta cuenta = (Cuenta) o;
+    final Cuenta cuenta = (Cuenta) o;
 
     return cuenta.nombre.equals(nombre);
   }
@@ -66,7 +66,7 @@ public class Cuenta {
 
   @Override
   public String toString() {
-    StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder();
     builder.append("{\n nombre : " + nombre + ", \n");
     builder.append("valores : " + periodos.toString() + "\n}");
     return builder.toString();

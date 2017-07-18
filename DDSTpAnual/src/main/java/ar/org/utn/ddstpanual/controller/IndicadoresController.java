@@ -4,17 +4,10 @@ import org.uqbar.commons.utils.Observable;
 
 import java.util.List;
 
-import ar.org.utn.ddstpanual.exception.ArbolException;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
-import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
-import ar.org.utn.ddstpanual.exception.NoEncuentraFormulaException;
-import ar.org.utn.ddstpanual.exception.NoSeEncuentraCuentaException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
-import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.EmpresaExcel;
-import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
+import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.IndicadorService;
@@ -31,9 +24,9 @@ public class IndicadoresController {
   List<Empresa> empresas;
   Empresa empresaCheckbox;
   List<Periodo> periodos;
-//Cuenta cuentaCheckbox;
+  // Cuenta cuentaCheckbox;
   Periodo periodoCheckbox;
-  //List<EmpresaExcel> tabla;
+  // List<EmpresaExcel> tabla;
   List<FormulaIndicador> formulaIndicador;
   String error;
 
@@ -41,61 +34,43 @@ public class IndicadoresController {
     error = "";
     try {
       empresas = getEmpresaService().obtenerEmpresas();
-    } catch (ServiceException e) {
+    } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
     }
     return empresas;
   }
-  
-  public List<Periodo> obtenerPeriodos(){
+
+  public List<Periodo> obtenerPeriodos() {
     error = "";
     try {
-    	periodos = getEmpresaService().obtenerPeriodos();
-    } catch (ServiceException e) {
+      periodos = getEmpresaService().obtenerPeriodos();
+    } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
-    }
-     catch (NullPointerException e){
-    	 error = "No existen períodos para estas empresas";
-    	 System.out.println(error);
+    } catch (final NullPointerException e) {
+      error = "No existen períodos para estas empresas";
+      System.out.println(error);
     }
     return periodos;
   }
-  
+
   public List<Indicador> obtenerIndicadores() {
     error = "";
     try {
       indicadores = getIndicadorService().obtenerIndicadores();
-    } catch (ServiceException e) {
+    } catch (final ServiceException e) {
       error = "Se produjo un error al obtener los indicadores.";
     }
     return indicadores;
   }
 
-  public List<FormulaIndicador> ejecutarIndicador(){
+  public List<FormulaIndicador> ejecutarIndicador() {
     error = "";
     try {
-    	formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getNombre(), periodoCheckbox, empresaCheckbox);
-       } 
-    catch (ServiceException e) {
-      error = "Se produjo un error al obtener los indicadores.";
-    }
-    catch (ArchivoException e1){
-    	error = e1.getMessage();
-    }
-    catch (ArbolException e2){
-    	error = e2.getMessage();
-    }
-    catch (NoEncuentraFormulaException e3){
-    	error = e3.getMessage();
-    }
-    catch (NoSeEncuentraCuentaException e4){
-    	error = e4.getMessage();
-    }
-    catch (NullPointerException e5){
-    	error = "No se encuentran las cuentas necesarias para calcular el indicador.";
-    }
-    catch (FormulaInfinitaException e6){
-    	error = e6.getMessage();
+      formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getNombre(), periodoCheckbox, empresaCheckbox);
+    } catch (final ServiceException e) {
+      error = e.getMessage();
+    } catch (final NullPointerException e) {
+      error = "No se encuentran las cuentas necesarias para calcular el indicador.";
     }
     return formulaIndicador;
   }
@@ -119,8 +94,8 @@ public class IndicadoresController {
   public Indicador getIndicador() {
     return indicador;
   }
-  
-  public void setIndicador(Indicador indicador) {
+
+  public void setIndicador(final Indicador indicador) {
     this.indicador = indicador;
   }
 
@@ -128,7 +103,7 @@ public class IndicadoresController {
     return indicadores;
   }
 
-  public void setIndicadores(List<Indicador> indicadores) {
+  public void setIndicadores(final List<Indicador> indicadores) {
     this.indicadores = indicadores;
   }
 
@@ -136,7 +111,7 @@ public class IndicadoresController {
     return empresas;
   }
 
-  public void setEmpresas(List<Empresa> empresas) {
+  public void setEmpresas(final List<Empresa> empresas) {
     this.empresas = empresas;
   }
 
@@ -144,54 +119,50 @@ public class IndicadoresController {
     return empresaCheckbox;
   }
 
-  public void setEmpresaCheckbox(Empresa empresaCheckbox) {
+  public void setEmpresaCheckbox(final Empresa empresaCheckbox) {
     this.empresaCheckbox = empresaCheckbox;
   }
-/*
-  public Cuenta getCuentaCheckbox() {
-    return cuentaCheckbox;
-  }
 
-  public void setCuentaCheckbox(Cuenta cuentaCheckbox) {
-    this.cuentaCheckbox = cuentaCheckbox;
-  }
-*/
+  /*
+   * public Cuenta getCuentaCheckbox() { return cuentaCheckbox; }
+   * 
+   * public void setCuentaCheckbox(Cuenta cuentaCheckbox) { this.cuentaCheckbox = cuentaCheckbox; }
+   */
   public Periodo getPeriodoCheckbox() {
     return periodoCheckbox;
   }
 
-  public void setPeriodoCheckbox(Periodo periodoCheckbox) {
+  public void setPeriodoCheckbox(final Periodo periodoCheckbox) {
     this.periodoCheckbox = periodoCheckbox;
   }
 
-  /*public List<EmpresaExcel> getTabla() {
-    return tabla;
-  }
-
-  public void setTabla(List<EmpresaExcel> tabla) {
-    this.tabla = tabla;
-  }
-*/
+  /*
+   * public List<EmpresaExcel> getTabla() { return tabla; }
+   * 
+   * public void setTabla(List<EmpresaExcel> tabla) { this.tabla = tabla; }
+   */
   public String getError() {
     return error;
   }
 
-  public void setError(String error) {
+  public void setError(final String error) {
     this.error = error;
   }
+
   public List<FormulaIndicador> getFormulaIndicador() {
-	return formulaIndicador;
-}
+    return formulaIndicador;
+  }
 
-  public void setFormulaIndicador(List<FormulaIndicador> formulaIndicador) {
-	this.formulaIndicador = formulaIndicador;
-}
+  public void setFormulaIndicador(final List<FormulaIndicador> formulaIndicador) {
+    this.formulaIndicador = formulaIndicador;
+  }
+
   public List<Periodo> getPeriodos() {
-	return periodos;
-		
-}
+    return periodos;
 
-  public void setPeriodos(List<Periodo> periodos) {
-  	this.periodos = periodos;
+  }
+
+  public void setPeriodos(final List<Periodo> periodos) {
+    this.periodos = periodos;
   }
 }

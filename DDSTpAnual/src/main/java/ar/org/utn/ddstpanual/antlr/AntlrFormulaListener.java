@@ -4,15 +4,16 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 
+@SuppressWarnings("deprecation")
 public class AntlrFormulaListener extends formulaBaseListener {
-  public boolean validarFormula(String formula) {
+  public boolean validarFormula(final String formula) {
 
-    ANTLRInputStream in = new ANTLRInputStream(formula);
-    formulaLexer lexer = new formulaLexer(in);
-    CommonTokenStream tokens = new CommonTokenStream(lexer);
-    formulaParser parser = new formulaParser(tokens);
+    final ANTLRInputStream in = new ANTLRInputStream(formula);
+    final formulaLexer lexer = new formulaLexer(in);
+    final CommonTokenStream tokens = new CommonTokenStream(lexer);
+    final formulaParser parser = new formulaParser(tokens);
 
-    formulaParser.StartContext ctx = parser.start();
+    final formulaParser.StartContext ctx = parser.start();
     return (ctx.getText().equals(formula));
 
   }

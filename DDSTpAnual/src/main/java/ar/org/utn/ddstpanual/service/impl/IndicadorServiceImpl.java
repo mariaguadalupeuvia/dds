@@ -9,18 +9,13 @@ import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.IndicadorArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
-import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
-import ar.org.utn.ddstpanual.exception.NoEncuentraFormulaException;
-import ar.org.utn.ddstpanual.exception.NoSeEncuentraCuentaException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.EmpresaExcel;
+import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
-import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.service.IndicadorService;
-import ar.org.utn.ddstpanual.tree.model.Arbol;
-import ar.org.utn.ddstpanual.tree.utils.ArbolUtil;
+import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
 
 public class IndicadorServiceImpl implements IndicadorService {
 
@@ -29,7 +24,7 @@ public class IndicadorServiceImpl implements IndicadorService {
   List<FormulaIndicador> lista;
 
   @Override
-  public void guardarIndicador(Indicador indicador) throws ServiceException {
+  public void guardarIndicador(final Indicador indicador) throws ServiceException {
     try {
       indicador.sacarEspacios();
       if (validarFormula(indicador.getFormula())) {
@@ -41,7 +36,7 @@ public class IndicadorServiceImpl implements IndicadorService {
       } else {
         throw new ServiceException("La formula contiene errores de sintaxis.");
       }
-    } catch (ArchivoException e) {
+    } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
   }
@@ -50,23 +45,23 @@ public class IndicadorServiceImpl implements IndicadorService {
   public List<Indicador> obtenerIndicadores() throws ServiceException {
     try {
       return getIndicadorArchivo().obtenerIndicadores();
-    } catch (ArchivoException e) {
+    } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
   }
 
   @Override
-  public void eliminarIndicador(Indicador indicador) throws ServiceException {
+  public void eliminarIndicador(final Indicador indicador) throws ServiceException {
     try {
       getIndicadorArchivo().eliminarIndicador(indicador);
-    } catch (ArchivoException e) {
+    } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
   }
 
   @Override
-  public boolean validarFormula(String formula) {
-    AntlrFormulaListener entrada = new AntlrFormulaListener();
+  public boolean validarFormula(final String formula) {
+    final AntlrFormulaListener entrada = new AntlrFormulaListener();
     return entrada.validarFormula(formula);
   }
 
@@ -79,34 +74,32 @@ public class IndicadorServiceImpl implements IndicadorService {
   }
 
   @Override
-  public List<FormulaIndicador> ejecutarIndicador(String nombre, Periodo periodo, Empresa empresa) throws ArchivoException, ServiceException, ArbolException, NoEncuentraFormulaException, NoSeEncuentraCuentaException, FormulaInfinitaException {
-	  List<FormulaIndicador> result = new ArrayList<FormulaIndicador>();
-	  ArbolUtil arbol = new ArbolUtil();
-	  String formula = obtenerFormula(nombre);
-	  if(periodo != null){
-		  result.add(new FormulaIndicador(periodo.getFecha(),nombre,arbol.obtenerValor(formula, periodo, empresa)));
-	  }
-	  else{		  
-		try {
-			List<Periodo> periodos = empresa.obtenerPeriodos();
-			for(Periodo per : periodos){
-				result.add(new FormulaIndicador(per.getFecha(),nombre,arbol.obtenerValor(formula, per, empresa)));
-			}
-		}
-		catch (NullPointerException e){
-			throw new NullPointerException(e.getMessage());
-		}
-	  }
-	  return result;
-
+  public List<FormulaIndicador> ejecutarIndicador(final String nombre, final Periodo periodo, final Empresa empresa)
+      throws ServiceException {
+    final List<FormulaIndicador> result = new ArrayList<FormulaIndicador>();
+    try {
+      final ArbolUtil arbol = new ArbolUtil();
+      final String formula = obtenerFormula(nombre);
+      if (periodo != null) {
+        result.add(new FormulaIndicador(periodo.getFecha(), nombre, arbol.obtenerValor(formula, periodo, empresa)));
+      } else {
+        final List<Periodo> periodos = empresa.obtenerPeriodos();
+        for (final Periodo per : periodos) {
+          result.add(new FormulaIndicador(per.getFecha(), nombre, arbol.obtenerValor(formula, per, empresa)));
+        }
+      }
+      return result;
+    } catch (final ArbolException e) {
+      throw new ServiceException(e.getMessage());
+    }
   }
 
   @Override
-  public String obtenerFormula(String nombre) throws ServiceException {
+  public String obtenerFormula(final String nombre) throws ServiceException {
     try {
-        return getIndicadorArchivo().obtenerFormula(nombre);
-      } catch (ArchivoException e) {
-        throw new ServiceException(e.getMessage());
-      }
+      return getIndicadorArchivo().obtenerFormula(nombre);
+    } catch (final ArchivoException e) {
+      throw new ServiceException(e.getMessage());
+    }
   }
 }

@@ -14,9 +14,8 @@ public interface EmpresaService {
 
   public List<Empresa> obtenerEmpresas() throws ServiceException;
 
-  public List<EmpresaExcel> buscar(Empresa empresa, Cuenta cuenta, Periodo periodo)
-      throws ServiceException;
-  
+  public List<EmpresaExcel> buscar(Empresa empresa, Cuenta cuenta, Periodo periodo) throws ServiceException;
+
   public List<Periodo> obtenerPeriodos() throws ServiceException;
 
 }

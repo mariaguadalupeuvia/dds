@@ -12,16 +12,14 @@ import ar.org.utn.ddstpanual.ui.MenuPrincipalWindow;
 
 public class DondeInviertoApplication extends Application {
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     new DondeInviertoApplication().start();
   }
 
   @Override
   protected Window<?> createMainWindow() {
-    ApplicationContext.getInstance().configureSingleton(IndicadorService.class,
-        new IndicadorServiceImpl());
-    ApplicationContext.getInstance().configureSingleton(EmpresaService.class,
-        new EmpresaServiceImpl());
+    ApplicationContext.getInstance().configureSingleton(IndicadorService.class, new IndicadorServiceImpl());
+    ApplicationContext.getInstance().configureSingleton(EmpresaService.class, new EmpresaServiceImpl());
     return new MenuPrincipalWindow(this);
   }
 }

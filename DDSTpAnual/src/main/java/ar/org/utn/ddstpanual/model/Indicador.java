@@ -11,7 +11,7 @@ public class Indicador {
 
   public Indicador() {}
 
-  public Indicador(String nombre, String formula) {
+  public Indicador(final String nombre, final String formula) {
     this.nombre = nombre;
     this.formula = formula;
   }
@@ -20,7 +20,7 @@ public class Indicador {
     return nombre;
   }
 
-  public void setNombre(String nombre) {
+  public void setNombre(final String nombre) {
     this.nombre = nombre;
   }
 
@@ -28,7 +28,7 @@ public class Indicador {
     return formula;
   }
 
-  public void setFormula(String formula) {
+  public void setFormula(final String formula) {
     this.formula = formula;
   }
 
@@ -39,7 +39,7 @@ public class Indicador {
 
   @Override
   public String toString() {
-    StringBuilder stringBuilder = new StringBuilder();
+    final StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(this.formula);
     return stringBuilder.toString();
   }

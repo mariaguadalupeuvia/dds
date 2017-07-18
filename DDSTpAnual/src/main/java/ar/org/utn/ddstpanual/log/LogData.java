@@ -13,10 +13,10 @@ public class LogData {
 
   // Set
   public static void setFileStream() throws IOException {
-    String path = System.getProperty("user.dir");
-    String ruta = path + "\\logs"; // Ruta de la carpeta a loguea - archivo de configuracion
-    Date fechaActual = new Date();
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd");
+    final String path = System.getProperty("user.dir");
+    final String ruta = path + "\\logs"; // Ruta de la carpeta a loguea - archivo de configuracion
+    final Date fechaActual = new Date();
+    final SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd");
     fileName = ruta + "\\LogTP_" + formatoFecha.format(fechaActual) + ".log";
     fWriter = new FileWriter(fileName, true);
     pWriter = new PrintWriter(fWriter);
@@ -26,48 +26,44 @@ public class LogData {
     pWriter.close();
     try {
       fWriter.close();
-    } catch (IOException e) {
+    } catch (final IOException e) {
       e.printStackTrace();
     }
   }
 
-  public static void EscribirLogException(Exception ex) {
+  public static void EscribirLogException(final Exception ex) {
     try {
       setFileStream();
-    } catch (IOException e) {
+    } catch (final IOException e) {
       e.printStackTrace();
     }
-    Date fechaActual = new Date();
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    final Date fechaActual = new Date();
+    final SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    pWriter.println(
-        "--------------------------------------------------------------------------------");
+    pWriter.println("--------------------------------------------------------------------------------");
     pWriter.println(formatoFecha.format(fechaActual) + " - EXCEPTION");
     pWriter.println("Tipo: " + ex.getCause());
     pWriter.println("Mensaje: " + ex.getMessage());
     pWriter.println("StackTrace: " + ex.getStackTrace());
-    pWriter.println(
-        "--------------------------------------------------------------------------------");
+    pWriter.println("--------------------------------------------------------------------------------");
 
     close();
   }
 
-  public static void EscribirLogText(String texto) {
+  public static void EscribirLogText(final String texto) {
     try {
       setFileStream();
-    } catch (IOException e) {
+    } catch (final IOException e) {
       e.printStackTrace();
     }
 
-    Date fechaActual = new Date();
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    final Date fechaActual = new Date();
+    final SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    pWriter.println(
-        "--------------------------------------------------------------------------------");
+    pWriter.println("--------------------------------------------------------------------------------");
     pWriter.println(formatoFecha.format(fechaActual) + ":");
     pWriter.println(texto);
-    pWriter.println(
-        "--------------------------------------------------------------------------------");
+    pWriter.println("--------------------------------------------------------------------------------");
 
     close();
   }

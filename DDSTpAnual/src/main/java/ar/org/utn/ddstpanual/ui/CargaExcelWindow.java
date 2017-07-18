@@ -16,22 +16,22 @@ import ar.org.utn.ddstpanual.controller.CargaExcelController;
 @SuppressWarnings("serial")
 public class CargaExcelWindow extends SimpleWindow<CargaExcelController> {
 
-  public CargaExcelWindow(WindowOwner parent) {
+  public CargaExcelWindow(final WindowOwner parent) {
     super(parent, new CargaExcelController());
   }
 
   @Override
-  protected void createMainTemplate(Panel mainPanel) {
+  protected void createMainTemplate(final Panel mainPanel) {
     this.setTitle("Carga de excel");
 
-    Label error = new Label(mainPanel);
+    final Label error = new Label(mainPanel);
     error.setForeground(Color.RED).bindValueToProperty("error");
 
     super.createMainTemplate(mainPanel);
   }
 
   @Override
-  protected void addActions(Panel actionsPanel) {
+  protected void addActions(final Panel actionsPanel) {
 
     new Button(actionsPanel).setCaption("Guardar").onClick(() -> {
       getModelObject().guardarArchivo();
@@ -40,16 +40,15 @@ public class CargaExcelWindow extends SimpleWindow<CargaExcelController> {
   }
 
   @Override
-  protected void createFormPanel(Panel mainPanel) {
-    Panel inputFormPanel = new Panel(mainPanel);
+  protected void createFormPanel(final Panel mainPanel) {
+    final Panel inputFormPanel = new Panel(mainPanel);
     inputFormPanel.setLayout(new ColumnLayout(2));
 
-    TextBox txtRuta = new TextBox(inputFormPanel);
+    final TextBox txtRuta = new TextBox(inputFormPanel);
     txtRuta.bindValueToProperty("rutaArchivo");
     txtRuta.setWidth(200);
 
-    FileSelector fileselector =
-        (FileSelector) new FileSelector(inputFormPanel).setCaption("Examinar");
+    final FileSelector fileselector = (FileSelector) new FileSelector(inputFormPanel).setCaption("Examinar");
     fileselector.bindValueToProperty("rutaArchivo");
     fileselector.extensions("*.xls");
   }

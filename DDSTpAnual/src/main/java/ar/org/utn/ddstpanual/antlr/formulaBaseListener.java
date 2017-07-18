@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * This class provides an empty implementation of {@link formulaListener}, which can be extended to
  * create a listener which only needs to handle a subset of the available methods.
  */
+@SuppressWarnings("deprecation")
 public class formulaBaseListener implements formulaListener {
   /**
    * {@inheritDoc}
@@ -19,7 +20,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterSuma(@NotNull formulaParser.SumaContext ctx) {}
+  public void enterSuma(@NotNull final formulaParser.SumaContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -29,7 +30,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitSuma(@NotNull formulaParser.SumaContext ctx) {}
+  public void exitSuma(@NotNull final formulaParser.SumaContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -39,7 +40,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterDiv(@NotNull formulaParser.DivContext ctx) {}
+  public void enterDiv(@NotNull final formulaParser.DivContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -49,7 +50,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitDiv(@NotNull formulaParser.DivContext ctx) {}
+  public void exitDiv(@NotNull final formulaParser.DivContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -59,7 +60,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterIndicador(@NotNull formulaParser.IndicadorContext ctx) {}
+  public void enterIndicador(@NotNull final formulaParser.IndicadorContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -69,7 +70,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitIndicador(@NotNull formulaParser.IndicadorContext ctx) {}
+  public void exitIndicador(@NotNull final formulaParser.IndicadorContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -79,7 +80,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterExpresion(@NotNull formulaParser.ExpresionContext ctx) {}
+  public void enterExpresion(@NotNull final formulaParser.ExpresionContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -89,7 +90,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitExpresion(@NotNull formulaParser.ExpresionContext ctx) {}
+  public void exitExpresion(@NotNull final formulaParser.ExpresionContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -99,7 +100,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterMult(@NotNull formulaParser.MultContext ctx) {}
+  public void enterMult(@NotNull final formulaParser.MultContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -109,7 +110,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitMult(@NotNull formulaParser.MultContext ctx) {}
+  public void exitMult(@NotNull final formulaParser.MultContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -119,7 +120,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterOperador_aditivo(@NotNull formulaParser.Operador_aditivoContext ctx) {}
+  public void enterOperador_aditivo(@NotNull final formulaParser.Operador_aditivoContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -129,7 +130,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitOperador_aditivo(@NotNull formulaParser.Operador_aditivoContext ctx) {}
+  public void exitOperador_aditivo(@NotNull final formulaParser.Operador_aditivoContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -139,7 +140,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterNum(@NotNull formulaParser.NumContext ctx) {}
+  public void enterNum(@NotNull final formulaParser.NumContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -149,7 +150,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitNum(@NotNull formulaParser.NumContext ctx) {}
+  public void exitNum(@NotNull final formulaParser.NumContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -159,7 +160,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterStart(@NotNull formulaParser.StartContext ctx) {}
+  public void enterStart(@NotNull final formulaParser.StartContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -169,7 +170,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitStart(@NotNull formulaParser.StartContext ctx) {}
+  public void exitStart(@NotNull final formulaParser.StartContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -179,7 +180,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterCuenta(@NotNull formulaParser.CuentaContext ctx) {}
+  public void enterCuenta(@NotNull final formulaParser.CuentaContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -189,7 +190,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitCuenta(@NotNull formulaParser.CuentaContext ctx) {}
+  public void exitCuenta(@NotNull final formulaParser.CuentaContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -199,7 +200,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterResta(@NotNull formulaParser.RestaContext ctx) {}
+  public void enterResta(@NotNull final formulaParser.RestaContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -209,7 +210,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitResta(@NotNull formulaParser.RestaContext ctx) {}
+  public void exitResta(@NotNull final formulaParser.RestaContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -219,7 +220,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterOperando(@NotNull formulaParser.OperandoContext ctx) {}
+  public void enterOperando(@NotNull final formulaParser.OperandoContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -229,7 +230,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitOperando(@NotNull formulaParser.OperandoContext ctx) {}
+  public void exitOperando(@NotNull final formulaParser.OperandoContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -239,7 +240,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterOperador_mult(@NotNull formulaParser.Operador_multContext ctx) {}
+  public void enterOperador_mult(@NotNull final formulaParser.Operador_multContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -249,7 +250,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitOperador_mult(@NotNull formulaParser.Operador_multContext ctx) {}
+  public void exitOperador_mult(@NotNull final formulaParser.Operador_multContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -259,7 +260,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void enterEveryRule(@NotNull ParserRuleContext ctx) {}
+  public void enterEveryRule(@NotNull final ParserRuleContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -269,7 +270,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void exitEveryRule(@NotNull ParserRuleContext ctx) {}
+  public void exitEveryRule(@NotNull final ParserRuleContext ctx) {}
 
   /**
    * {@inheritDoc}
@@ -279,7 +280,7 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void visitTerminal(@NotNull TerminalNode node) {}
+  public void visitTerminal(@NotNull final TerminalNode node) {}
 
   /**
    * {@inheritDoc}
@@ -289,5 +290,5 @@ public class formulaBaseListener implements formulaListener {
    * </p>
    */
   @Override
-  public void visitErrorNode(@NotNull ErrorNode node) {}
+  public void visitErrorNode(@NotNull final ErrorNode node) {}
 }

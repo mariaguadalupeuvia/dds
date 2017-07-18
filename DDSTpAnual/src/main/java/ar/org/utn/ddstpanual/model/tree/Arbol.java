@@ -1,4 +1,4 @@
-package ar.org.utn.ddstpanual.tree.model;
+package ar.org.utn.ddstpanual.model.tree;
 
 public class Arbol {
 
@@ -9,7 +9,7 @@ public class Arbol {
     return formula;
   }
 
-  public void setFormula(String formula) {
+  public void setFormula(final String formula) {
     this.formula = formula;
   }
 
@@ -17,7 +17,7 @@ public class Arbol {
     return root;
   }
 
-  public void setRoot(Node root) {
+  public void setRoot(final Node root) {
     this.root = root;
   }
 

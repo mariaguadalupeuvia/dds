@@ -27,7 +27,7 @@ public class ConsultaEmpresasController {
     error = "";
     try {
       empresas = getEmpresaService().obtenerEmpresas();
-    } catch (ServiceException e) {
+    } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
     }
     return empresas;
@@ -39,7 +39,7 @@ public class ConsultaEmpresasController {
       try {
         tabla = getEmpresaService().buscar(empresaCheckbox, cuentaCheckbox, periodoCheckbox);
         empresas = getEmpresaService().obtenerEmpresas();
-      } catch (ServiceException e) {
+      } catch (final ServiceException e) {
         error = "Se produjo un error al realizar la busqueda.";
       }
     } else {
@@ -64,7 +64,7 @@ public class ConsultaEmpresasController {
   }
 
 
-  public void setEmpresas(List<Empresa> empresas) {
+  public void setEmpresas(final List<Empresa> empresas) {
     this.empresas = empresas;
   }
 
@@ -74,7 +74,7 @@ public class ConsultaEmpresasController {
   }
 
 
-  public void setEmpresaCheckbox(Empresa empresaCheckbox) {
+  public void setEmpresaCheckbox(final Empresa empresaCheckbox) {
     this.empresaCheckbox = empresaCheckbox;
   }
 
@@ -84,7 +84,7 @@ public class ConsultaEmpresasController {
   }
 
 
-  public void setCuentaCheckbox(Cuenta cuentaCheckbox) {
+  public void setCuentaCheckbox(final Cuenta cuentaCheckbox) {
     this.cuentaCheckbox = cuentaCheckbox;
   }
 
@@ -94,7 +94,7 @@ public class ConsultaEmpresasController {
   }
 
 
-  public void setPeriodoCheckbox(Periodo periodoCheckbox) {
+  public void setPeriodoCheckbox(final Periodo periodoCheckbox) {
     this.periodoCheckbox = periodoCheckbox;
   }
 
@@ -104,7 +104,7 @@ public class ConsultaEmpresasController {
   }
 
 
-  public void setTabla(List<EmpresaExcel> tabla) {
+  public void setTabla(final List<EmpresaExcel> tabla) {
     this.tabla = tabla;
   }
 
@@ -114,7 +114,7 @@ public class ConsultaEmpresasController {
   }
 
 
-  public void setError(String error) {
+  public void setError(final String error) {
     this.error = error;
   }
 

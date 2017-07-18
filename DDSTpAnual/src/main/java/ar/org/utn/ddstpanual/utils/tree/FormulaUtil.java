@@ -1,27 +1,27 @@
-package ar.org.utn.ddstpanual.tree.utils;
+package ar.org.utn.ddstpanual.utils.tree;
 
 import java.util.Stack;
 
-import ar.org.utn.ddstpanual.exception.ServiceException;
-import ar.org.utn.ddstpanual.tree.model.CuentaNode;
-import ar.org.utn.ddstpanual.tree.model.IndicadorNode;
-import ar.org.utn.ddstpanual.tree.model.Node;
-import ar.org.utn.ddstpanual.tree.model.OperadorNode;
-import ar.org.utn.ddstpanual.tree.model.ValorNode;
+import ar.org.utn.ddstpanual.exception.FormulaException;
+import ar.org.utn.ddstpanual.model.tree.CuentaNode;
+import ar.org.utn.ddstpanual.model.tree.IndicadorNode;
+import ar.org.utn.ddstpanual.model.tree.Node;
+import ar.org.utn.ddstpanual.model.tree.OperadorNode;
+import ar.org.utn.ddstpanual.model.tree.ValorNode;
 
 public class FormulaUtil {
 
-  public static Stack<Node> inToPost(String formula) throws ServiceException {
+  public static Stack<Node> inToPost(final String formula) throws FormulaException {
     try {
-      Stack<Node> salida = new Stack<Node>();
+      final Stack<Node> salida = new Stack<Node>();
 
       // Depurar la expresion algebraica
-      String expr = depurar(formula);
-      String[] arrayInfix = expr.split(" ");
+      final String expr = depurar(formula);
+      final String[] arrayInfix = expr.split(" ");
 
       // Declaración de las pilas
-      Stack<String> entrada = new Stack<String>(); // Pila entrada
-      Stack<String> operadores = new Stack<String>(); // Pila temporal para operadores
+      final Stack<String> entrada = new Stack<String>(); // Pila entrada
+      final Stack<String> operadores = new Stack<String>(); // Pila temporal para operadores
 
       // Añadir la array a la Pila de entrada
       for (int i = arrayInfix.length - 1; i >= 0; i--) {
@@ -59,8 +59,8 @@ public class FormulaUtil {
         }
       }
       return salida;
-    } catch (Exception ex) {
-      throw new ServiceException("Error en la expresión algebraica.");
+    } catch (final Exception ex) {
+      throw new FormulaException("Error en la expresión algebraica.");
     }
   }
 
@@ -68,7 +68,7 @@ public class FormulaUtil {
   private static String depurar(String s) {
     s = s.replaceAll("\\s+", ""); // Elimina espacios en blanco
     s = "(" + s + ")";
-    String simbols = "+-*/()";
+    final String simbols = "+-*/()";
     String str = "";
 
     // Deja espacios entre operadores
@@ -82,7 +82,7 @@ public class FormulaUtil {
   }
 
   // Jerarquia de los operadores
-  private static int pref(String op) {
+  private static int pref(final String op) {
     int prf = 99;
     if (op.contains("["))
       prf = 7;

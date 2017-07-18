@@ -5,18 +5,18 @@ import org.apache.commons.lang3.StringUtils;
 public class ArbolException extends Exception {
   private String code;
   private static final long serialVersionUID = -5257620166747093766L;
-	
+
   public ArbolException(final String mensaje) {
-	super(mensaje);
+    super(mensaje);
   }
-	
+
   public ArbolException(final String mensaje, final String code) {
-	    super(mensaje);
-	    this.code = code;
+    super(mensaje);
+    this.code = code;
   }
-  
+
   public ArbolException(final String mensaje, final Exception ex) {
-	    super(mensaje, ex);
+    super(mensaje, ex);
   }
 
   public ArbolException(final String mensaje, final String code, final Exception ex) {

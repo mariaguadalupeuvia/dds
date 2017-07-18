@@ -10,37 +10,37 @@ import org.uqbar.arena.windows.WindowOwner;
 @SuppressWarnings({"serial", "unchecked", "rawtypes"})
 public class MenuPrincipalWindow extends SimpleWindow {
 
-  public MenuPrincipalWindow(WindowOwner parent) {
+  public MenuPrincipalWindow(final WindowOwner parent) {
     super(parent, new Object());
   }
 
   @Override
-  protected void addActions(Panel actionsPanel) {
-    Panel actions = new Panel(actionsPanel);
+  protected void addActions(final Panel actionsPanel) {
+    final Panel actions = new Panel(actionsPanel);
     actions.setLayout(new ColumnLayout(2));
 
-    Button cargarExcel = new Button(actions);
+    final Button cargarExcel = new Button(actions);
     cargarExcel.setCaption("Cargar Datos");
     cargarExcel.onClick(this::cargarExcel);
 
-    Button consultarEmpresa = new Button(actions);
+    final Button consultarEmpresa = new Button(actions);
     consultarEmpresa.setCaption("Consultar Empresa");
     consultarEmpresa.onClick(this::consultaIndicadores);
 
-    Button crearIndicador = new Button(actions);
+    final Button crearIndicador = new Button(actions);
     crearIndicador.setCaption("Ejecutar Indicador");
     crearIndicador.onClick(this::ejecutarIndicador);
 
-    Button abmIndicador = new Button(actions);
+    final Button abmIndicador = new Button(actions);
     abmIndicador.setCaption("ABM Indicadores");
     abmIndicador.onClick(this::abmIndicadores);
   }
 
   @Override
-  protected void createFormPanel(Panel mainPanel) {
+  protected void createFormPanel(final Panel mainPanel) {
     this.setTitle("Donde Invierto");
 
-    Label lblAcciones = new Label(mainPanel);
+    final Label lblAcciones = new Label(mainPanel);
     lblAcciones.setText("Bienvenido!");
   }
 

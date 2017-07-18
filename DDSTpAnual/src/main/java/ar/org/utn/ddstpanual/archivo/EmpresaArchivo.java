@@ -14,7 +14,7 @@ public interface EmpresaArchivo {
   public boolean exists(EmpresaExcel empresa) throws ArchivoException;
 
   public List<Empresa> obtenerEmpresas() throws ArchivoException;
-  
+
   public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ArchivoException;
 
 }

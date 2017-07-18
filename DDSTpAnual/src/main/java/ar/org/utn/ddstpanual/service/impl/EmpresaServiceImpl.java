@@ -28,14 +28,14 @@ public class EmpresaServiceImpl implements EmpresaService {
   EmpresaArchivo empresaArchivo;
 
   @Override
-  public void subirExcel(String rutaArchivo) throws ServiceException {
+  public void subirExcel(final String rutaArchivo) throws ServiceException {
     try {
-      File file = new File(rutaArchivo);
-      FileInputStream fileStream = new FileInputStream(file);
+      final File file = new File(rutaArchivo);
+      final FileInputStream fileStream = new FileInputStream(file);
       EmpresaExcel empresaExcel = new EmpresaExcel();
-      HSSFWorkbook workbook = new HSSFWorkbook(fileStream);
-      HSSFSheet sheet = workbook.getSheetAt(0);
-      Iterator<Row> rowIterator = sheet.iterator();
+      final HSSFWorkbook workbook = new HSSFWorkbook(fileStream);
+      final HSSFSheet sheet = workbook.getSheetAt(0);
+      final Iterator<Row> rowIterator = sheet.iterator();
       Row row;
       rowIterator.next();
       while (rowIterator.hasNext()) {
@@ -48,14 +48,13 @@ public class EmpresaServiceImpl implements EmpresaService {
         if (!getEmpresaArchivo().exists(empresaExcel)) {
           getEmpresaArchivo().guardarEmpresa(empresaExcel);
         } else {
-          LogData.EscribirLogText(
-              row.getRowNum() + ": Ya se ingreso un valor para este periodo en el archivo.");
+          LogData.EscribirLogText(row.getRowNum() + ": Ya se ingreso un valor para este periodo en el archivo.");
         }
       }
       workbook.close();
-    } catch (IOException ex) {
+    } catch (final IOException ex) {
       throw new ServiceException("Error al abrir el archivo.");
-    } catch (ArchivoException e) {
+    } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
   }
@@ -63,27 +62,26 @@ public class EmpresaServiceImpl implements EmpresaService {
   @Override
   public List<Empresa> obtenerEmpresas() throws ServiceException {
     try {
-      List<Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
+      final List<Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
       return empresas;
-    } catch (ArchivoException e) {
+    } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
   }
 
   @Override
-  public List<EmpresaExcel> buscar(Empresa empresa, Cuenta cuenta, Periodo periodo)
-      throws ServiceException {
+  public List<EmpresaExcel> buscar(final Empresa empresa, final Cuenta cuenta, final Periodo periodo) throws ServiceException {
     List<EmpresaExcel> empresas = new ArrayList<EmpresaExcel>();
 
     if (cuenta != null) {
-      List<Cuenta> cuentas = empresa.getCuentas().stream()
-          .filter(c -> c.getNombre().equals(cuenta.getNombre())).collect(Collectors.toList());
+      final List<Cuenta> cuentas =
+          empresa.getCuentas().stream().filter(c -> c.getNombre().equals(cuenta.getNombre())).collect(Collectors.toList());
       empresa.setCuentas(cuentas);
     }
 
     if (periodo != null) {
-      List<Periodo> periodos = cuenta.getPeriodos().stream()
-          .filter(p -> p.getFecha().equals(periodo.getFecha())).collect(Collectors.toList());
+      final List<Periodo> periodos =
+          cuenta.getPeriodos().stream().filter(p -> p.getFecha().equals(periodo.getFecha())).collect(Collectors.toList());
       empresa.getCuentas().get(0).setPeriodos(periodos);
     }
 
@@ -91,14 +89,14 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     return empresas;
   }
-  
 
-  public List<EmpresaExcel> convertToEmpresaExcel(Empresa empresa) {
-    List<EmpresaExcel> empresas = new ArrayList<EmpresaExcel>();
 
-    for (Cuenta cuenta : empresa.getCuentas()) {
-      for (Periodo periodo : cuenta.getPeriodos()) {
-        EmpresaExcel empresaExcel = new EmpresaExcel();
+  public List<EmpresaExcel> convertToEmpresaExcel(final Empresa empresa) {
+    final List<EmpresaExcel> empresas = new ArrayList<EmpresaExcel>();
+
+    for (final Cuenta cuenta : empresa.getCuentas()) {
+      for (final Periodo periodo : cuenta.getPeriodos()) {
+        final EmpresaExcel empresaExcel = new EmpresaExcel();
         empresaExcel.setFecha(periodo.getFecha());
         empresaExcel.setValor(periodo.getValor());
         empresaExcel.setNombreCuenta(cuenta.getNombre());
@@ -118,24 +116,24 @@ public class EmpresaServiceImpl implements EmpresaService {
     return empresaArchivo;
   }
 
-@Override
+  @Override
   public List<Periodo> obtenerPeriodos() throws ServiceException {
     try {
-    	List<Empresa> empresas = this.obtenerEmpresas();
-		List<Periodo> periodos = new ArrayList<Periodo>();
-    	for(Empresa e : empresas){
-    		for(Cuenta c : e.getCuentas()){
-    			for(Periodo per : c.getPeriodos()){
-    		          if(periodos.stream().allMatch(p -> !p.getFecha().equals(per.getFecha()))){
-    		        	  periodos.add(new Periodo(per.getFecha()));
-    		          }
-    			}
-    		}
-    	}
-        return periodos;
-      } catch (ServiceException e) {
-        throw new ServiceException(e.getMessage());
-      } 
+      final List<Empresa> empresas = this.obtenerEmpresas();
+      final List<Periodo> periodos = new ArrayList<Periodo>();
+      for (final Empresa e : empresas) {
+        for (final Cuenta c : e.getCuentas()) {
+          for (final Periodo per : c.getPeriodos()) {
+            if (periodos.stream().allMatch(p -> !p.getFecha().equals(per.getFecha()))) {
+              periodos.add(new Periodo(per.getFecha()));
+            }
+          }
+        }
+      }
+      return periodos;
+    } catch (final ServiceException e) {
+      throw new ServiceException(e.getMessage());
+    }
   }
 
 }
