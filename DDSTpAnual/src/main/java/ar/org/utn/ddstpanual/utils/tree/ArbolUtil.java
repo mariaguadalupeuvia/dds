@@ -50,21 +50,15 @@ public class ArbolUtil {
     return nodo;
   }
 
-  public double obtenerValor(final String formula, final Periodo periodo, final Empresa empresa) throws ArbolException {
+  public double obtenerValor(final String formula, final Periodo periodo, final Empresa empresa)
+      throws ArbolException {
     double valor = 0;
     try {
       final Arbol arbol = convertFormulaToArbol(formula);
-      try {
-        valor = arbol.getRoot().obtenerValor(periodo, empresa);
-      } catch (final NodeException e) {
-        throw new ArbolException(e.getMessage());
-      }
-    } catch (final NullPointerException e) {
+      valor = arbol.getRoot().obtenerValor(periodo, empresa);
+    } catch (final NodeException e) {
       throw new ArbolException(e.getMessage());
-    } catch (final StackOverflowError e) {
-      throw new ArbolException(e.getMessage());
-    }
-
+    } 
     return valor;
 
   }

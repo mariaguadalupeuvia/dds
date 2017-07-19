@@ -69,9 +69,7 @@ public class IndicadoresController {
       formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getNombre(), periodoCheckbox, empresaCheckbox);
     } catch (final ServiceException e) {
       error = e.getMessage();
-    } catch (final NullPointerException e) {
-      error = "No se encuentran las cuentas necesarias para calcular el indicador.";
-    }
+    } 
     return formulaIndicador;
   }
 
