@@ -1,5 +1,7 @@
 package ar.org.utn.ddstpanual.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,18 +76,17 @@ public class IndicadorServiceImpl implements IndicadorService {
   }
 
   @Override
-  public List<FormulaIndicador> ejecutarIndicador(final String nombre, final Periodo periodo, final Empresa empresa)
+  public List<FormulaIndicador> ejecutarIndicador(final String formula, final String fechaPeriodo, final Empresa empresa)
       throws ServiceException {
     final List<FormulaIndicador> result = new ArrayList<FormulaIndicador>();
     try {
       final ArbolUtil arbol = new ArbolUtil();
-      final String formula = obtenerFormula(nombre);
-      if (periodo != null) {
-        result.add(new FormulaIndicador(periodo.getFecha(), nombre, arbol.obtenerValor(formula, periodo, empresa)));
+      if (!StringUtils.isEmpty(fechaPeriodo)) {
+        result.add(new FormulaIndicador(fechaPeriodo, formula, arbol.obtenerValor(formula, fechaPeriodo, empresa)));
       } else {
         final List<Periodo> periodos = empresa.obtenerPeriodos();
         for (final Periodo per : periodos) {
-          result.add(new FormulaIndicador(per.getFecha(), nombre, arbol.obtenerValor(formula, per, empresa)));
+          result.add(new FormulaIndicador(per.getFecha(), formula, arbol.obtenerValor(formula, per.getFecha(), empresa)));
         }
       }
       return result;

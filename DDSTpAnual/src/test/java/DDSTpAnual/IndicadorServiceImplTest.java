@@ -56,7 +56,7 @@ public class IndicadorServiceImplTest {
      * FormulaIndicador("2010","IndicadorA",2000));
      */
     System.out.println(periodos.get(0).getFecha());
-    Assert.assertEquals(1000.0, arbol.obtenerValor("[cuenta1]+[cuenta2]", periodos.get(0), ejemplo), 0);
+    Assert.assertEquals(1000.0, arbol.obtenerValor("[cuenta1]+[cuenta2]", periodos.get(0).getFecha(), ejemplo), 0);
   }
 
   // Test sobre el guardado de indicadores

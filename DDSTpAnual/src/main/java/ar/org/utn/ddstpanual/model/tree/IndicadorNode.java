@@ -5,7 +5,6 @@ import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
 import ar.org.utn.ddstpanual.exception.NodeException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
@@ -65,7 +64,7 @@ public class IndicadorNode extends Node {
   }
 
   @Override
-  public double obtenerValor(final Periodo periodo, final Empresa empresa) throws NodeException {
+  public double obtenerValor(final String fechaPeriodo, final Empresa empresa) throws NodeException {
     String formula;
     try {
       formula = getIndicadorService().obtenerFormula(nombreIndicador.substring(1, nombreIndicador.length() - 1));
@@ -73,7 +72,7 @@ public class IndicadorNode extends Node {
         throw new NodeException("No se encuentra la formula del indicador " + nombreIndicador + ". No puede calcularse su valor \n");
       }
       getIndicadorUtil().verificarAnalisisFormula();
-      return getUtil().obtenerValor(formula, periodo, empresa);
+      return getUtil().obtenerValor(formula, fechaPeriodo, empresa);
     } catch (ServiceException | ArbolException | FormulaInfinitaException e) {
       throw new NodeException(e.getMessage());
     }

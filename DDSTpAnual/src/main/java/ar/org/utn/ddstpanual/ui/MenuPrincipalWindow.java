@@ -27,13 +27,22 @@ public class MenuPrincipalWindow extends SimpleWindow {
     consultarEmpresa.setCaption("Consultar Empresa");
     consultarEmpresa.onClick(this::consultaIndicadores);
 
-    final Button crearIndicador = new Button(actions);
-    crearIndicador.setCaption("Ejecutar Indicador");
-    crearIndicador.onClick(this::ejecutarIndicador);
+    final Button ejecutarIndicador = new Button(actions);
+    ejecutarIndicador.setCaption("Ejecutar Indicador");
+    ejecutarIndicador.onClick(this::ejecutarIndicador);
 
     final Button abmIndicador = new Button(actions);
     abmIndicador.setCaption("ABM Indicadores");
     abmIndicador.onClick(this::abmIndicadores);
+
+    final Button abmMetodologia = new Button(actions);
+    abmMetodologia.setCaption("ABM Metodologias");
+    abmMetodologia.onClick(this::abmMetodologias);
+
+    final Button ejecutarMetodologias = new Button(actions);
+    ejecutarMetodologias.setCaption("Ejecutar Metodologia");
+    ejecutarMetodologias.onClick(this::ejecutarMetodologia);
+
   }
 
   @Override
@@ -61,6 +70,14 @@ public class MenuPrincipalWindow extends SimpleWindow {
 
   public void cargarExcel() {
     new CargaExcelWindow(this).open();
+  }
+
+  public void abmMetodologias() {
+    new AbmMetodologiasWindow(this).open();
+  }
+
+  public void ejecutarMetodologia() {
+    new MetodologiasWindow(this).open();
   }
 
 }

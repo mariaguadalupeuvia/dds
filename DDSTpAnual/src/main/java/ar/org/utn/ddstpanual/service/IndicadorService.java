@@ -6,7 +6,6 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;
-import ar.org.utn.ddstpanual.model.Periodo;
 
 public interface IndicadorService {
 
@@ -18,7 +17,7 @@ public interface IndicadorService {
 
   public boolean validarFormula(String formula) throws ServiceException;
 
-  public List<FormulaIndicador> ejecutarIndicador(String nombre, Periodo periodo, Empresa empresa) throws ServiceException;
+  public List<FormulaIndicador> ejecutarIndicador(String formula, String fechaPeriodo, Empresa empresa) throws ServiceException;
 
   public String obtenerFormula(String nombre) throws ServiceException;
 

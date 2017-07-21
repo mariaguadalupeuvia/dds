@@ -7,8 +7,6 @@ import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.FormulaException;
 import ar.org.utn.ddstpanual.exception.NodeException;
 import ar.org.utn.ddstpanual.model.Empresa;
-// import ar.org.utn.ddstpanual.model.FormulaIndicador;
-import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.tree.Arbol;
 import ar.org.utn.ddstpanual.model.tree.Node;
 import ar.org.utn.ddstpanual.model.tree.OperadorNode;
@@ -50,15 +48,14 @@ public class ArbolUtil {
     return nodo;
   }
 
-  public double obtenerValor(final String formula, final Periodo periodo, final Empresa empresa)
-      throws ArbolException {
+  public double obtenerValor(final String formula, final String fechaPeriodo, final Empresa empresa) throws ArbolException {
     double valor = 0;
     try {
       final Arbol arbol = convertFormulaToArbol(formula);
-      valor = arbol.getRoot().obtenerValor(periodo, empresa);
+      valor = arbol.getRoot().obtenerValor(fechaPeriodo, empresa);
     } catch (final NodeException e) {
       throw new ArbolException(e.getMessage());
-    } 
+    }
     return valor;
 
   }

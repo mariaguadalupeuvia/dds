@@ -66,10 +66,10 @@ public class IndicadoresController {
   public List<FormulaIndicador> ejecutarIndicador() {
     error = "";
     try {
-      formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getNombre(), periodoCheckbox, empresaCheckbox);
+      formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getFormula(), periodoCheckbox.getFecha(), empresaCheckbox);
     } catch (final ServiceException e) {
       error = e.getMessage();
-    } 
+    }
     return formulaIndicador;
   }
 
