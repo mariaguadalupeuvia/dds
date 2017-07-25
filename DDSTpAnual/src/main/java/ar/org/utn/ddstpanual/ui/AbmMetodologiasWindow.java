@@ -39,6 +39,11 @@ public class AbmMetodologiasWindow extends SimpleWindow<AbmMetodologiasControlle
       getModelObject().cargarCondicion();
       createResultsGridIndicadores(actionsPanel);
     }).setAsDefault().disableOnError();
+
+    new Button(actionsPanel).setCaption("Guardar Metodologia").onClick(() -> {
+      getModelObject().guardarMetodologia();
+      createResultsGridIndicadores(actionsPanel);
+    }).setAsDefault().disableOnError();
   }
 
   @Override
@@ -94,14 +99,11 @@ public class AbmMetodologiasWindow extends SimpleWindow<AbmMetodologiasControlle
   }
 
   protected void describeResultsGridIndicador(final Table<Condicion> table) {
-    // new Column<Condicion>(table) //
-    // .setTitle("Indicador").setFixedSize(100).bindContentsToProperty("indicador");
-    //
-    // new Column<Condicion>(table) //
-    // .setTitle("Filtro").setFixedSize(150).bindContentsToProperty("filtro");
+    new Column<Condicion>(table) //
+        .setTitle("Indicador").setFixedSize(100).bindContentsToProperty("indicador");
 
     new Column<Condicion>(table) //
-        .setTitle("Asd").setFixedSize(150).bindContentsToProperty("asd");
+        .setTitle("Filtro").setFixedSize(150).bindContentsToProperty("filtro");
 
   }
 

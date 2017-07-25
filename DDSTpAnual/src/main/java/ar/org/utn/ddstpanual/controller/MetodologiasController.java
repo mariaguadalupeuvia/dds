@@ -36,6 +36,16 @@ public class MetodologiasController {
     return empresas;
   }
 
+  public List<Empresa> obtenerMetodologias() {
+    error = "";
+    try {
+      metodologias = getMetodologiaService().obtenerMetodologias();
+    } catch (final ServiceException e) {
+      error = "Se produjo un error al obtener las metodologias.";
+    }
+    return empresas;
+  }
+
   public List<MetodologiaResultado> ejecutarMetodologia() {
     try {
       metodologiasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox);

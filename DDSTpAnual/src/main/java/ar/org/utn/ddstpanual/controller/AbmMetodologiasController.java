@@ -16,13 +16,17 @@ import ar.org.utn.ddstpanual.model.metodologia.FiltroMayor;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMayorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenorIgual;
+import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.service.IndicadorService;
+import ar.org.utn.ddstpanual.service.MetodologiaService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
+import ar.org.utn.ddstpanual.service.impl.MetodologiaServiceImpl;
 
 @Observable
 public class AbmMetodologiasController {
 
   IndicadorService indicadorService;
+  MetodologiaService metodologiaService;
 
   String nombre;
   List<Indicador> indicadores;
@@ -43,11 +47,6 @@ public class AbmMetodologiasController {
     tiposCondiciones.add(new FiltroMayorIgual());
     tiposCondiciones.add(new FiltroMenor());
     tiposCondiciones.add(new FiltroMenorIgual());
-    Condicion condicion = new Condicion();
-    condicion.setAsd("   asdasd    ");
-    condicion.setFiltro(null);
-    condicion.setIndicador(null);
-    condiciones.add(condicion);
   }
 
   public List<Indicador> obtenerIndicadores() {
@@ -60,18 +59,28 @@ public class AbmMetodologiasController {
   }
 
   public List<Condicion> cargarCondicion() {
-    Condicion condicion = new Condicion();
-    condicion.setIndicador(indicadorCheckbox);
-    Filtro filtro = tipoCondicionCheckbox;
-    filtro.setValor(valor);
-    condicion.setFiltro(filtro);
-    condicion.setAsd("asd");
-    List<Condicion> aux = new ArrayList<>();
-    aux.addAll(condiciones);
-    aux.add(condicion);
-    condiciones.add(condicion);
-    condiciones = aux;
+    try {
+      Condicion condicion = new Condicion();
+      condicion.setIndicador(indicadorCheckbox);
+      Filtro filtro = tipoCondicionCheckbox;
+      filtro.setValor(valor);
+      condicion.setFiltro(filtro);
+      condiciones = getMetodologiaService().agregarCondicion(condiciones, condicion);
+    } catch (ServiceException e) {
+      error = e.getMessage();
+    }
     return condiciones;
+  }
+
+  public void guardarMetodologia() {
+    try {
+      Metodologia metodologia = new Metodologia();
+      metodologia.setCondiciones(condiciones);
+      metodologia.setNombre(nombre);
+      getMetodologiaService().guardarMetodologia(metodologia);
+    } catch (ServiceException e) {
+      error = e.getMessage();
+    }
   }
 
   public IndicadorService getIndicadorService() {
@@ -80,6 +89,14 @@ public class AbmMetodologiasController {
     }
     indicadorService = new IndicadorServiceImpl();
     return indicadorService;
+  }
+
+  public MetodologiaService getMetodologiaService() {
+    if (metodologiaService != null) {
+      return metodologiaService;
+    }
+    metodologiaService = new MetodologiaServiceImpl();
+    return metodologiaService;
   }
 
 

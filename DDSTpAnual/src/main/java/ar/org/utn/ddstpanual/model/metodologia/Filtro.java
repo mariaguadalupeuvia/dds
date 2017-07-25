@@ -2,6 +2,8 @@ package ar.org.utn.ddstpanual.model.metodologia;
 
 import org.uqbar.commons.utils.Observable;
 
+import java.io.Serializable;
+
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -9,12 +11,21 @@ import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 
 @Observable
-public abstract class Filtro {
+public abstract class Filtro implements Serializable {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
 
   private IndicadorService indicadorService;
 
   private Integer valor;
   private String nombre;
+
+  public Filtro() {
+
+  }
 
   public Integer getValor() {
     return valor;
@@ -40,6 +51,17 @@ public abstract class Filtro {
     }
     indicadorService = new IndicadorServiceImpl();
     return indicadorService;
+  }
+
+  public String toJson() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("{");
+    builder.append("\"nombre\" : ");
+    builder.append("\"" + nombre + "\",");
+    builder.append("\"valor\" : ");
+    builder.append("\"" + valor + "\"");
+    builder.append("}");
+    return builder.toString();
   }
 
 }

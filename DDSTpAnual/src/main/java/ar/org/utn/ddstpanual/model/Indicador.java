@@ -43,4 +43,15 @@ public class Indicador {
     stringBuilder.append(this.formula);
     return stringBuilder.toString();
   }
+
+  public String toJson() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("{");
+    builder.append("\"nombre\" : ");
+    builder.append("\"" + nombre + "\",");
+    builder.append("\"formula\" : ");
+    builder.append("\"" + formula + "\"");
+    builder.append("}");
+    return builder.toString();
+  }
 }

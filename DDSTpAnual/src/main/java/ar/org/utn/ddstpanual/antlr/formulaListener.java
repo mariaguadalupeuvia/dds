@@ -38,14 +38,14 @@ public interface formulaListener extends ParseTreeListener {
   void exitDiv(@NotNull formulaParser.DivContext ctx);
 
   /**
-   * Enter a parse tree produced by {@link formulaParser#indicador}.
+   * Enter a parse tree produced by {@link formulaParser#metodologia}.
    * 
    * @param ctx the parse tree
    */
   void enterIndicador(@NotNull formulaParser.IndicadorContext ctx);
 
   /**
-   * Exit a parse tree produced by {@link formulaParser#indicador}.
+   * Exit a parse tree produced by {@link formulaParser#metodologia}.
    * 
    * @param ctx the parse tree
    */

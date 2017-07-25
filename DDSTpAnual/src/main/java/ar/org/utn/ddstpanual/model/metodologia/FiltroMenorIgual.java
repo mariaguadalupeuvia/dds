@@ -11,6 +11,8 @@ import ar.org.utn.ddstpanual.model.Indicador;
 
 public class FiltroMenorIgual extends Filtro {
 
+  private static final long serialVersionUID = 1L;
+
   public FiltroMenorIgual() {
     this.setNombre("Menor o igual");
   }

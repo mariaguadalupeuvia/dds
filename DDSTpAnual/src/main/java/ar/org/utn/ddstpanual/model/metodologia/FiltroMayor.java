@@ -11,6 +11,11 @@ import ar.org.utn.ddstpanual.model.Indicador;
 
 public class FiltroMayor extends Filtro {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+
   public FiltroMayor() {
     this.setNombre("Mayor");
   }

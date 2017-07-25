@@ -10,6 +10,8 @@ import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;
 
 public class FiltroMenor extends Filtro {
+  
+  private static final long serialVersionUID = 1L;
 
   public FiltroMenor() {
     this.setNombre("Menor");

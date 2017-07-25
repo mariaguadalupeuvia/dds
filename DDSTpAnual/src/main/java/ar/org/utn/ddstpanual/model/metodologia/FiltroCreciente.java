@@ -10,6 +10,8 @@ import ar.org.utn.ddstpanual.model.Indicador;
 
 public class FiltroCreciente extends Filtro {
 
+  private static final long serialVersionUID = 1L;
+
   public FiltroCreciente() {
     this.setNombre("Estrictamente creciente");
   }

@@ -10,9 +10,17 @@ import ar.org.utn.ddstpanual.model.Indicador;
 @Observable
 public class Condicion {
 
-  String asd;
   private Indicador indicador;
   private Filtro filtro;
+
+  public Condicion() {
+
+  }
+
+  public Condicion(Indicador indicador, Filtro filtro) {
+    this.indicador = indicador;
+    this.filtro = filtro;
+  }
 
   public Indicador getIndicador() {
     return indicador;
@@ -30,20 +38,23 @@ public class Condicion {
     this.filtro = filtro;
   }
 
-  public String getAsd() {
-    return asd;
-  }
-
-  public void setAsd(String asd) {
-    this.asd = asd;
-  }
-
   public boolean cumpleCondicion(Empresa empresa) throws CondicionException {
     try {
       return filtro.cumpleCondicion(indicador, empresa);
     } catch (FiltroException e) {
       throw new CondicionException(e.getMessage());
     }
+  }
+
+  public String toJson() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("{");
+    builder.append("\"indicador\" : ");
+    builder.append(indicador.toJson() + ",");
+    builder.append("\"filtro\" : ");
+    builder.append(filtro.toJson());
+    builder.append("}");
+    return builder.toString();
   }
 
 }
