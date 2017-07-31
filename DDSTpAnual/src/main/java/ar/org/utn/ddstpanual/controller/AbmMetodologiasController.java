@@ -37,8 +37,7 @@ public class AbmMetodologiasController {
   Integer valor;
   String error;
 
-  public void inicializarPantalla() {
-    condiciones = new ArrayList<>();
+  public void inicializarVariables() {
     tiposCondiciones = new ArrayList<>();
     tiposCondiciones.add(new FiltroCreciente());
     tiposCondiciones.add(new FiltroDecreciente());
@@ -47,6 +46,13 @@ public class AbmMetodologiasController {
     tiposCondiciones.add(new FiltroMayorIgual());
     tiposCondiciones.add(new FiltroMenor());
     tiposCondiciones.add(new FiltroMenorIgual());
+    condiciones = new ArrayList<>();
+    indicadores = obtenerIndicadores();
+    indicadorCheckbox = null;
+    tipoCondicionCheckbox = null;
+    nombre = "";
+    valor = 0;
+    error = "";
   }
 
   public List<Indicador> obtenerIndicadores() {

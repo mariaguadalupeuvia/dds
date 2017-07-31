@@ -13,7 +13,6 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import ar.org.utn.ddstpanual.model.metodologia.MetodologiaResultado;
 import ar.org.utn.ddstpanual.service.CondicionService;
 import ar.org.utn.ddstpanual.service.MetodologiaService;
 
@@ -56,8 +55,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
   }
 
   @Override
-  public List<MetodologiaResultado> ejecutarMetodologia(List<Empresa> empresas, Metodologia metodologia) throws ServiceException {
-    List<MetodologiaResultado> resultado = new ArrayList<>();
+  public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Metodologia metodologia) throws ServiceException {
     empresas = empresas.stream().filter(e -> {
       try {
         return getCondicionService().cumpleCondiciones(metodologia, e);
@@ -65,7 +63,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
         return false;
       }
     }).collect(Collectors.toList());
-    return resultado;
+    return empresas;
   }
 
   @Override

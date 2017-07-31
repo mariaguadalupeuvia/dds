@@ -21,15 +21,14 @@ public class AbmIndicadoresWindow extends SimpleWindow<AbmIndicadoresController>
 
   public AbmIndicadoresWindow(final WindowOwner parent) {
     super(parent, new AbmIndicadoresController());
-    this.getModelObject().setFormula("");
-    this.getModelObject().setNombre("");
-    getModelObject().obtenerIndicadores();
+    this.getModelObject().inicializarVariables();
   }
 
   @Override
   protected void addActions(final Panel actionsPanel) {
     new Button(actionsPanel).setCaption("Guardar").onClick(() -> {
       getModelObject().guardarIndicador();
+      this.getModelObject().inicializarVariables();
     }).setAsDefault().disableOnError();
   }
 

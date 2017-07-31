@@ -28,10 +28,10 @@ public class MetodologiaArchivoImpl implements MetodologiaArchivo {
     FileWriter filewriter = null;
     PrintWriter printwriten = null;
     try {
-      filewriter = new FileWriter(path + pathMetodologias + metodologia.getNombre(), true);
+      filewriter = new FileWriter(path + pathMetodologias + metodologia.getNombre(), false);
       printwriten = new PrintWriter(filewriter);
       final Gson gson = new Gson();
-      final String linea = gson.toJson(metodologia, Metodologia.class);// metodologia.toJson();
+      final String linea = gson.toJson(metodologia, Metodologia.class);
       printwriten.println(linea);
     } catch (final IOException e) {
       throw new ArchivoException("Error al abrir el archivo");
@@ -94,7 +94,6 @@ public class MetodologiaArchivoImpl implements MetodologiaArchivo {
           buffer = new BufferedReader(filereader);
           while ((linea = buffer.readLine()) != null) {
             metodologia = gson.fromJson(linea, Metodologia.class);
-            metodologias.add(metodologia);
           }
         } catch (final IOException e) {
           throw new ArchivoException("Error al abrir el archivo");

@@ -39,9 +39,11 @@ public class Indicador {
 
   @Override
   public String toString() {
-    final StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append(this.formula);
-    return stringBuilder.toString();
+    final StringBuilder builder = new StringBuilder();
+    builder.append(this.nombre);
+    builder.append(": ");
+    builder.append(this.formula);
+    return builder.toString();
   }
 
   public String toJson() {

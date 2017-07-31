@@ -27,13 +27,13 @@ public class MenuPrincipalWindow extends SimpleWindow {
     consultarEmpresa.setCaption("Consultar Empresa");
     consultarEmpresa.onClick(this::consultaIndicadores);
 
-    final Button ejecutarIndicador = new Button(actions);
-    ejecutarIndicador.setCaption("Ejecutar Indicador");
-    ejecutarIndicador.onClick(this::ejecutarIndicador);
-
     final Button abmIndicador = new Button(actions);
     abmIndicador.setCaption("ABM Indicadores");
     abmIndicador.onClick(this::abmIndicadores);
+
+    final Button ejecutarIndicador = new Button(actions);
+    ejecutarIndicador.setCaption("Ejecutar Indicador");
+    ejecutarIndicador.onClick(this::ejecutarIndicador);
 
     final Button abmMetodologia = new Button(actions);
     abmMetodologia.setCaption("ABM Metodologias");

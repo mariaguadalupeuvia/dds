@@ -28,9 +28,7 @@ public class AbmMetodologiasWindow extends SimpleWindow<AbmMetodologiasControlle
 
   public AbmMetodologiasWindow(final WindowOwner parent) {
     super(parent, new AbmMetodologiasController());
-    this.getModelObject().setError("");
-    this.getModelObject().obtenerIndicadores();
-    this.getModelObject().inicializarPantalla();
+    this.getModelObject().inicializarVariables();
   }
 
   @Override
@@ -42,6 +40,7 @@ public class AbmMetodologiasWindow extends SimpleWindow<AbmMetodologiasControlle
 
     new Button(actionsPanel).setCaption("Guardar Metodologia").onClick(() -> {
       getModelObject().guardarMetodologia();
+      getModelObject().inicializarVariables();
       createResultsGridIndicadores(actionsPanel);
     }).setAsDefault().disableOnError();
   }
@@ -78,7 +77,7 @@ public class AbmMetodologiasWindow extends SimpleWindow<AbmMetodologiasControlle
 
   @Override
   protected void createMainTemplate(final Panel mainPanel) {
-    this.setTitle("Alta de Metodologia");
+    this.setTitle("ABM Metodologia");
 
     final Label error = new Label(mainPanel);
     error.setForeground(Color.RED).bindValueToProperty("error");

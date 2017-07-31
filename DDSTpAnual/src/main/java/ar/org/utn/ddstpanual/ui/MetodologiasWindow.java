@@ -17,8 +17,8 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 import java.awt.Color;
 
 import ar.org.utn.ddstpanual.controller.MetodologiasController;
+import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import ar.org.utn.ddstpanual.model.metodologia.MetodologiaResultado;
 
 public class MetodologiasWindow extends SimpleWindow<MetodologiasController> {
 
@@ -68,17 +68,17 @@ public class MetodologiasWindow extends SimpleWindow<MetodologiasController> {
   }
 
   protected void createResultsGridEmpresas(final Panel mainPanel) {
-    final Table<MetodologiaResultado> table = new Table<MetodologiaResultado>(mainPanel, MetodologiaResultado.class);
+    final Table<Empresa> table = new Table<Empresa>(mainPanel, Empresa.class);
     table.setNumberVisibleRows(4);
     table.setWidth(450);
 
-    table.bindItemsToProperty("metodologiasResultado");
+    table.bindItemsToProperty("empresasResultado");
 
     this.describeResultsGridEmpresa(table);
   }
 
-  protected void describeResultsGridEmpresa(final Table<MetodologiaResultado> table) {
-    new Column<MetodologiaResultado>(table).setTitle("Empresa").setFixedSize(100).bindContentsToProperty("nombreEmpresa");
+  protected void describeResultsGridEmpresa(final Table<Empresa> table) {
+    new Column<Empresa>(table).setTitle("Empresa").setFixedSize(100).bindContentsToProperty("nombre");
   }
 
 }

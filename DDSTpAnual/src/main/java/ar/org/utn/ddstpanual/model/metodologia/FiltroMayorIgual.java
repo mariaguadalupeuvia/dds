@@ -12,7 +12,7 @@ import ar.org.utn.ddstpanual.model.Indicador;
 public class FiltroMayorIgual extends Filtro {
 
   private static final long serialVersionUID = 1L;
-  
+
   public FiltroMayorIgual() {
     this.setNombre("Mayor o igual");
   }

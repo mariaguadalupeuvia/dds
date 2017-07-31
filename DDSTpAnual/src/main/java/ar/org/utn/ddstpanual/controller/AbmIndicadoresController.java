@@ -80,6 +80,13 @@ public class AbmIndicadoresController {
     return indicadorService;
   }
 
+  public void inicializarVariables() {
+    nombre = "";
+    formula = "";
+    error = "";
+    obtenerIndicadores();
+  }
+
   public List<Indicador> getIndicadores() {
     return indicadores;
   }

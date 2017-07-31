@@ -7,7 +7,6 @@ import java.util.List;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import ar.org.utn.ddstpanual.model.metodologia.MetodologiaResultado;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.MetodologiaService;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
@@ -22,37 +21,40 @@ public class MetodologiasController {
   List<Metodologia> metodologias;
   Metodologia metodologiaCheckbox;
 
-  List<MetodologiaResultado> metodologiasResultado;
+  List<Empresa> empresasResultado;
 
   String error;
 
-  public List<Empresa> obtenerEmpresas() {
+  public void inicializarVariables() {
+    error = "";
+    obtenerEmpresas();
+    obtenerMetodologias();
+  }
+
+  public void obtenerEmpresas() {
     error = "";
     try {
       empresas = getEmpresaService().obtenerEmpresas();
     } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
     }
-    return empresas;
   }
 
-  public List<Empresa> obtenerMetodologias() {
+  public void obtenerMetodologias() {
     error = "";
     try {
       metodologias = getMetodologiaService().obtenerMetodologias();
     } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las metodologias.";
     }
-    return empresas;
   }
 
-  public List<MetodologiaResultado> ejecutarMetodologia() {
+  public void ejecutarMetodologia() {
     try {
-      metodologiasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox);
+      empresasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox);
     } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
     }
-    return metodologiasResultado;
   }
 
   public EmpresaService getEmpresaService() {
@@ -79,12 +81,12 @@ public class MetodologiasController {
     this.empresas = empresas;
   }
 
-  public List<MetodologiaResultado> getMetodologiasResultado() {
-    return metodologiasResultado;
+  public List<Empresa> getEmpresasResultado() {
+    return empresasResultado;
   }
 
-  public void setMetodologiasResultado(List<MetodologiaResultado> metodologiasResultado) {
-    this.metodologiasResultado = metodologiasResultado;
+  public void setEmpresasResultado(List<Empresa> empresasResultado) {
+    this.empresasResultado = empresasResultado;
   }
 
   public String getError() {
