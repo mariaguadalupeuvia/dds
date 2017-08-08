@@ -18,6 +18,7 @@ import java.awt.Color;
 
 import ar.org.utn.ddstpanual.controller.MetodologiasController;
 import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 
 public class MetodologiasWindow extends SimpleWindow<MetodologiasController> {
@@ -29,6 +30,7 @@ public class MetodologiasWindow extends SimpleWindow<MetodologiasController> {
     getModelObject().setError("");
     getModelObject().obtenerEmpresas();
     getModelObject().obtenerMetodologias();
+    getModelObject().obtenerPeriodos();
   }
 
   @Override
@@ -48,11 +50,17 @@ public class MetodologiasWindow extends SimpleWindow<MetodologiasController> {
     final Selector<Metodologia> selectorMetodologia = new Selector<Metodologia>(inputFormPanel).allowNull(false);
     selectorMetodologia.bindValueToProperty("metodologiaCheckbox");
     selectorMetodologia.setWidth(150);
-    @SuppressWarnings({"unchecked", "rawtypes"})
     final Binding<Metodologia, Selector<Metodologia>, ListBuilder<Metodologia>> propiedadMetodologia =
-        selectorMetodologia.bindItems(new ObservableProperty(getModelObject(), "metodologias"));
+        selectorMetodologia.bindItems(new ObservableProperty<Metodologia>(getModelObject(), "metodologias"));
     propiedadMetodologia.setAdapter(new PropertyAdapter(Metodologia.class, "nombre"));
-
+    
+    new Label(inputFormPanel).setText("Periodo").setForeground(Color.BLUE);
+    final Selector<Periodo> selectorPeriodo = new Selector<Periodo>(inputFormPanel).allowNull(false);
+    selectorPeriodo.bindValueToProperty("periodoCheckbox");
+    selectorPeriodo.setWidth(150);
+    final Binding<Periodo, Selector<Periodo>, ListBuilder<Periodo>> propiedadPeriodo =
+    	selectorPeriodo.bindItems(new ObservableProperty<Periodo>(getModelObject(), "periodos"));
+    propiedadPeriodo.setAdapter(new PropertyAdapter(Periodo.class, "fecha"));
   }
 
   @Override
