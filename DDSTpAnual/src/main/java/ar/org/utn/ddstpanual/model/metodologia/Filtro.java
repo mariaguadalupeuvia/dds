@@ -7,6 +7,7 @@ import java.io.Serializable;
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 
@@ -43,7 +44,7 @@ public abstract class Filtro implements Serializable {
     this.nombre = nombre;
   }
 
-  public abstract boolean cumpleCondicion(Indicador indicador, Empresa empresa) throws FiltroException;
+  public abstract boolean cumpleCondicion(Indicador indicador, Empresa empresa, Periodo periodo) throws FiltroException;
 
   public IndicadorService getIndicadorService() {
     if (indicadorService != null) {
