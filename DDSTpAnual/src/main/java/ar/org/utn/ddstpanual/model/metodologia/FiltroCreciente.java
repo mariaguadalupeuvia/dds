@@ -7,6 +7,7 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Periodo;
 
 public class FiltroCreciente extends Filtro {
 
@@ -17,7 +18,7 @@ public class FiltroCreciente extends Filtro {
   }
 
   @Override
-  public boolean cumpleCondicion(Indicador indicador, Empresa empresa) throws FiltroException {
+  public boolean cumpleCondicion(Indicador indicador, Empresa empresa, Periodo periodo) throws FiltroException {
     try {
       Year fechaPeriodoDesde = Year.now().minusYears(this.getValor());
       FormulaIndicador valorIndicadorDesde =
