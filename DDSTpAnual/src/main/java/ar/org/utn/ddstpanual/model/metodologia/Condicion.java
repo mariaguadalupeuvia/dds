@@ -6,6 +6,7 @@ import ar.org.utn.ddstpanual.exception.CondicionException;
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Periodo;
 
 @Observable
 public class Condicion {
@@ -38,9 +39,9 @@ public class Condicion {
     this.filtro = filtro;
   }
 
-  public boolean cumpleCondicion(Empresa empresa) throws CondicionException {
+  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws CondicionException {
     try {
-      return filtro.cumpleCondicion(indicador, empresa);
+      return filtro.cumpleCondicion(indicador, empresa, periodo);
     } catch (FiltroException e) {
       throw new CondicionException(e.getMessage());
     }
