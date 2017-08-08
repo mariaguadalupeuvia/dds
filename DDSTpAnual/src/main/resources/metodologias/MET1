@@ -1,0 +1,1 @@
+{"nombre":"MET1","condiciones":[{"indicador":{"nombre":"activoTotal","formula":"[activoCorriente]+[activoNoCorriente]"},"filtro":{"valor":500,"nombre":"Mayor"}}]}
