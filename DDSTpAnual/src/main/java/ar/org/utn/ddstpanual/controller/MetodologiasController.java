@@ -6,6 +6,7 @@ import java.util.List;
 
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 import ar.org.utn.ddstpanual.service.MetodologiaService;
@@ -20,6 +21,8 @@ public class MetodologiasController {
   List<Empresa> empresas;
   List<Metodologia> metodologias;
   Metodologia metodologiaCheckbox;
+  Periodo periodoCheckbox;
+  List<Periodo> periodos;
 
   List<Empresa> empresasResultado;
 
@@ -29,6 +32,7 @@ public class MetodologiasController {
     error = "";
     obtenerEmpresas();
     obtenerMetodologias();
+    obtenerPeriodos();
   }
 
   public void obtenerEmpresas() {
@@ -48,12 +52,29 @@ public class MetodologiasController {
       error = "Se produjo un error al obtener las metodologias.";
     }
   }
-
-  public void ejecutarMetodologia() {
+  
+  public List<Periodo> obtenerPeriodos() {
+    error = "";
     try {
-      empresasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox);
+      periodos = getEmpresaService().obtenerPeriodos();
     } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
+    } catch (final NullPointerException e) {
+      error = "No existen períodos para estas empresas";
+      System.out.println(error);
+    }
+    return periodos;
+  }
+
+  public void ejecutarMetodologia() {
+	error = "";
+    try {
+      empresasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox, periodoCheckbox);
+      if(empresasResultado.isEmpty()) error = "No se encuentran empresas que cumplan estas condiciones \n para el año " + periodoCheckbox.getFecha();
+    } catch (final ServiceException e) {
+      error = "Se produjo un error al obtener las empresas.";
+    } catch (final NullPointerException n) {
+	  error = "Debe completar todos los campos";
     }
   }
 
@@ -116,7 +137,21 @@ public class MetodologiasController {
   public void setMetodologiaCheckbox(Metodologia metodologiaCheckbox) {
     this.metodologiaCheckbox = metodologiaCheckbox;
   }
+  public Periodo getPeriodoCheckbox() {
+	    return periodoCheckbox;
+	  }
 
+  public void setPeriodoCheckbox(final Periodo periodoCheckbox) {
+    this.periodoCheckbox = periodoCheckbox;
+  }
+  public List<Periodo> getPeriodos() {
+	    return periodos;
+
+	  }
+
+  public void setPeriodos(final List<Periodo> periodos) {
+    this.periodos = periodos;
+  }
 
 
 }
