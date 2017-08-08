@@ -62,13 +62,16 @@ public class IndicadoresController {
     }
     return indicadores;
   }
-
+ 
   public List<FormulaIndicador> ejecutarIndicador() {
     error = "";
     try {
+      if(periodoCheckbox == null) periodoCheckbox = new Periodo("");
       formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getFormula(), periodoCheckbox.getFecha(), empresaCheckbox);
     } catch (final ServiceException e) {
       error = e.getMessage();
+    } catch (final NullPointerException n) {
+      error = "Debe completar los campos \"Empresa\" e \"Indicador\"";
     }
     return formulaIndicador;
   }
