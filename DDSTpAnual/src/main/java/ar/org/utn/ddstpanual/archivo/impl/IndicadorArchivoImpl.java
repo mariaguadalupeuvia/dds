@@ -85,7 +85,7 @@ public class IndicadorArchivoImpl implements IndicadorArchivo {
       buffer = new BufferedReader(filereader);
       while ((linea = buffer.readLine()) != null) {
         final String[] indicadorArchivo = StringUtils.split(linea, "=");
-        if (indicadorArchivo[0].equals(indicador.getNombre()) || indicadorArchivo[1].equals(indicador.getFormula())) {
+        if (indicadorArchivo[0].equals(indicador.getNombre())) {
           existe = true;
         }
       }

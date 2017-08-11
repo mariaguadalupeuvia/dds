@@ -9,6 +9,7 @@ public class Metodologia {
 
   private String nombre;
   private List<Condicion> condiciones;
+  private Orden orden;
 
   public Metodologia() {
 
@@ -34,6 +35,14 @@ public class Metodologia {
   public void setCondiciones(List<Condicion> condiciones) {
     this.condiciones = condiciones;
   }
+  
+  public Orden getOrden() {
+    return orden;
+  }
+  
+  public void setOrden(Orden orden) {
+    this.orden = orden;
+  }
 
   public String toJson() {
     StringBuilder builder = new StringBuilder();
@@ -53,5 +62,6 @@ public class Metodologia {
     builder.append("}");
     return builder.toString();
   }
+
 
 }

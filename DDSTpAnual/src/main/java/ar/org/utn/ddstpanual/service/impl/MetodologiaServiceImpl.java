@@ -3,6 +3,7 @@ package ar.org.utn.ddstpanual.service.impl;
 import static org.mockito.Mockito.doThrow;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,10 +12,14 @@ import ar.org.utn.ddstpanual.archivo.impl.MetodologiaArchivoImpl;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
+import ar.org.utn.ddstpanual.model.metodologia.Orden;
+import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 import ar.org.utn.ddstpanual.service.CondicionService;
+import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.MetodologiaService;
 
 public class MetodologiaServiceImpl implements MetodologiaService {
@@ -22,6 +27,8 @@ public class MetodologiaServiceImpl implements MetodologiaService {
   private CondicionService condicionService;
 
   private MetodologiaArchivo metododologiaArchivo;
+
+  private IndicadorService indicadorService;
 
 
   @Override
@@ -64,6 +71,17 @@ public class MetodologiaServiceImpl implements MetodologiaService {
         return false;
       }
     }).collect(Collectors.toList());
+
+    Collections.sort(empresas, (e1, e2) -> {
+      int comp = 0;
+      try {
+        comp = compareEmpresasByMetodologia(e1, e2, metodologia.getOrden(), periodo);
+      } catch (ServiceException e3) {
+        e3.printStackTrace();
+      }
+      return comp;
+    });
+
     return empresas;
   }
 
@@ -73,6 +91,14 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     nuevasCondiciones.addAll(condiciones);
     nuevasCondiciones.add(condicion);
     return nuevasCondiciones;
+  }
+
+  @Override
+  public List<Indicador> agregarIndicadorSeleccionado(List<Indicador> indicadores, Indicador indicador) throws ServiceException {
+    List<Indicador> indicadoresSeleccionados = new ArrayList<>();
+    indicadoresSeleccionados.addAll(indicadores);
+    indicadoresSeleccionados.add(indicador);
+    return indicadoresSeleccionados;
   }
 
   public CondicionService getCondicionService() {
@@ -89,6 +115,33 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     }
     metododologiaArchivo = new MetodologiaArchivoImpl();
     return metododologiaArchivo;
+  }
+
+  public IndicadorService getIndicadorService() {
+    if (indicadorService != null) {
+      return indicadorService;
+    }
+    indicadorService = new IndicadorServiceImpl();
+    return indicadorService;
+  }
+
+  public int compareEmpresasByMetodologia(Empresa e1, Empresa e2, Orden orden, Periodo per) throws ServiceException {
+    int flag = 0;
+
+    Indicador indicador = orden.getIndicador();
+
+    Double valorE1 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e1).get(0).getValor();
+    Double valorE2 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e2).get(0).getValor();
+
+    if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.ASCENDENTE) {
+      return Double.compare(valorE1, valorE2);
+    }
+
+    if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.DESCENDENTE) {
+      return Double.compare(valorE2, valorE1);
+    }
+
+    return flag;
   }
 
 }

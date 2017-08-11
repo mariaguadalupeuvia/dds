@@ -17,6 +17,8 @@ import ar.org.utn.ddstpanual.model.metodologia.FiltroMayorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
+import ar.org.utn.ddstpanual.model.metodologia.Orden;
+import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.MetodologiaService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
@@ -30,14 +32,29 @@ public class AbmMetodologiasController {
 
   String nombre;
   List<Indicador> indicadores;
+  List<Indicador> indicadoresSeleccionados;
   Indicador indicadorCheckbox;
+  Indicador indicadorOrdenCheckbox;
+  TipoOrden tipoOrdenCheckbox;
+
   List<Filtro> tiposCondiciones;
   Filtro tipoCondicionCheckbox;
   List<Condicion> condiciones;
+  List<TipoOrden> tiposOrden;
+
   Integer valor;
   String error;
 
   public void inicializarVariables() {
+    tiposOrden = new ArrayList<>();
+    TipoOrden ascendente = new TipoOrden();
+    ascendente.setIdTipoOrden(TipoOrden.ASCENDENTE);
+    ascendente.setNombreOrden("Ascendente");
+    TipoOrden descendente = new TipoOrden();
+    descendente.setIdTipoOrden(TipoOrden.DESCENDENTE);
+    descendente.setNombreOrden("Descendente");
+    tiposOrden.add(ascendente);
+    tiposOrden.add(descendente);
     tiposCondiciones = new ArrayList<>();
     tiposCondiciones.add(new FiltroCreciente());
     tiposCondiciones.add(new FiltroDecreciente());
@@ -48,7 +65,9 @@ public class AbmMetodologiasController {
     tiposCondiciones.add(new FiltroMenorIgual());
     condiciones = new ArrayList<>();
     indicadores = obtenerIndicadores();
+    indicadoresSeleccionados = new ArrayList<>();
     indicadorCheckbox = null;
+    indicadorOrdenCheckbox = null;
     tipoCondicionCheckbox = null;
     nombre = "";
     valor = 0;
@@ -72,6 +91,7 @@ public class AbmMetodologiasController {
       filtro.setValor(valor);
       condicion.setFiltro(filtro);
       condiciones = getMetodologiaService().agregarCondicion(condiciones, condicion);
+      indicadoresSeleccionados = getMetodologiaService().agregarIndicadorSeleccionado(indicadoresSeleccionados, indicadorCheckbox);
     } catch (ServiceException e) {
       error = e.getMessage();
     }
@@ -83,6 +103,10 @@ public class AbmMetodologiasController {
       Metodologia metodologia = new Metodologia();
       metodologia.setCondiciones(condiciones);
       metodologia.setNombre(nombre);
+      Orden orden = new Orden();
+      orden.setIndicador(indicadorOrdenCheckbox);
+      orden.setTipoOrden(tipoOrdenCheckbox);
+      metodologia.setOrden(orden);
       getMetodologiaService().guardarMetodologia(metodologia);
     } catch (ServiceException e) {
       error = e.getMessage();
@@ -168,6 +192,38 @@ public class AbmMetodologiasController {
 
   public void setError(String error) {
     this.error = error;
+  }
+
+  public List<Indicador> getIndicadoresSeleccionados() {
+    return indicadoresSeleccionados;
+  }
+
+  public void setIndicadoresSeleccionados(List<Indicador> indicadoresSeleccionados) {
+    this.indicadoresSeleccionados = indicadoresSeleccionados;
+  }
+
+  public Indicador getIndicadorOrdenCheckbox() {
+    return indicadorOrdenCheckbox;
+  }
+
+  public void setIndicadorOrdenCheckbox(Indicador indicadorOrdenCheckbox) {
+    this.indicadorOrdenCheckbox = indicadorOrdenCheckbox;
+  }
+
+  public List<TipoOrden> getTiposOrden() {
+    return tiposOrden;
+  }
+
+  public void setTiposOrden(List<TipoOrden> tiposOrden) {
+    this.tiposOrden = tiposOrden;
+  }
+
+  public TipoOrden getTipoOrdenCheckbox() {
+    return tipoOrdenCheckbox;
+  }
+
+  public void setTipoOrdenCheckbox(TipoOrden tipoOrdenCheckbox) {
+    this.tipoOrdenCheckbox = tipoOrdenCheckbox;
   }
 
 }
