@@ -139,7 +139,6 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     return empresas;
   }
 
-
   @Override
   public List<Periodo> obtenerPeriodos(final String nombreEmpresa) throws ArchivoException {
     final String path = System.getProperty("user.dir");

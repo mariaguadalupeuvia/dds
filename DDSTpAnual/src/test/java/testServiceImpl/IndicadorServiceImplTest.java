@@ -42,26 +42,15 @@ public class IndicadorServiceImplTest {
     periodos.add(new Periodo("2013", 3500));
     periodos.add(new Periodo("2014", 4500));
 
-    cuentas.add(new Cuenta("[cuenta1]", periodos));
-    cuentas.add(new Cuenta("[cuenta2]", periodos));
+    cuentas.add(new Cuenta("cuenta1", periodos));
+    cuentas.add(new Cuenta("cuenta2", periodos));
 
     ejemplo = new Empresa(cuentas, "Ejemplo");
   }
 
-
-  @Test
-  public void testEjecutarIndicador() throws ArbolException {
-    /*
-     * List<FormulaIndicador> lista = new ArrayList<FormulaIndicador>(); lista.add(new
-     * FormulaIndicador("2010","IndicadorA",2000));
-     */
-    System.out.println(periodos.get(0).getFecha());
-    Assert.assertEquals(1000.0, arbol.obtenerValor("[cuenta1]+[cuenta2]", periodos.get(0).getFecha(), ejemplo), 0);
-  }
-
   // Test sobre el guardado de indicadores
-  @Test
-  public void testGuardarIndicadorCorrectamente() throws ServiceException {
+  @Test(expected = ServiceException.class)
+  public void testGuardarIndicadorCorrectoDuplicado() throws ServiceException {
     indicador = new Indicador("IndicadorCorrecto", indicadorSimpleCorrecto);
     service.guardarIndicador(indicador);
   }
@@ -92,11 +81,11 @@ public class IndicadorServiceImplTest {
 
 
   // Test sobre la ejecucion de los indicadores
-  // ejecutarIndicador
-  /*
-   * @Test public void testEjecutarIndicador() throws ServiceException {
-   * service.ejecutarIndicador("IndicadorA"); }
-   */
+  @Test
+  public void testEjecutarIndicador() throws ArbolException {
+    System.out.println(periodos.get(0).getFecha());
+    Assert.assertEquals(1000.0, arbol.obtenerValor("[cuenta1]+[cuenta2]", periodos.get(0).getFecha(), ejemplo), 0);
+  }
 
 
 }

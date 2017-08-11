@@ -9,6 +9,15 @@ public class EmpresaExcel {
   private String fecha;
   private double valor;
 
+  public EmpresaExcel(String nombreEmpresa, String nombreCuenta, String fecha, double valor){
+    this.nombreEmpresa = nombreEmpresa;
+    this.nombreCuenta = nombreCuenta;
+    this.fecha = fecha;
+    this.valor = valor;
+  }
+  
+  public EmpresaExcel(){}
+  
   public String getNombreEmpresa() {
     return nombreEmpresa;
   }

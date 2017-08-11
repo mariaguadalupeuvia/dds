@@ -1,19 +1,20 @@
 package testServiceImpl;
 
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
 
 public class EmpresaServiceImplTest {
-  EmpresaServiceImpl service = null;
+  EmpresaServiceImpl empresaService = null;
 
   @Before
   public void init() {
-    service = new EmpresaServiceImpl();
+    empresaService = new EmpresaServiceImpl();
   }
 
   public String iniciarArchivo(final String nombreArchivo) {
@@ -25,31 +26,33 @@ public class EmpresaServiceImplTest {
   // Test sobre la carga del archivo
   @Test
   public void testSubirExcel() throws ServiceException {
-    service.subirExcel(iniciarArchivo("Carga1.xlsx"));
+    empresaService.subirExcel(iniciarArchivo("Carga1.xlsx"));
   }
 
   @Test(expected = ServiceException.class)
   public void testSubirArchivoInexistente() throws ServiceException {
-    service.subirExcel(iniciarArchivo("Caso1"));
+    empresaService.subirExcel(iniciarArchivo("Caso1"));
   }
 
   @Test(expected = NotOfficeXmlFileException.class)
   public void testSubirArchivoNoExcel() throws ServiceException {
-    service.subirExcel(iniciarArchivo("CargaCSV.csv"));
+    empresaService.subirExcel(iniciarArchivo("CargaCSV.csv"));
   }
 
   // Test sobre la obtencion de datos del archivo
-  // buscar ()
-  // obtenerEmpresas ()
-
   @Test
-  public void testObtenerIndicadores() throws ServiceException {
-    service.obtenerEmpresas();
-  }
-
-  @Test
-  public void testObtenerPeriodos() throws ServiceException {
-    Assert.assertNotNull(service.obtenerPeriodos());
+  public void testObtenerDatosEmpresa() throws ServiceException {
+    Empresa empresaTest = new Empresa();
+   
+    for(Empresa e : empresaService.obtenerEmpresas()){
+      if(e.getNombre().equals("Facebook")){
+        empresaTest = e;
+      }
+    }
+    
+    for(EmpresaExcel empresa : empresaService.buscar(empresaTest,null, null)){
+      System.out.println(empresa.toString());
+    };
   }
 
 }

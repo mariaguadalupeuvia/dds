@@ -35,4 +35,12 @@ public class Periodo {
   public void setValor(final double valor) {
     this.valor = valor;
   }
+  
+  @Override
+  public String toString() {
+    final StringBuilder builder = new StringBuilder();
+    builder.append("{\n fecha : " + fecha + ", \n");
+    builder.append("valor : " + valor + "\n}");
+    return builder.toString();
+  }
 }
