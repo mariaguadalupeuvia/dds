@@ -15,9 +15,10 @@ public class Metodologia {
 
   }
 
-  public Metodologia(String nombre, List<Condicion> condiciones) {
+  public Metodologia(String nombre, List<Condicion> condiciones, Orden orden) {
     this.nombre = nombre;
     this.condiciones = condiciones;
+    this.orden = orden;
   }
 
   public String getNombre() {

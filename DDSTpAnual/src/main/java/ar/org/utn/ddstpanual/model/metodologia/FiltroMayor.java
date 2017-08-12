@@ -19,6 +19,11 @@ public class FiltroMayor extends Filtro {
   public FiltroMayor() {
     this.setNombre("Mayor");
   }
+  
+  public FiltroMayor(Integer valor) {
+    this.setNombre("Mayor");
+    super.setValor(valor);
+  }
 
   @Override
   public boolean cumpleCondicion(Indicador indicador, Empresa empresa, Periodo periodo) throws FiltroException {

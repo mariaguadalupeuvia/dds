@@ -82,7 +82,7 @@ public class IndicadorServiceImpl implements IndicadorService {
     try {
       final ArbolUtil arbol = new ArbolUtil();
       if (!StringUtils.isEmpty(fechaPeriodo)) {
-        result.add(new FormulaIndicador(fechaPeriodo, formula, arbol.obtenerValor(formula, fechaPeriodo, empresa)));
+        result.add(new FormulaIndicador(formula, fechaPeriodo, arbol.obtenerValor(formula, fechaPeriodo, empresa)));
       } else {
         final List<Periodo> periodos = empresa.obtenerPeriodos();
         for (final Periodo per : periodos) {

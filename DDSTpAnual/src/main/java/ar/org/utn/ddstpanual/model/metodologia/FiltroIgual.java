@@ -19,6 +19,11 @@ public class FiltroIgual extends Filtro {
   public FiltroIgual() {
     this.setNombre("Igual");
   }
+  
+  public FiltroIgual(Integer valor) {
+    this.setNombre("Igual");
+    super.setValor(valor);
+  }
 
   @Override
   public boolean cumpleCondicion(Indicador indicador, Empresa empresa, Periodo periodo) throws FiltroException {

@@ -17,4 +17,6 @@ public interface EmpresaArchivo {
 
   public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ArchivoException;
 
+  public Empresa obtenerEmpresa(String nombre) throws ArchivoException;
+
 }

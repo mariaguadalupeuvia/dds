@@ -76,8 +76,8 @@ public class MetodologiaServiceImpl implements MetodologiaService {
       int comp = 0;
       try {
         comp = compareEmpresasByMetodologia(e1, e2, metodologia.getOrden(), periodo);
-      } catch (ServiceException e3) {
-        e3.printStackTrace();
+      } catch (Exception e3) {
+        e3.getMessage();
       }
       return comp;
     });

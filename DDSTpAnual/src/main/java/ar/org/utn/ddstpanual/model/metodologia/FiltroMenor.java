@@ -16,6 +16,11 @@ public class FiltroMenor extends Filtro {
   public FiltroMenor() {
     this.setNombre("Menor");
   }
+  
+  public FiltroMenor(Integer valor) {
+    this.setNombre("Menor");
+    super.setValor(valor);
+  }
 
   @Override
   public boolean cumpleCondicion(Indicador indicador, Empresa empresa, Periodo periodo) throws FiltroException {

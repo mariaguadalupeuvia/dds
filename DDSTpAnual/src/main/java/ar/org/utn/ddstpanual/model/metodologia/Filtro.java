@@ -27,6 +27,10 @@ public abstract class Filtro implements Serializable {
   public Filtro() {
 
   }
+  
+  public Filtro(Integer valor) {
+    this.valor = valor;
+  }
 
   public Integer getValor() {
     return valor;

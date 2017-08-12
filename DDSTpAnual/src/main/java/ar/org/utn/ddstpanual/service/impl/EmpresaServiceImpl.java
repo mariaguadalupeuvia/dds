@@ -136,4 +136,13 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
   }
 
+  @Override
+  public Empresa obtenerEmpresa(String nombre) throws ServiceException {
+    try {
+      return getEmpresaArchivo().obtenerEmpresa(nombre);
+    } catch (ArchivoException e) {
+      throw new ServiceException(e.getMessage());
+    }
+  }
+
 }

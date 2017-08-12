@@ -79,6 +79,60 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
   }
 
   @Override
+  public Empresa obtenerEmpresa(final String nombreEmpresa) throws ArchivoException {
+    Empresa empresa = new Empresa();
+    final String path = System.getProperty("user.dir");
+    final File file = new File(path + "\\src\\main\\resources\\empresas\\" + nombreEmpresa);
+    FileReader filereader = null;
+    BufferedReader buffer = null;
+    String linea = "";
+    try {
+      filereader = new FileReader(file);
+      buffer = new BufferedReader(filereader);
+      empresa.setNombre(nombreEmpresa);
+      empresa.setCuentas(new ArrayList<Cuenta>());
+      while ((linea = buffer.readLine()) != null) {
+        Cuenta cuenta = new Cuenta();
+        final String[] registro = StringUtils.split(linea, "|");
+        cuenta.setNombre(registro[0]);
+        if (empresa.getCuentas().contains(cuenta)) {
+          for (final Cuenta cuentaIter : empresa.getCuentas()) {
+            if (cuentaIter.getNombre().equals(registro[0])) {
+              cuenta = cuentaIter;
+              break;
+            }
+          }
+          final Periodo periodo = new Periodo();
+          periodo.setFecha(registro[1]);
+          periodo.setValor(Float.valueOf(registro[2]));
+          cuenta.getPeriodos().add(periodo);
+          empresa.getCuentas().remove(cuenta);
+        } else {
+          cuenta.setPeriodos(new ArrayList<Periodo>());
+          final Periodo periodo = new Periodo();
+          periodo.setFecha(registro[1]);
+          periodo.setValor(Float.valueOf(registro[2]));
+          cuenta.getPeriodos().add(periodo);
+        }
+        empresa.getCuentas().add(cuenta);
+      }
+    } catch (final FileNotFoundException fnfe) {
+      throw new ArchivoException("No existe la empresa " + nombreEmpresa);
+    } catch (final IOException e) {
+      throw new ArchivoException("Error al abrir el archivo");
+    } finally {
+      try {
+        if (null != filereader) {
+          filereader.close();
+        }
+      } catch (final Exception ex) {
+        throw new ArchivoException("Error al intentar cerrar el archivo.");
+      }
+    }
+    return empresa;
+  }
+
+  @Override
   public List<Empresa> obtenerEmpresas() throws ArchivoException {
     final String path = System.getProperty("user.dir");
     final File dir = new File(path + "\\src\\main\\resources\\empresas\\");
