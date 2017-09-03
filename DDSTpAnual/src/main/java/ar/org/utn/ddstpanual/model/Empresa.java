@@ -1,5 +1,7 @@
 package ar.org.utn.ddstpanual.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
 
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +28,7 @@ public @Data class Empresa {
   @Id
   @GeneratedValue
   private int id;
-  @OneToMany
+  @OneToMany @JoinColumn @Cascade(value=CascadeType.ALL)
   private List<Cuenta> cuentas;
   private String nombre;
 

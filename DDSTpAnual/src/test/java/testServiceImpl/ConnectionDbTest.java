@@ -28,9 +28,11 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
     Empresa empresa = new Empresa();
     empresa.setCuentas(cuentas);
     empresa.setNombre("Empresa");
-    entityManager().persist(empresa);
-    entityManager().getTransaction().commit();
-    entityManager().close();
+    withTransaction(() -> {
+      entityManager().persist(empresa);
+    });
+//    entityManager().persist(empresa);
+//    entityManager().close();
   }
 
 }
