@@ -59,21 +59,22 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
     String nombre = jsonObject.get("nombre").getAsString();
     JsonArray condicionesJson = jsonObject.getAsJsonArray("condiciones");
     Iterator<JsonElement> iterator = condicionesJson.iterator();
+    
     while (iterator.hasNext()) {
       JsonObject condicionJson = iterator.next().getAsJsonObject();
       JsonElement indicadorJson = condicionJson.get("indicador");
       JsonObject filtroJson = condicionJson.get("filtro").getAsJsonObject();
       Indicador indicador = context.deserialize(indicadorJson, Indicador.class);
       String filtroNombre = filtroJson.get("nombre").getAsString();
-      Integer filtroValor = filtroJson.get("valor").getAsInt();
       Filtro filtro = tiposFiltros.get(filtroNombre);
       filtro.setNombre(filtroNombre);
-      filtro.setValor(filtroValor);
       Condicion condicion = new Condicion();
       condicion.setFiltro(filtro);
       condicion.setIndicador(indicador);
+      condicion.setValor(condicionJson.get("valor").getAsInt());
       condiciones.add(condicion);
     }
+    
     JsonElement jsonOrden = jsonObject.get("orden");
     Orden orden = context.deserialize(jsonOrden, Orden.class);
     Metodologia metodologia = new Metodologia();

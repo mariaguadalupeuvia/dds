@@ -9,7 +9,13 @@ import java.util.List;
 
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
+import ar.org.utn.ddstpanual.model.metodologia.Condicion;
+import ar.org.utn.ddstpanual.model.metodologia.FiltroMayor;
+import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
+import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
+import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
 public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
@@ -31,8 +37,45 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
     withTransaction(() -> {
       entityManager().persist(empresa);
     });
+    
 //    entityManager().persist(empresa);
 //    entityManager().close();
-  }
+ }
+  
+  @Test
+  public void persistirMetodologia() 
+  {
 
+	Indicador indicador = new Indicador("activoTotal", "[activoCorriente]+[activoNoCorriente]");
+
+	List<Condicion> condiciones = new ArrayList<>();
+	condiciones.add(new Condicion(indicador, new FiltroMayor(), 500));
+	condiciones.add(new Condicion(indicador, new FiltroMenor(), 1000));
+   
+	Metodologia metodologia= new Metodologia("MET2",condiciones, new Orden());
+
+	  withTransaction(() -> {
+		  entityManager().persist(indicador);
+		  entityManager().persist(metodologia);
+		});
+
+  }
+  
+  @Test
+  public void obtenerMetodologia() 
+  {
+	  withTransaction(() -> {
+		  List<Metodologia> metodologias =  entityManager().createQuery("from Metodologia", Metodologia.class).getResultList();
+		
+//    for (Metodologia metod : metodologias) 
+//    {
+//      System.out.println("Metodologia: " + metod.getNombre());
+//      
+//      for (Condicion condicion : metod.getCondiciones()) 
+//      {
+//        System.out.println("Condicion: " + condicion.getIndicador() + " " + condicion.getFiltro().getNombre() + " " + condicion.getValor() );
+//      }
+//    }
+	  });
+  }
 }

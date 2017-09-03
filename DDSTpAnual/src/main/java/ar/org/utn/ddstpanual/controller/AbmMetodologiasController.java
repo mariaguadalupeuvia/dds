@@ -88,7 +88,7 @@ public class AbmMetodologiasController {
       Condicion condicion = new Condicion();
       condicion.setIndicador(indicadorCheckbox);
       Filtro filtro = tipoCondicionCheckbox;
-      filtro.setValor(valor);
+      condicion.setValor(valor);
       condicion.setFiltro(filtro);
       condiciones = getMetodologiaService().agregarCondicion(condiciones, condicion);
       indicadoresSeleccionados = getMetodologiaService().agregarIndicadorSeleccionado(indicadoresSeleccionados, indicadorCheckbox);

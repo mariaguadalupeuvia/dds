@@ -52,8 +52,8 @@ public class CondicionServiceImplTest {
   // boolean cumpleCondiciones(Metodologia metodologia, Empresa empresa, Periodo periodo)
   @Test
   public void testCumpleCondicionCondicionMayorA100() throws ArchivoException, ServiceException {
-    Filtro filtroTest = new FiltroMayor(100);
-    condicion1 = new Condicion(indicadorTest, filtroTest);
+    Filtro filtroTest = new FiltroMayor();
+    condicion1 = new Condicion(indicadorTest, filtroTest, 100);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
     metodologia = new Metodologia(nombreEmpresa, condiciones, null);
@@ -62,8 +62,8 @@ public class CondicionServiceImplTest {
 
   @Test
   public void testCumpleCondicionCondicionMayorIgualA1000() throws ArchivoException, ServiceException {
-    Filtro filtroTest = new FiltroMayorIgual(1000);
-    condicion1 = new Condicion(indicadorTest, filtroTest);
+    Filtro filtroTest = new FiltroMayorIgual();
+    condicion1 = new Condicion(indicadorTest, filtroTest, 1000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
     metodologia = new Metodologia(nombreEmpresa, condiciones, null);
@@ -72,8 +72,8 @@ public class CondicionServiceImplTest {
 
   @Test
   public void testNoCumpleCondicionCondicionIgualA2000() throws ArchivoException, ServiceException {
-    Filtro filtroTest = new FiltroIgual(2000);
-    condicion1 = new Condicion(indicadorTest, filtroTest);
+    Filtro filtroTest = new FiltroIgual();
+    condicion1 = new Condicion(indicadorTest, filtroTest, 2000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
     metodologia = new Metodologia(nombreEmpresa, condiciones, null);
@@ -82,8 +82,8 @@ public class CondicionServiceImplTest {
 
   @Test
   public void testCumpleCondicionCondicionMenorA2000() throws ArchivoException, ServiceException {
-    Filtro filtroTest = new FiltroMenor(2000);
-    condicion1 = new Condicion(indicadorTest, filtroTest);
+    Filtro filtroTest = new FiltroMenor();
+    condicion1 = new Condicion(indicadorTest, filtroTest, 2000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
     metodologia = new Metodologia(nombreEmpresa, condiciones, null);
@@ -92,8 +92,8 @@ public class CondicionServiceImplTest {
 
   @Test
   public void testCumpleCondicionCondicionMenorIgualA2000() throws ArchivoException, ServiceException {
-    Filtro filtroTest = new FiltroMenorIgual(1000);
-    condicion1 = new Condicion(indicadorTest, filtroTest);
+    Filtro filtroTest = new FiltroMenorIgual();
+    condicion1 = new Condicion(indicadorTest, filtroTest, 1000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
     metodologia = new Metodologia(nombreEmpresa, condiciones, null);

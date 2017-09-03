@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,7 +27,8 @@ public @Data class Empresa {
   @Id
   @GeneratedValue
   private int id;
-  @OneToMany @JoinColumn @Cascade(value=CascadeType.ALL)
+  @OneToMany 
+  @Cascade(value=CascadeType.ALL)
   private List<Cuenta> cuentas;
   private String nombre;
 

@@ -1,19 +1,44 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Observable
-public class Metodologia {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
+@Observable
+@Entity
+@Table(name = "METODOLOGIAS")
+@AllArgsConstructor
+@NoArgsConstructor
+
+@Data public class Metodologia 
+{
+
+  @Id
+  @GeneratedValue
+  private int id;
+  
   private String nombre;
+  @OneToMany
+  @Cascade(value=CascadeType.ALL)
+  @JoinColumn(name="metodologia_id")
   private List<Condicion> condiciones;
+  @Transient
   private Orden orden;
 
-  public Metodologia() {
-
-  }
 
   public Metodologia(String nombre, List<Condicion> condiciones, Orden orden) {
     this.nombre = nombre;
@@ -21,29 +46,6 @@ public class Metodologia {
     this.orden = orden;
   }
 
-  public String getNombre() {
-    return nombre;
-  }
-
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
-  public List<Condicion> getCondiciones() {
-    return condiciones;
-  }
-
-  public void setCondiciones(List<Condicion> condiciones) {
-    this.condiciones = condiciones;
-  }
-
-  public Orden getOrden() {
-    return orden;
-  }
-
-  public void setOrden(Orden orden) {
-    this.orden = orden;
-  }
 
   public String toJson() {
     StringBuilder builder = new StringBuilder();

@@ -15,9 +15,11 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
+
 @Entity
 @Table(name = "CUENTAS")
 @Observable
+
 public @Data class Cuenta {
 
   @Id
@@ -25,7 +27,7 @@ public @Data class Cuenta {
   private int id;
   private String nombre;
   @OneToMany
-  @JoinColumn
+  @JoinColumn(name="cuenta_id")
   @Cascade(value = CascadeType.ALL)
   private List<Periodo> periodos;
 

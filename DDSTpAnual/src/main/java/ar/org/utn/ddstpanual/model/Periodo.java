@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Observable
 @Table(name = "PERIODOS")
 @NoArgsConstructor
+
 public @Data class Periodo {
 
   @Id

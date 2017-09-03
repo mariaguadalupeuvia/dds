@@ -20,7 +20,7 @@ public class MetodologiaServiceImplTest {
   // obtenerIndicadores
   @Test
   public void testObtenerIndicadores() throws ServiceException {
-    metodologia = service.obtenerMetodologia("asd");
+    metodologia = service.obtenerMetodologia("MET1");
     System.out.println(metodologia.getNombre());
   }
 

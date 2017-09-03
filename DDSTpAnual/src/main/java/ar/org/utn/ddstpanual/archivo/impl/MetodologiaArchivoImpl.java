@@ -62,6 +62,7 @@ public class MetodologiaArchivoImpl implements MetodologiaArchivo {
         metodologia = gson.fromJson(linea, Metodologia.class);
       }
     } catch (final IOException e) {
+    	System.out.println(e.getMessage());
       throw new ArchivoException("Error al abrir el archivo");
     } finally {
       try {

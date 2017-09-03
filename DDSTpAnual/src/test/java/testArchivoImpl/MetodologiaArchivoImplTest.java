@@ -27,8 +27,8 @@ public class MetodologiaArchivoImplTest {
 
     String nombre = "MetodologiaArchivo";
     Indicador indicadorTest = new Indicador("IndicadorMetodologia", "{IndicadorA}/50");
-    Filtro filtroTest = new FiltroMayor(100);
-    Condicion condicion1 = new Condicion(indicadorTest, filtroTest);
+    Filtro filtroTest = new FiltroMayor();
+    Condicion condicion1 = new Condicion(indicadorTest, filtroTest, 100);
     ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
     TipoOrden tipoOrdenTest = new TipoOrden();
