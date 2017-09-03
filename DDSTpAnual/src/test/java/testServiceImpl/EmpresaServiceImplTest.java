@@ -43,16 +43,16 @@ public class EmpresaServiceImplTest {
   @Test
   public void testObtenerDatosEmpresa() throws ServiceException {
     Empresa empresaTest = new Empresa();
-   
-    for(Empresa e : empresaService.obtenerEmpresas()){
-      if(e.getNombre().equals("Facebook")){
+
+    for (Empresa e : empresaService.obtenerEmpresas()) {
+      if (e.getNombre().equals("Facebook")) {
         empresaTest = e;
       }
     }
-    
-    for(EmpresaExcel empresa : empresaService.buscar(empresaTest,null, null)){
+
+    for (EmpresaExcel empresa : empresaService.buscar(empresaTest, null, null)) {
       System.out.println(empresa.toString());
-    };
+    } ;
   }
 
 }

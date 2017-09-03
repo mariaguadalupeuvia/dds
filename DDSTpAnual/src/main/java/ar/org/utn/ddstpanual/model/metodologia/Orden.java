@@ -9,13 +9,14 @@ public class Orden {
 
   private Indicador indicador;
   private TipoOrden tipoOrden;
-  
-  public Orden(){}
-  
-  public Orden(Indicador indicador, TipoOrden tipoOrden){
+
+  public Orden() {}
+
+  public Orden(Indicador indicador, TipoOrden tipoOrden) {
     this.indicador = indicador;
     this.tipoOrden = tipoOrden;
   }
+
   public Indicador getIndicador() {
     return indicador;
   }

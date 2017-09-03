@@ -36,11 +36,11 @@ public class Metodologia {
   public void setCondiciones(List<Condicion> condiciones) {
     this.condiciones = condiciones;
   }
-  
+
   public Orden getOrden() {
     return orden;
   }
-  
+
   public void setOrden(Orden orden) {
     this.orden = orden;
   }

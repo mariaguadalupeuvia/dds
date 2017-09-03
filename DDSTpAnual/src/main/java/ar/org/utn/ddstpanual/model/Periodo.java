@@ -2,13 +2,25 @@ package ar.org.utn.ddstpanual.model;
 
 import org.uqbar.commons.utils.Observable;
 
-@Observable
-public class Periodo {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Observable
+@Table(name = "PERIODOS")
+@NoArgsConstructor
+public @Data class Periodo {
+
+  @Id
+  @GeneratedValue
+  private int id;
   private String fecha;
   private double valor;
-
-  public Periodo() {}
 
   public Periodo(final String fecha) {
     this.fecha = fecha;
@@ -20,22 +32,6 @@ public class Periodo {
     this.valor = valor;
   }
 
-  public String getFecha() {
-    return fecha;
-  }
-
-  public void setFecha(final String fecha) {
-    this.fecha = fecha;
-  }
-
-  public double getValor() {
-    return valor;
-  }
-
-  public void setValor(final double valor) {
-    this.valor = valor;
-  }
-  
   @Override
   public String toString() {
     final StringBuilder builder = new StringBuilder();

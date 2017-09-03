@@ -21,6 +21,12 @@
       <version>3.0</version>
     </dependency>
     <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.18</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
       <version>3.16</version>
@@ -59,6 +65,18 @@
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.6.2</version>
+    </dependency>
+    <!-- JPA Persistence Dependencies -->
+    <dependency>
+      <groupId>org.uqbar-project</groupId>
+      <artifactId>jpa-java8-extras</artifactId>
+      <version>1.0-alpha-1</version>
+    </dependency>
+    <!-- driver jdbc -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.26</version>
     </dependency>
   </dependencies>
 

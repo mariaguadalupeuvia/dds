@@ -17,11 +17,11 @@ public class CuentaNode extends Node {
   public double obtenerValor(final String fechaPeriodo, final Empresa empresa) throws NodeException {
     final double valor = empresa.obtenerValor(nombreCuenta, fechaPeriodo);
     System.out.println(this.nombreCuenta + ": " + valor + "\n");
-   /* if (valor == 0) {
-      throw new NodeException(
-          "La cuenta " + nombreCuenta + " no existe para la empresa " + empresa.getNombre() + " en el período " + fechaPeriodo);
-    }*/
-    
+    /*
+     * if (valor == 0) { throw new NodeException( "La cuenta " + nombreCuenta +
+     * " no existe para la empresa " + empresa.getNombre() + " en el período " + fechaPeriodo); }
+     */
+
     return valor;
   }
 

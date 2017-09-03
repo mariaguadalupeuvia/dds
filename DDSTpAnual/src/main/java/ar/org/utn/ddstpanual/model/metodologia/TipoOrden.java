@@ -10,16 +10,19 @@ public class TipoOrden {
 
   private Integer idTipoOrden;
   private String nombreOrden;
-  
+
   public Integer getIdTipoOrden() {
     return idTipoOrden;
   }
+
   public void setIdTipoOrden(Integer idTipoOrden) {
     this.idTipoOrden = idTipoOrden;
   }
+
   public String getNombreOrden() {
     return nombreOrden;
   }
+
   public void setNombreOrden(String nombreOrden) {
     this.nombreOrden = nombreOrden;
   }

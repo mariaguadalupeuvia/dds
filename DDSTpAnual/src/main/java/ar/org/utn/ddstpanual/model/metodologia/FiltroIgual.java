@@ -19,7 +19,7 @@ public class FiltroIgual extends Filtro {
   public FiltroIgual() {
     this.setNombre("Igual");
   }
-  
+
   public FiltroIgual(Integer valor) {
     this.setNombre("Igual");
     super.setValor(valor);

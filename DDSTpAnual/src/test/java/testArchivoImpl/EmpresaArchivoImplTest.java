@@ -19,71 +19,71 @@ public class EmpresaArchivoImplTest {
   EmpresaArchivoImpl empresaArchivo;
   List<Periodo> periodos = new ArrayList<Periodo>();
   EmpresaExcel empresa;
-  
+
   EmpresaExcel empresaBusqueda1;
   EmpresaExcel empresaBusqueda2;
 
   @Before
   public void init() {
     empresaArchivo = new EmpresaArchivoImpl();
-    
-    empresaBusqueda1 = new EmpresaExcel("EmpresaBusqueda","CuentaA","2016", 200);
-    empresaBusqueda2 = new EmpresaExcel("EmpresaBusqueda","CuentaA","2017", 300);
-   
+
+    empresaBusqueda1 = new EmpresaExcel("EmpresaBusqueda", "CuentaA", "2016", 200);
+    empresaBusqueda2 = new EmpresaExcel("EmpresaBusqueda", "CuentaA", "2017", 300);
+
   }
-  
+
   // Test guardar empresa
   @Test
   public void testGuardarEmpresaEnExcel() throws ArchivoException {
-    empresa = new EmpresaExcel("EmpresaArchivo","Cuenta1","2016", 500);
+    empresa = new EmpresaExcel("EmpresaArchivo", "Cuenta1", "2016", 500);
     empresaArchivo.guardarEmpresa(empresa);
   }
-  
+
   // Test sobre la existencia de datos en un archivo
   @Test
   public void testExisteEmpresaEnArchivo() throws ArchivoException {
-    empresa = new EmpresaExcel("EmpresaArchivo","Cuenta1","2016", 500);
+    empresa = new EmpresaExcel("EmpresaArchivo", "Cuenta1", "2016", 500);
     assertTrue(empresaArchivo.exists(empresa));
   }
-  
+
   @Test
   public void testNoExisteEmpresaEnArchivo() throws ArchivoException {
-    empresa = new EmpresaExcel("EmpresaArchivo","Cuenta2","2016", 500);
+    empresa = new EmpresaExcel("EmpresaArchivo", "Cuenta2", "2016", 500);
     assertFalse(empresaArchivo.exists(empresa));
   }
-  
+
   // Test sobre los datos guardados
   @Test
   public void testObtenerEmpresaGuardada() throws ArchivoException {
-    if(!empresaArchivo.exists(empresaBusqueda1)){
+    if (!empresaArchivo.exists(empresaBusqueda1)) {
       empresaArchivo.guardarEmpresa(empresaBusqueda1);
     }
-    
-    if(!empresaArchivo.exists(empresaBusqueda2)){
+
+    if (!empresaArchivo.exists(empresaBusqueda2)) {
       empresaArchivo.guardarEmpresa(empresaBusqueda2);
     }
-    
-    for(Empresa empresa : empresaArchivo.obtenerEmpresas()){
-      if(empresa.getNombre().equals("EmpresaBusqueda")){
-         System.out.println(empresa.toString());
+
+    for (Empresa empresa : empresaArchivo.obtenerEmpresas()) {
+      if (empresa.getNombre().equals("EmpresaBusqueda")) {
+        System.out.println(empresa.toString());
       }
-    };
+    } ;
   }
-  
+
   @Test
   public void testEncontrarPeriodosDeEmpresaGuardadas() throws ArchivoException {
-    if(!empresaArchivo.exists(empresaBusqueda1)){
+    if (!empresaArchivo.exists(empresaBusqueda1)) {
       empresaArchivo.guardarEmpresa(empresaBusqueda1);
     }
-    
-    if(!empresaArchivo.exists(empresaBusqueda2)){
+
+    if (!empresaArchivo.exists(empresaBusqueda2)) {
       empresaArchivo.guardarEmpresa(empresaBusqueda2);
     }
-    for(Periodo periodo : empresaArchivo.obtenerPeriodos("EmpresaBusqueda")){
+    for (Periodo periodo : empresaArchivo.obtenerPeriodos("EmpresaBusqueda")) {
       System.out.println(periodo);
     }
   }
-  
+
   @Test(expected = ArchivoException.class)
   public void testBuscarPeriodosDeUnaEmpresaQueNoExiste() throws ArchivoException {
     empresaArchivo.obtenerPeriodos("EmpresaInexistente");

@@ -52,7 +52,7 @@ public class MetodologiasController {
       error = "Se produjo un error al obtener las metodologias.";
     }
   }
-  
+
   public List<Periodo> obtenerPeriodos() {
     error = "";
     try {
@@ -67,14 +67,15 @@ public class MetodologiasController {
   }
 
   public void ejecutarMetodologia() {
-	error = "";
+    error = "";
     try {
       empresasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox, periodoCheckbox);
-      if(empresasResultado.isEmpty()) error = "No se encuentran empresas que cumplan estas condiciones \n para el año " + periodoCheckbox.getFecha();
+      if (empresasResultado.isEmpty())
+        error = "No se encuentran empresas que cumplan estas condiciones \n para el año " + periodoCheckbox.getFecha();
     } catch (final ServiceException e) {
       error = "Se produjo un error al obtener las empresas.";
     } catch (final NullPointerException n) {
-	  error = "Debe completar todos los campos";
+      error = "Debe completar todos los campos";
     }
   }
 
@@ -137,17 +138,19 @@ public class MetodologiasController {
   public void setMetodologiaCheckbox(Metodologia metodologiaCheckbox) {
     this.metodologiaCheckbox = metodologiaCheckbox;
   }
+
   public Periodo getPeriodoCheckbox() {
-	    return periodoCheckbox;
-	  }
+    return periodoCheckbox;
+  }
 
   public void setPeriodoCheckbox(final Periodo periodoCheckbox) {
     this.periodoCheckbox = periodoCheckbox;
   }
-  public List<Periodo> getPeriodos() {
-	    return periodos;
 
-	  }
+  public List<Periodo> getPeriodos() {
+    return periodos;
+
+  }
 
   public void setPeriodos(final List<Periodo> periodos) {
     this.periodos = periodos;

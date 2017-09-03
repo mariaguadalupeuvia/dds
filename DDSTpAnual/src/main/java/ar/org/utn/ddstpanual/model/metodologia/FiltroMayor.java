@@ -19,7 +19,7 @@ public class FiltroMayor extends Filtro {
   public FiltroMayor() {
     this.setNombre("Mayor");
   }
-  
+
   public FiltroMayor(Integer valor) {
     this.setNombre("Mayor");
     super.setValor(valor);
@@ -29,7 +29,7 @@ public class FiltroMayor extends Filtro {
   public boolean cumpleCondicion(Indicador indicador, Empresa empresa, Periodo periodo) throws FiltroException {
     try {
       List<FormulaIndicador> formulaIndicador =
-          getIndicadorService().ejecutarIndicador(indicador.getFormula(),periodo.getFecha() , empresa);
+          getIndicadorService().ejecutarIndicador(indicador.getFormula(), periodo.getFecha(), empresa);
       return formulaIndicador.get(0).getValor() > this.getValor();
     } catch (ServiceException e) {
       throw new FiltroException(e.getMessage());

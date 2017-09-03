@@ -5,18 +5,29 @@ import org.uqbar.commons.utils.Observable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
 @Observable
-public class Empresa {
+@Table(name = "EMPRESAS")
+@AllArgsConstructor
+@NoArgsConstructor
+public @Data class Empresa {
 
-  List<Cuenta> cuentas;
-  String nombre;
-
-  public Empresa() {}
-
-  public Empresa(final List<Cuenta> cuentas, final String nombre) {
-    this.cuentas = cuentas;
-    this.nombre = nombre;
-  }
+  @Id
+  @GeneratedValue
+  private int id;
+  @OneToMany
+  private List<Cuenta> cuentas;
+  private String nombre;
 
   public double obtenerValor(final String nombreCuenta, final String periodo) {
     double valor = 0;
@@ -25,7 +36,6 @@ public class Empresa {
         valor = cue.obtenerValor(periodo);
     }
     return valor;
-
   }
 
   public List<Periodo> obtenerPeriodos() {
@@ -38,22 +48,6 @@ public class Empresa {
       }
     }
     return periodos;
-  }
-
-  public List<Cuenta> getCuentas() {
-    return cuentas;
-  }
-
-  public void setCuentas(final List<Cuenta> cuentas) {
-    this.cuentas = cuentas;
-  }
-
-  public String getNombre() {
-    return nombre;
-  }
-
-  public void setNombre(final String nombre) {
-    this.nombre = nombre;
   }
 
   @Override

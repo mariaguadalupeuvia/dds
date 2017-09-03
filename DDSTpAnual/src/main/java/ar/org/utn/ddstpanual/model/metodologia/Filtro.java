@@ -14,9 +14,6 @@ import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 @Observable
 public abstract class Filtro implements Serializable {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1L;
 
   private IndicadorService indicadorService;
@@ -27,7 +24,7 @@ public abstract class Filtro implements Serializable {
   public Filtro() {
 
   }
-  
+
   public Filtro(Integer valor) {
     this.valor = valor;
   }

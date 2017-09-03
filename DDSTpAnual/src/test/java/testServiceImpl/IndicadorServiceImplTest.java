@@ -10,6 +10,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
@@ -45,7 +49,15 @@ public class IndicadorServiceImplTest {
     cuentas.add(new Cuenta("cuenta1", periodos));
     cuentas.add(new Cuenta("cuenta2", periodos));
 
-    ejemplo = new Empresa(cuentas, "Ejemplo");
+    ejemplo = new Empresa(1, cuentas, "Ejemplo");
+  }
+
+  @Test
+  public void probandoPersistencia() {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.hibernate.tutorial.jpa");
+    EntityManager em = emf.createEntityManager();
+    Empresa empresa = new Empresa(1, null, "Ejemplo");
+    em.persist(empresa);
   }
 
   // Test sobre el guardado de indicadores

@@ -2,51 +2,20 @@ package ar.org.utn.ddstpanual.model;
 
 import org.uqbar.commons.utils.Observable;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Observable
-public class EmpresaExcel {
+public @Data @NoArgsConstructor class EmpresaExcel {
   private String nombreEmpresa;
   private String nombreCuenta;
   private String fecha;
   private double valor;
 
-  public EmpresaExcel(String nombreEmpresa, String nombreCuenta, String fecha, double valor){
+  public EmpresaExcel(String nombreEmpresa, String nombreCuenta, String fecha, double valor) {
     this.nombreEmpresa = nombreEmpresa;
     this.nombreCuenta = nombreCuenta;
     this.fecha = fecha;
-    this.valor = valor;
-  }
-  
-  public EmpresaExcel(){}
-  
-  public String getNombreEmpresa() {
-    return nombreEmpresa;
-  }
-
-  public void setNombreEmpresa(final String nombreEmpresa) {
-    this.nombreEmpresa = nombreEmpresa;
-  }
-
-  public String getNombreCuenta() {
-    return nombreCuenta;
-  }
-
-  public void setNombreCuenta(final String nombreCuenta) {
-    this.nombreCuenta = nombreCuenta;
-  }
-
-  public String getFecha() {
-    return fecha;
-  }
-
-  public void setFecha(final String fecha) {
-    this.fecha = fecha;
-  }
-
-  public double getValor() {
-    return valor;
-  }
-
-  public void setValor(final double valor) {
     this.valor = valor;
   }
 
