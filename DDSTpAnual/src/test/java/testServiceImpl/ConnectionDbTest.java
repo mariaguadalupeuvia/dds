@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +68,7 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
   {
 	  withTransaction(() -> {
 		  List<Metodologia> metodologias =  entityManager().createQuery("from Metodologia", Metodologia.class).getResultList();
-		
+		  assertTrue(metodologias.size()>0);
 //    for (Metodologia metod : metodologias) 
 //    {
 //      System.out.println("Metodologia: " + metod.getNombre());

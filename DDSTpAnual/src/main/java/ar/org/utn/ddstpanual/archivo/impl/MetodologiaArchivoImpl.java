@@ -12,13 +12,13 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.org.utn.ddstpanual.archivo.MetodologiaArchivo;
+import ar.org.utn.ddstpanual.archivo.MetodologiaAlmacenamiento;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.utils.MetodologiaClassAdapter;
 
 
-public class MetodologiaArchivoImpl implements MetodologiaArchivo {
+public class MetodologiaArchivoImpl implements MetodologiaAlmacenamiento {
 
   String pathMetodologias = "\\src\\main\\resources\\metodologias\\";
 
