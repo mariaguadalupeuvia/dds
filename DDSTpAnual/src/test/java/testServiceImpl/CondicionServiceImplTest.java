@@ -56,7 +56,7 @@ public class CondicionServiceImplTest {
     condicion1 = new Condicion(indicadorTest, filtroTest, 100);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
-    metodologia = new Metodologia(nombreEmpresa, condiciones, null);
+    metodologia = new Metodologia(nombreEmpresa, condiciones);
     assertTrue(condicionService.cumpleCondiciones(metodologia, empresaTest, periodoTest));
   }
 
@@ -66,7 +66,7 @@ public class CondicionServiceImplTest {
     condicion1 = new Condicion(indicadorTest, filtroTest, 1000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
-    metodologia = new Metodologia(nombreEmpresa, condiciones, null);
+    metodologia = new Metodologia(nombreEmpresa, condiciones);
     assertTrue(condicionService.cumpleCondiciones(metodologia, empresaTest, periodoTest));
   }
 
@@ -76,7 +76,7 @@ public class CondicionServiceImplTest {
     condicion1 = new Condicion(indicadorTest, filtroTest, 2000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
-    metodologia = new Metodologia(nombreEmpresa, condiciones, null);
+    metodologia = new Metodologia(nombreEmpresa, condiciones);
     assertFalse(condicionService.cumpleCondiciones(metodologia, empresaTest, periodoTest));
   }
 
@@ -86,7 +86,7 @@ public class CondicionServiceImplTest {
     condicion1 = new Condicion(indicadorTest, filtroTest, 2000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
-    metodologia = new Metodologia(nombreEmpresa, condiciones, null);
+    metodologia = new Metodologia(nombreEmpresa, condiciones);
     assertTrue(condicionService.cumpleCondiciones(metodologia, empresaTest, periodoTest));
   }
 
@@ -96,7 +96,7 @@ public class CondicionServiceImplTest {
     condicion1 = new Condicion(indicadorTest, filtroTest, 1000);
     condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
-    metodologia = new Metodologia(nombreEmpresa, condiciones, null);
+    metodologia = new Metodologia(nombreEmpresa, condiciones);
     assertTrue(condicionService.cumpleCondiciones(metodologia, empresaTest, periodoTest));
   }
 

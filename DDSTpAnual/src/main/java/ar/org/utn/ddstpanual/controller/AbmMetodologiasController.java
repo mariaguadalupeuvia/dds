@@ -17,8 +17,6 @@ import ar.org.utn.ddstpanual.model.metodologia.FiltroMayorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import ar.org.utn.ddstpanual.model.metodologia.Orden;
-import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.MetodologiaService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
@@ -35,26 +33,17 @@ public class AbmMetodologiasController {
   List<Indicador> indicadoresSeleccionados;
   Indicador indicadorCheckbox;
   Indicador indicadorOrdenCheckbox;
-  TipoOrden tipoOrdenCheckbox;
 
   List<Filtro> tiposCondiciones;
   Filtro tipoCondicionCheckbox;
   List<Condicion> condiciones;
-  List<TipoOrden> tiposOrden;
+
 
   Integer valor;
   String error;
 
   public void inicializarVariables() {
-    tiposOrden = new ArrayList<>();
-    TipoOrden ascendente = new TipoOrden();
-    ascendente.setIdTipoOrden(TipoOrden.ASCENDENTE);
-    ascendente.setNombreOrden("Ascendente");
-    TipoOrden descendente = new TipoOrden();
-    descendente.setIdTipoOrden(TipoOrden.DESCENDENTE);
-    descendente.setNombreOrden("Descendente");
-    tiposOrden.add(ascendente);
-    tiposOrden.add(descendente);
+
     tiposCondiciones = new ArrayList<>();
     tiposCondiciones.add(new FiltroCreciente());
     tiposCondiciones.add(new FiltroDecreciente());
@@ -103,10 +92,7 @@ public class AbmMetodologiasController {
       Metodologia metodologia = new Metodologia();
       metodologia.setCondiciones(condiciones);
       metodologia.setNombre(nombre);
-      Orden orden = new Orden();
-      orden.setIndicador(indicadorOrdenCheckbox);
-      orden.setTipoOrden(tipoOrdenCheckbox);
-      metodologia.setOrden(orden);
+
       getMetodologiaService().guardarMetodologia(metodologia);
     } catch (ServiceException e) {
       error = e.getMessage();
@@ -210,20 +196,5 @@ public class AbmMetodologiasController {
     this.indicadorOrdenCheckbox = indicadorOrdenCheckbox;
   }
 
-  public List<TipoOrden> getTiposOrden() {
-    return tiposOrden;
-  }
-
-  public void setTiposOrden(List<TipoOrden> tiposOrden) {
-    this.tiposOrden = tiposOrden;
-  }
-
-  public TipoOrden getTipoOrdenCheckbox() {
-    return tipoOrdenCheckbox;
-  }
-
-  public void setTipoOrdenCheckbox(TipoOrden tipoOrdenCheckbox) {
-    this.tipoOrdenCheckbox = tipoOrdenCheckbox;
-  }
 
 }

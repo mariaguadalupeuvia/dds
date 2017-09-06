@@ -28,7 +28,6 @@ import ar.org.utn.ddstpanual.model.metodologia.FiltroMayorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
 public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, JsonDeserializer<Metodologia> {
 
@@ -37,7 +36,6 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
     JsonObject result = new JsonObject();
     result.add("nombre", new JsonPrimitive(src.getNombre()));
     result.add("condiciones", context.serialize(src.getCondiciones(), src.getCondiciones().getClass()));
-    result.add("orden", context.serialize(src.getOrden(), src.getOrden().getClass()));
     return result;
   }
 
@@ -75,12 +73,9 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
       condiciones.add(condicion);
     }
 
-    JsonElement jsonOrden = jsonObject.get("orden");
-    Orden orden = context.deserialize(jsonOrden, Orden.class);
     Metodologia metodologia = new Metodologia();
     metodologia.setNombre(nombre);
     metodologia.setCondiciones(condiciones);
-    metodologia.setOrden(orden);
     return metodologia;
 
   }

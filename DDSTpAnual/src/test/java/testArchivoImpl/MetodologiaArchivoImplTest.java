@@ -14,8 +14,6 @@ import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMayor;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import ar.org.utn.ddstpanual.model.metodologia.Orden;
-import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 
 public class MetodologiaArchivoImplTest {
   MetodologiaDb metodologiaDb;
@@ -32,11 +30,8 @@ public class MetodologiaArchivoImplTest {
     Condicion condicion1 = new Condicion(indicadorTest, filtroTest, 100);
     ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
-    TipoOrden tipoOrdenTest = new TipoOrden();
-    tipoOrdenTest.setIdTipoOrden(TipoOrden.ASCENDENTE);
-    Orden ordenTest = new Orden(indicadorTest, tipoOrdenTest);
 
-    metodologia = new Metodologia(nombre, condiciones, ordenTest);
+    metodologia = new Metodologia(nombre, condiciones);
 
   }
 

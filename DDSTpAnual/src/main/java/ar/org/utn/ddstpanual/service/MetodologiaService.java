@@ -17,8 +17,8 @@ public interface MetodologiaService {
 
   public List<Metodologia> obtenerMetodologias() throws ServiceException;
 
-  public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Metodologia metodologia, Periodo periodo) throws ServiceException;
-
+  public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, List<Condicion> condiciones, Periodo periodo);
+  
   public List<Condicion> agregarCondicion(List<Condicion> condiciones, Condicion condicion) throws ServiceException;
 
   public List<Indicador> agregarIndicadorSeleccionado(List<Indicador> indicadores, Indicador indicador) throws ServiceException;
