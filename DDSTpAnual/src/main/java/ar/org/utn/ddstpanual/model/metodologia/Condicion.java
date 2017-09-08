@@ -1,9 +1,8 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,11 +30,9 @@ public class Condicion {
   @GeneratedValue
   private long id;
   private Integer valor;
-  @ManyToOne
-  @Cascade(value = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private Indicador indicador;
-  @ManyToOne
-  @Cascade(value = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private Filtro filtro;
 
 

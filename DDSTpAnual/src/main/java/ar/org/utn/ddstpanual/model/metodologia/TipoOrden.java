@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Observable
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "TIPO_ORDEN")
-@Data
+//@Entity
+//@Table(name = "TIPO_ORDEN")
+//@Data
 public class TipoOrden {
 
   public static Integer ASCENDENTE = 1;

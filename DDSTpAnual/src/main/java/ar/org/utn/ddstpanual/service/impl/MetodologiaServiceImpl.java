@@ -17,7 +17,6 @@ import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
-import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 import ar.org.utn.ddstpanual.service.CondicionService;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.MetodologiaService;
@@ -91,6 +90,13 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     return nuevasCondiciones;
   }
 
+@Override
+public List<Orden> agregarOrden(List<Orden> ordenes, Orden orden) throws ServiceException {
+    List<Orden> nuevosOrdenes = new ArrayList<>();
+    nuevosOrdenes.addAll(ordenes);
+    nuevosOrdenes.add(orden);
+    return nuevosOrdenes;
+}
   @Override
   public List<Indicador> agregarIndicadorSeleccionado(List<Indicador> indicadores, Indicador indicador) throws ServiceException {
     List<Indicador> indicadoresSeleccionados = new ArrayList<>();
@@ -132,11 +138,11 @@ public class MetodologiaServiceImpl implements MetodologiaService {
       Double valorE1 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e1).get(0).getValor();
       Double valorE2 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e2).get(0).getValor();
 
-      if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.ASCENDENTE) {
+      if ( orden.getTipoOrden() == "Ascendente") {
         flag = Double.compare(valorE1, valorE2);
       }
 
-      if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.DESCENDENTE) {
+      if (orden.getTipoOrden() == "Descendente") {
         flag = Double.compare(valorE2, valorE1);
       }
       
@@ -146,4 +152,6 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     }
     return flag;
   }
+
+
 }

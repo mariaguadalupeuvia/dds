@@ -1,16 +1,16 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -30,16 +30,16 @@ public class Metodologia {
   private int id;
 
   private String nombre;
-  @OneToMany
-  @Cascade(value = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "metodologia_id")
   private List<Condicion> condiciones;
-  @OneToMany
-  @Cascade(value = CascadeType.ALL)
+  
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "metodologia_id")
+  @OrderColumn(name="prioridad")
   private List<Orden> ordenes;
 
-
+  
   public Metodologia(String nombre, List<Condicion> condiciones, List<Orden> ordenes) {
     this.nombre = nombre;
     this.condiciones = condiciones;

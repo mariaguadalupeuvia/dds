@@ -8,6 +8,7 @@ import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
+import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
 public interface MetodologiaService {
 
@@ -22,5 +23,7 @@ public interface MetodologiaService {
   public List<Condicion> agregarCondicion(List<Condicion> condiciones, Condicion condicion) throws ServiceException;
 
   public List<Indicador> agregarIndicadorSeleccionado(List<Indicador> indicadores, Indicador indicador) throws ServiceException;
+
+  public List<Orden> agregarOrden(List<Orden> ordenes, Orden orden) throws ServiceException;
 
 }

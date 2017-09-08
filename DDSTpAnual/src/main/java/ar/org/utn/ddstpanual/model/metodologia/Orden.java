@@ -1,7 +1,5 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
 
 import javax.persistence.Entity;
@@ -26,15 +24,13 @@ public class Orden {
   @Id
   @GeneratedValue
   private int id;
+  
   @ManyToOne
-  @Cascade(value = CascadeType.ALL)
   private Indicador indicador;
-  @ManyToOne
-  private TipoOrden tipoOrden;
 
-  //public Orden() {}
+  private String tipoOrden;
 
-  public Orden(Indicador indicador, TipoOrden tipoOrden) {
+  public Orden(Indicador indicador, String tipoOrden) {
     this.indicador = indicador;
     this.tipoOrden = tipoOrden;
   }
@@ -47,16 +43,16 @@ public class Orden {
     this.indicador = indicador;
   }
 
-  public TipoOrden getTipoOrden() {
+  public String getTipoOrden() {
     return tipoOrden;
   }
 
-  public void setTipoOrden(TipoOrden tipoOrden) {
+  public void setTipoOrden(String tipoOrden) {
     this.tipoOrden = tipoOrden;
   }
   
   public String toJson(){
-    return "orden: {\n" + indicador.toJson() + ", tipo orden: " + tipoOrden.toJson() + "}";
+    return "orden: {\n" + indicador.toJson() + ", tipo orden: " + tipoOrden + "}";
   }
 
 }
