@@ -78,8 +78,7 @@ public class EmpresaServiceImpl implements EmpresaService {
   @Override
   public List<Empresa> obtenerEmpresas() throws ServiceException {
     try {
-      final List<Empresa> empresas = getEmpresaArchivo().obtenerEmpresas();
-      empresas.addAll(getEmpresaDb().obtenerEmpresas());
+      final List<Empresa> empresas = getEmpresaDb().obtenerEmpresas();
       return empresas;
     } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());

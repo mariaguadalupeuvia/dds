@@ -1,12 +1,11 @@
 package ar.org.utn.ddstpanual.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,12 +27,17 @@ public @Data class Empresa {
   @Id
   @GeneratedValue
   private int id;
-  @OneToMany
-  @Cascade(value = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "empresa_id")
   private List<Cuenta> cuentas;
   private String nombre;
 
+  public Empresa(String nombre, List<Cuenta> cuentas)
+  {
+	  this.nombre = nombre;
+	  this.cuentas = cuentas;
+  }
+  
   public double obtenerValor(final String nombreCuenta, final String periodo) {
     double valor = 0;
     for (final Cuenta cue : cuentas) {

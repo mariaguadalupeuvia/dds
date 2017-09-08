@@ -32,8 +32,8 @@ public class EmpresaDbImpl implements EmpresaDb, WithGlobalEntityManager, Transa
 
   @Override
   public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ArchivoException {
-    return entityManager().createQuery(
-        "from Periodo p where p.id in (select id from Cuenta c where c.id in (select e.id from Empresa where nombre = :nombre))",
+    return entityManager().createQuery("select p.fecha from Periodo p inner join Cuenta c on p.cuenta_id=c.id inner join Empresa e on c.empresa_id= e.id where e.nombre like :nombre",
+        //"from Periodo p where p.cuenta_id in (select c.id from Cuenta c where c.empresa_id in (select e.id from Empresa e where e.nombre = :nombre))",
         Periodo.class).setParameter("nombre", nombreEmpresa).getResultList();
   }
 

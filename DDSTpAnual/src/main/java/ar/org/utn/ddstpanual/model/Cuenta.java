@@ -1,11 +1,10 @@
 package ar.org.utn.ddstpanual.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,9 +24,8 @@ public @Data class Cuenta {
   @GeneratedValue
   private int id;
   private String nombre;
-  @OneToMany
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "cuenta_id")
-  @Cascade(value = CascadeType.ALL)
   private List<Periodo> periodos;
 
   public Cuenta() {}
