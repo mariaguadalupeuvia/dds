@@ -39,7 +39,7 @@ public class MetodologiaArchivoImplTest {
     
     TipoOrden tipoOrdenTest = new TipoOrden();
     tipoOrdenTest.setIdTipoOrden(TipoOrden.ASCENDENTE);
-    Orden ordenTest = new Orden(indicadorTest, tipoOrdenTest);
+    Orden ordenTest = new Orden(indicadorTest, "Ascendente");
     
     List<Orden> ordenes = new ArrayList<>();
     ordenes.add(ordenTest);
