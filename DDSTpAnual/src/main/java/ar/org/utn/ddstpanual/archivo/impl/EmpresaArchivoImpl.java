@@ -21,7 +21,6 @@ import ar.org.utn.ddstpanual.model.Periodo;
 
 public class EmpresaArchivoImpl implements EmpresaArchivo {
 
-  @Override
   public void guardarEmpresa(final EmpresaExcel empresa) throws ArchivoException {
     final String path = System.getProperty("user.dir");
     FileWriter filewriter = null;

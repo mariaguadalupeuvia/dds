@@ -5,7 +5,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import ar.org.utn.ddstpanual.archivo.impl.MetodologiaArchivoImpl;
+import ar.org.utn.ddstpanual.db.MetodologiaDb;
+import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -17,13 +18,13 @@ import ar.org.utn.ddstpanual.model.metodologia.Orden;
 import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 
 public class MetodologiaArchivoImplTest {
-  MetodologiaArchivoImpl metodologiaArchivo;
+  MetodologiaDb metodologiaDb;
   Metodologia metodologia;
 
 
   @Before
   public void init() {
-    metodologiaArchivo = new MetodologiaArchivoImpl();
+    metodologiaDb = new MetodologiaDbImpl();
 
     String nombre = "MetodologiaArchivo";
     Indicador indicadorTest = new Indicador("IndicadorMetodologia", "{IndicadorA}/50");
@@ -42,22 +43,22 @@ public class MetodologiaArchivoImplTest {
   // Test guardar empresa
   @Test
   public void testGuardarMetodologia() throws ArchivoException {
-    metodologiaArchivo.guardarMetodologia(metodologia);
+    metodologiaDb.guardarMetodologia(metodologia);
   }
 
   @Test
   public void testMostrarMetodologiaExistente() throws ServiceException, ArchivoException {
-    System.out.println(metodologiaArchivo.obtenerMetodologia("MetodologiaArchivo").toJson());
+    System.out.println(metodologiaDb.obtenerMetodologia("MetodologiaArchivo").toJson());
   }
 
   @Test(expected = ArchivoException.class)
   public void testMostrarMetodologiaInexistente() throws ServiceException, ArchivoException {
-    System.out.println(metodologiaArchivo.obtenerMetodologia("MetodologiaArchivoInexistente").toJson());
+    System.out.println(metodologiaDb.obtenerMetodologia("MetodologiaArchivoInexistente").toJson());
   }
 
   @Test
   public void testObtenerMetodologiasGuardadas() throws ArchivoException {
-    for (Metodologia m : metodologiaArchivo.obtenerMetodologias()) {
+    for (Metodologia m : metodologiaDb.obtenerMetodologias()) {
       System.out.println(m.toJson());
     } ;
   }

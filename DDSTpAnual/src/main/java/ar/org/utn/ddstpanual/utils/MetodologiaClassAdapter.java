@@ -59,7 +59,7 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
     String nombre = jsonObject.get("nombre").getAsString();
     JsonArray condicionesJson = jsonObject.getAsJsonArray("condiciones");
     Iterator<JsonElement> iterator = condicionesJson.iterator();
-    
+
     while (iterator.hasNext()) {
       JsonObject condicionJson = iterator.next().getAsJsonObject();
       JsonElement indicadorJson = condicionJson.get("indicador");
@@ -74,7 +74,7 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
       condicion.setValor(condicionJson.get("valor").getAsInt());
       condiciones.add(condicion);
     }
-    
+
     JsonElement jsonOrden = jsonObject.get("orden");
     Orden orden = context.deserialize(jsonOrden, Orden.class);
     Metodologia metodologia = new Metodologia();

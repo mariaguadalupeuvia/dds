@@ -1,14 +1,14 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.uqbar.commons.utils.Observable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.uqbar.commons.utils.Observable;
 
 import ar.org.utn.ddstpanual.exception.CondicionException;
 import ar.org.utn.ddstpanual.exception.FiltroException;
@@ -23,29 +23,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "CONDICIONES")
-@Data public class Condicion 
-{
+@Table(name = "CONDICION")
+@Data
+public class Condicion {
 
   @Id
   @GeneratedValue
   private long id;
   private Integer valor;
   @ManyToOne
-  @Cascade(value=CascadeType.ALL)
+  @Cascade(value = CascadeType.ALL)
   private Indicador indicador;
   @ManyToOne
-  @Cascade(value=CascadeType.ALL)
+  @Cascade(value = CascadeType.ALL)
   private Filtro filtro;
- 
 
-  public Condicion(Indicador indicador, Filtro filtro, Integer valor)
-  {
-	  this.indicador = indicador;
-	  this.valor = valor;
-	  this.filtro = filtro;
+
+  public Condicion(Indicador indicador, Filtro filtro, Integer valor) {
+    this.indicador = indicador;
+    this.valor = valor;
+    this.filtro = filtro;
   }
-  
+
   public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws CondicionException {
     try {
       return filtro.cumpleCondicion(this, empresa, periodo);

@@ -12,9 +12,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Observable
-@Table(name = "PERIODOS")
+@Table(name = "PERIODO")
 @NoArgsConstructor
-
 public @Data class Periodo {
 
   @Id

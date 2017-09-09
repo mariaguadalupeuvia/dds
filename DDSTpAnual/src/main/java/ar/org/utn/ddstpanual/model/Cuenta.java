@@ -17,9 +17,8 @@ import lombok.Data;
 
 
 @Entity
-@Table(name = "CUENTAS")
+@Table(name = "CUENTA")
 @Observable
-
 public @Data class Cuenta {
 
   @Id
@@ -27,7 +26,7 @@ public @Data class Cuenta {
   private int id;
   private String nombre;
   @OneToMany
-  @JoinColumn(name="cuenta_id")
+  @JoinColumn(name = "cuenta_id")
   @Cascade(value = CascadeType.ALL)
   private List<Periodo> periodos;
 

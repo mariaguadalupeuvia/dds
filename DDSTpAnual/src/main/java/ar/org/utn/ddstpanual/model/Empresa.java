@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Observable
-@Table(name = "EMPRESAS")
+@Table(name = "EMPRESA")
 @AllArgsConstructor
 @NoArgsConstructor
 public @Data class Empresa {
@@ -27,8 +28,9 @@ public @Data class Empresa {
   @Id
   @GeneratedValue
   private int id;
-  @OneToMany 
-  @Cascade(value=CascadeType.ALL)
+  @OneToMany
+  @Cascade(value = CascadeType.ALL)
+  @JoinColumn(name = "empresa_id")
   private List<Cuenta> cuentas;
   private String nombre;
 

@@ -4,10 +4,6 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.uqbar.commons.utils.Observable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,23 +14,27 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Observable
 @Entity
-@Table(name = "METODOLOGIAS")
+@Table(name = "METODOLOGIA")
 @AllArgsConstructor
 @NoArgsConstructor
 
-@Data public class Metodologia 
-{
+@Data
+public class Metodologia {
 
   @Id
   @GeneratedValue
   private int id;
-  
+
   private String nombre;
   @OneToMany
-  @Cascade(value=CascadeType.ALL)
-  @JoinColumn(name="metodologia_id")
+  @Cascade(value = CascadeType.ALL)
+  @JoinColumn(name = "metodologia_id")
   private List<Condicion> condiciones;
   @Transient
   private Orden orden;

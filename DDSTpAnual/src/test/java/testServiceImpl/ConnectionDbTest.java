@@ -1,10 +1,10 @@
 package testServiceImpl;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
-
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,45 +39,44 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
     withTransaction(() -> {
       entityManager().persist(empresa);
     });
-    
-//    entityManager().persist(empresa);
-//    entityManager().close();
- }
-  
+
+    // entityManager().persist(empresa);
+    // entityManager().close();
+  }
+
   @Test
-  public void persistirMetodologia() 
-  {
+  public void persistirMetodologia() {
 
-	Indicador indicador = new Indicador("activoTotal", "[activoCorriente]+[activoNoCorriente]");
+    Indicador indicador = new Indicador("activoTotal", "[activoCorriente]+[activoNoCorriente]");
 
-	List<Condicion> condiciones = new ArrayList<>();
-	condiciones.add(new Condicion(indicador, new FiltroMayor(), 500));
-	condiciones.add(new Condicion(indicador, new FiltroMenor(), 1000));
-   
-	Metodologia metodologia= new Metodologia("MET2",condiciones, new Orden());
+    List<Condicion> condiciones = new ArrayList<>();
+    condiciones.add(new Condicion(indicador, new FiltroMayor(), 500));
+    condiciones.add(new Condicion(indicador, new FiltroMenor(), 1000));
 
-	  withTransaction(() -> {
-		  entityManager().persist(indicador);
-		  entityManager().persist(metodologia);
-		});
+    Metodologia metodologia = new Metodologia("MET2", condiciones, new Orden());
+
+    withTransaction(() -> {
+      entityManager().persist(indicador);
+      entityManager().persist(metodologia);
+    });
 
   }
-  
+
   @Test
-  public void obtenerMetodologia() 
-  {
-	  withTransaction(() -> {
-		  List<Metodologia> metodologias =  entityManager().createQuery("from Metodologia", Metodologia.class).getResultList();
-		  assertTrue(metodologias.size()>0);
-//    for (Metodologia metod : metodologias) 
-//    {
-//      System.out.println("Metodologia: " + metod.getNombre());
-//      
-//      for (Condicion condicion : metod.getCondiciones()) 
-//      {
-//        System.out.println("Condicion: " + condicion.getIndicador() + " " + condicion.getFiltro().getNombre() + " " + condicion.getValor() );
-//      }
-//    }
-	  });
+  public void obtenerMetodologia() {
+    withTransaction(() -> {
+      List<Metodologia> metodologias = entityManager().createQuery("from Metodologia", Metodologia.class).getResultList();
+      assertTrue(metodologias.size() > 0);
+      // for (Metodologia metod : metodologias)
+      // {
+      // System.out.println("Metodologia: " + metod.getNombre());
+      //
+      // for (Condicion condicion : metod.getCondiciones())
+      // {
+      // System.out.println("Condicion: " + condicion.getIndicador() + " " +
+      // condicion.getFiltro().getNombre() + " " + condicion.getValor() );
+      // }
+      // }
+    });
   }
 }

@@ -1,12 +1,12 @@
 package ar.org.utn.ddstpanual.model;
 
+import org.apache.commons.lang3.StringUtils;
+import org.uqbar.commons.utils.Observable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.apache.commons.lang3.StringUtils;
-import org.uqbar.commons.utils.Observable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,13 +16,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "INDICADORES")
-public @Data class Indicador 
-{
+@Table(name = "INDICADOR")
+public @Data class Indicador {
   @Id
   @GeneratedValue
   private int id;
-	  
+
   String nombre;
   String formula;
 
@@ -51,9 +50,8 @@ public @Data class Indicador
     return builder.toString();
   }
 
-public Indicador(String nombre, String formula) 
-{
-   this.nombre = nombre;
-   this.formula = formula;
-}
+  public Indicador(String nombre, String formula) {
+    this.nombre = nombre;
+    this.formula = formula;
+  }
 }
