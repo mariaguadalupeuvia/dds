@@ -1,6 +1,5 @@
 package testService;
 
-import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +25,7 @@ public class EmpresaServiceTest {
   // Test sobre la carga del archivo
   @Test
   public void testSubirExcel() throws ServiceException {
-    empresaService.subirExcel(iniciarArchivo("Carga1.xlsx"));
+    empresaService.subirExcel(iniciarArchivo("CargarDatosEmpresas.xls"));
   }
 
   @Test(expected = ServiceException.class)
@@ -34,7 +33,7 @@ public class EmpresaServiceTest {
     empresaService.subirExcel(iniciarArchivo("Caso1"));
   }
 
-  @Test(expected = NotOfficeXmlFileException.class)
+  @Test(expected = ServiceException.class)
   public void testSubirArchivoNoExcel() throws ServiceException {
     empresaService.subirExcel(iniciarArchivo("CargaCSV.csv"));
   }
@@ -45,7 +44,7 @@ public class EmpresaServiceTest {
     Empresa empresaTest = new Empresa();
 
     for (Empresa e : empresaService.obtenerEmpresas()) {
-      if (e.getNombre().equals("Facebook")) {
+      if (e.getNombre().equals("Tenaris")) {
         empresaTest = e;
       }
     }
