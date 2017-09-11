@@ -25,7 +25,7 @@ import ar.org.utn.ddstpanual.service.MetodologiaService;
 public class MetodologiaServiceImpl implements MetodologiaService {
 
   private CondicionService condicionService;
-  private MetodologiaDb metododologiaAlmacenamiento;
+  private MetodologiaDb metododologiaDb;
   private IndicadorService indicadorService;
 
 
@@ -83,7 +83,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     return empresas;
   }
 
-  @Override
+@Override
   public List<Condicion> agregarCondicion(List<Condicion> condiciones, Condicion condicion) throws ServiceException {
     List<Condicion> nuevasCondiciones = new ArrayList<>();
     nuevasCondiciones.addAll(condiciones);
@@ -108,11 +108,11 @@ public class MetodologiaServiceImpl implements MetodologiaService {
   }
 
   public MetodologiaDb getMetodologiaAlmacenamiento() {
-    if (metododologiaAlmacenamiento != null) {
-      return metododologiaAlmacenamiento;
+    if (metododologiaDb != null) {
+      return metododologiaDb;
     }
-    metododologiaAlmacenamiento = new MetodologiaDbImpl();// MetodologiaArchivoImpl();
-    return metododologiaAlmacenamiento;
+    metododologiaDb = new MetodologiaDbImpl();// MetodologiaArchivoImpl();
+    return metododologiaDb;
   }
 
   public IndicadorService getIndicadorService() {
@@ -146,5 +146,4 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     }
     return flag;
   }
-
 }

@@ -72,10 +72,11 @@ public class MetodologiasController {
       empresasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox, periodoCheckbox);
       if (empresasResultado.isEmpty())
         error = "No se encuentran empresas que cumplan estas condiciones \n para el año " + periodoCheckbox.getFecha();
-    } catch (final ServiceException e) {
-      error = "Se produjo un error al obtener las empresas.";
     } catch (final NullPointerException n) {
       error = "Debe completar todos los campos";
+    } catch (ServiceException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }
 

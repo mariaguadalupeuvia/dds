@@ -21,7 +21,6 @@ import ar.org.utn.ddstpanual.controller.AbmMetodologiasController;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
-import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 
 public class AbmMetodologiasWindow extends SimpleWindow<AbmMetodologiasController> {
 
@@ -64,13 +63,6 @@ public class AbmMetodologiasWindow extends SimpleWindow<AbmMetodologiasControlle
     propiedadIndicadorOrden.setAdapter(new PropertyAdapter(Indicador.class, "nombre"));
 
     new Label(inputFormPanel).setText("Tipo de Orden").setForeground(Color.BLUE);
-    final Selector<TipoOrden> selectorTipoOrder = new Selector<TipoOrden>(inputFormPanel).allowNull(false);
-    selectorTipoOrder.bindValueToProperty("tipoOrdenCheckbox");
-    selectorTipoOrder.setWidth(150);
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    final Binding<TipoOrden, Selector<TipoOrden>, ListBuilder<TipoOrden>> propiedadTipoOrden =
-        selectorTipoOrder.bindItems(new ObservableProperty(getModelObject(), "tiposOrden"));
-    propiedadTipoOrden.setAdapter(new PropertyAdapter(TipoOrden.class, "nombreOrden"));
 
     new Label(inputFormPanel).setText("Indicador").setForeground(Color.BLUE);
     final Selector<Indicador> selectorIndicador = new Selector<Indicador>(inputFormPanel).allowNull(false);

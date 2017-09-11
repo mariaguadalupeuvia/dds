@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "METODOLOGIA")
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Data
 public class Metodologia {
 
