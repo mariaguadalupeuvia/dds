@@ -32,7 +32,6 @@ public class MetodologiaDbImpl implements MetodologiaDb, WithGlobalEntityManager
     return null;
   }
 
-
   @Override
   public List<Metodologia> obtenerMetodologias() throws ArchivoException {
     try {
@@ -43,6 +42,5 @@ public class MetodologiaDbImpl implements MetodologiaDb, WithGlobalEntityManager
     }
     return null;
   }
-
 
 }

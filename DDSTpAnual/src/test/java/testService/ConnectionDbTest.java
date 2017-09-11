@@ -51,8 +51,6 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
     condiciones.add(new Condicion(indicador, new FiltroMayor(), 500));
     condiciones.add(new Condicion(indicador, new FiltroMenor(), 1000));
 
-    TipoOrden tipoOrdenTest = new TipoOrden();
-    tipoOrdenTest.setIdTipoOrden(TipoOrden.ASCENDENTE);
     Orden ordenTest = new Orden(indicador, "Ascendente");
 
     List<Orden> ordenes = new ArrayList<>();

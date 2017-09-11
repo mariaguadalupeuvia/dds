@@ -2,6 +2,7 @@ package testDbTest;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,50 +14,41 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMayor;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
-import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
+
 import db.FixtureDB;
 
-public class MetodologiaDbTest {
+public class MetodologiaDbTest implements WithGlobalEntityManager{
   MetodologiaDb metodologiaDb;
-  Metodologia metodologia;
-  FixtureDB fixture;
 
+  FixtureDB fixture;
 
   @Before
   public void init() {
     metodologiaDb = new MetodologiaDbImpl();
     fixture = new FixtureDB();
-
-    String nombre = "MetodologiaOrden";
-    Indicador indicadorTest = new Indicador("IndicadorMetodologiaOrden", "{IndicadorA}+100");
-    Filtro filtroTest = new FiltroMayor();
-    Condicion condicion1 = new Condicion(indicadorTest, filtroTest, 100);
-    ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
-    condiciones.add(condicion1);
-
-    TipoOrden tipoOrdenTest = new TipoOrden();
-    tipoOrdenTest.setIdTipoOrden(TipoOrden.ASCENDENTE);
-    Orden ordenTest = new Orden(indicadorTest, "Ascendente");
-
-    List<Orden> ordenes = new ArrayList<>();
-    ordenes.add(ordenTest);
-
-    metodologia = new Metodologia(nombre, condiciones, ordenes);
-
   }
-
-  // Test guardar empresa
+  
+  // Test guardar metodologia
   @Test
   public void testGuardarMetodologia() throws ArchivoException {
-    metodologiaDb.guardarMetodologia(metodologia);
+
+	    Indicador indicadorTest = new Indicador("IndicadorMetodologiaOrden", "{IndicadorA}+100");
+	    Filtro filtroTest = entityManager().find(Filtro.class, 1);
+	    Condicion condicion1 = new Condicion(indicadorTest, filtroTest, 100);
+	    ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
+	    condiciones.add(condicion1);
+
+	    Orden ordenTest = new Orden(indicadorTest, "Ascendente");
+	    List<Orden> ordenes = new ArrayList<>();
+	    ordenes.add(ordenTest);
+    metodologiaDb.guardarMetodologia(new Metodologia("MET1", condiciones, ordenes));
   }
 
   @Test
   public void testMostrarMetodologiaGuardada() throws ServiceException, ArchivoException {
-    System.out.println(metodologiaDb.obtenerMetodologia("MetodologiaOrden").toJson());
+    System.out.println(metodologiaDb.obtenerMetodologia("BUFFET").toJson());
   }
 
   @Test

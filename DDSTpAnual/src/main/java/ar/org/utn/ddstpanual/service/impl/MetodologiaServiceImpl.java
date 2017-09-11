@@ -31,7 +31,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
   @Override
   public void guardarMetodologia(Metodologia metodologia) throws ServiceException {
     try {
-      getMetodologiaAlmacenamiento().guardarMetodologia(metodologia);
+      getMetodologiaDb().guardarMetodologia(metodologia);
     } catch (ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
@@ -41,7 +41,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
   public Metodologia obtenerMetodologia(String nombre) throws ServiceException {
     Metodologia metodologia;
     try {
-      metodologia = getMetodologiaAlmacenamiento().obtenerMetodologia(nombre);
+      metodologia = getMetodologiaDb().obtenerMetodologia(nombre);
     } catch (ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
@@ -52,7 +52,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
   public List<Metodologia> obtenerMetodologias() throws ServiceException {
     List<Metodologia> metodologias = null;
     try {
-      metodologias = getMetodologiaAlmacenamiento().obtenerMetodologias();
+      metodologias = getMetodologiaDb().obtenerMetodologias();
     } catch (ArchivoException e) {
       doThrow(new ServiceException(e.getMessage()));
     }
@@ -60,14 +60,10 @@ public class MetodologiaServiceImpl implements MetodologiaService {
   }
 
   @Override
-  public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Metodologia metodologia, Periodo periodo) throws ServiceException {
-    empresas = empresas.stream().filter(e -> {
-      try {
-        return getCondicionService().cumpleCondiciones(metodologia, e, periodo);
-      } catch (ServiceException e1) {
-        return false;
-      }
-    }).collect(Collectors.toList());
+  public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Metodologia metodologia, Periodo periodo) throws ServiceException 
+  {
+ 
+	  empresas = empresas.stream().filter(e -> cumpleCondiciones(metodologia, e, periodo)).collect(Collectors.toList());
 
     Collections.sort(empresas, (e1, e2) -> {
       int comp = 0;
@@ -82,7 +78,12 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     return empresas;
   }
 
-  @Override
+  private Boolean cumpleCondiciones(Metodologia metodologia, Empresa e, Periodo periodo) 
+  {
+	return metodologia.getCondiciones().stream().allMatch(c -> c.cumpleCondicion(e, periodo));
+}
+
+@Override
   public List<Condicion> agregarCondicion(List<Condicion> condiciones, Condicion condicion) throws ServiceException {
     List<Condicion> nuevasCondiciones = new ArrayList<>();
     nuevasCondiciones.addAll(condiciones);
@@ -114,11 +115,11 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     return condicionService;
   }
 
-  public MetodologiaDb getMetodologiaAlmacenamiento() {
+  public MetodologiaDb getMetodologiaDb() {
     if (metododologiaDb != null) {
       return metododologiaDb;
     }
-    metododologiaDb = new MetodologiaDbImpl();// MetodologiaArchivoImpl();
+    metododologiaDb = new MetodologiaDbImpl();
     return metododologiaDb;
   }
 
@@ -139,11 +140,11 @@ public class MetodologiaServiceImpl implements MetodologiaService {
       Double valorE1 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e1).get(0).getValor();
       Double valorE2 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e2).get(0).getValor();
 
-      if (orden.getTipoOrden() == "Ascendente") {
+      if (orden.getTipoOrden().equals("Ascendente")) {
         flag = Double.compare(valorE1, valorE2);
       }
 
-      if (orden.getTipoOrden() == "Descendente") {
+      if (orden.getTipoOrden().equals("Descendente")) {
         flag = Double.compare(valorE2, valorE1);
       }
 
