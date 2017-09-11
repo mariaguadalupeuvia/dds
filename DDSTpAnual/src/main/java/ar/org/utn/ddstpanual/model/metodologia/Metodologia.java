@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,14 +35,16 @@ public class Metodologia {
   @Cascade(value = CascadeType.ALL)
   @JoinColumn(name = "metodologia_id")
   private List<Condicion> condiciones;
-  @Transient
-  private Orden orden;
+  @OneToMany
+  @Cascade(value = CascadeType.ALL)
+  @JoinColumn(name = "metodologia_id")
+  private List<Orden> ordenes;
 
 
-  public Metodologia(String nombre, List<Condicion> condiciones, Orden orden) {
+  public Metodologia(String nombre, List<Condicion> condiciones, List<Orden> ordenes) {
     this.nombre = nombre;
     this.condiciones = condiciones;
-    this.orden = orden;
+    this.ordenes = ordenes;
   }
 
 
@@ -57,6 +58,14 @@ public class Metodologia {
     if (condiciones.size() > 0) {
       for (Condicion condicion : condiciones) {
         builder.append(condicion.toJson());
+        builder.append(",");
+      }
+      builder.deleteCharAt(builder.length() - 1);
+    }
+    builder.append("\"ordenes\" : [");
+    if (ordenes.size() > 0) {
+      for (Orden orden : ordenes) {
+        builder.append(orden.toJson());
         builder.append(",");
       }
       builder.deleteCharAt(builder.length() - 1);

@@ -35,7 +35,12 @@ public class MetodologiaServiceImplTest {
     assertTrue(metodologia.getNombre().equals("MET2"));
   }
 
-
+//Test de Orden 
+ @Test 
+ public void testOrdenarAscendenteEmpresas(){
+   //service.compareEmpresasByMetodologia(e1, e2, ordenes, per)
+ }
+ 
   private Metodologia obtener() {
     try {
       EntityManager entity = PerThreadEntityManagers.getEntityManager();

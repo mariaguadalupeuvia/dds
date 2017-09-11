@@ -103,10 +103,10 @@ public class AbmMetodologiasController {
       Metodologia metodologia = new Metodologia();
       metodologia.setCondiciones(condiciones);
       metodologia.setNombre(nombre);
-      Orden orden = new Orden();
-      orden.setIndicador(indicadorOrdenCheckbox);
-      orden.setTipoOrden(tipoOrdenCheckbox);
-      metodologia.setOrden(orden);
+//      Orden orden = new Orden();
+//      orden.setIndicador(indicadorOrdenCheckbox);
+//      orden.setTipoOrden(tipoOrdenCheckbox);
+//      metodologia.setOrden(orden);
       getMetodologiaService().guardarMetodologia(metodologia);
     } catch (ServiceException e) {
       error = e.getMessage();

@@ -16,14 +16,16 @@ public class MetodologiaDbImpl implements MetodologiaDb, WithGlobalEntityManager
 
   @Override
   public void guardarMetodologia(Metodologia metodologia) throws ArchivoException {
-    // TODO Auto-generated method stub
+    withTransaction(() -> {
+      entityManager().persist(metodologia);
+    });
   }
 
   @Override
   public Metodologia obtenerMetodologia(String nombre) throws ArchivoException {
     try {
       return entityManager().createQuery("from Metodologia m WHERE m.nombre LIKE :nombreX", Metodologia.class)
-          .setParameter("nombreX", nombre).getSingleResult();
+          .setParameter("nombreX", nombre).setMaxResults(1).getSingleResult();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }

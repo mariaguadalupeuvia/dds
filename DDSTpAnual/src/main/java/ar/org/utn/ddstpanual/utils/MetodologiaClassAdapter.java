@@ -37,7 +37,7 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
     JsonObject result = new JsonObject();
     result.add("nombre", new JsonPrimitive(src.getNombre()));
     result.add("condiciones", context.serialize(src.getCondiciones(), src.getCondiciones().getClass()));
-    result.add("orden", context.serialize(src.getOrden(), src.getOrden().getClass()));
+    result.add("ordenes", context.serialize(src.getOrdenes(), src.getOrdenes().getClass()));
     return result;
   }
 
@@ -54,14 +54,17 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
     tiposFiltros.put("Menor o igual", new FiltroMenorIgual());
 
     List<Condicion> condiciones = new ArrayList<>();
+    List<Orden> ordenes = new ArrayList<>();
 
     JsonObject jsonObject = json.getAsJsonObject();
     String nombre = jsonObject.get("nombre").getAsString();
+    
+    // Condiciones
     JsonArray condicionesJson = jsonObject.getAsJsonArray("condiciones");
-    Iterator<JsonElement> iterator = condicionesJson.iterator();
+    Iterator<JsonElement> iterator1 = condicionesJson.iterator();
 
-    while (iterator.hasNext()) {
-      JsonObject condicionJson = iterator.next().getAsJsonObject();
+    while (iterator1.hasNext()) {
+      JsonObject condicionJson = iterator1.next().getAsJsonObject();
       JsonElement indicadorJson = condicionJson.get("indicador");
       JsonObject filtroJson = condicionJson.get("filtro").getAsJsonObject();
       Indicador indicador = context.deserialize(indicadorJson, Indicador.class);
@@ -75,12 +78,22 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
       condiciones.add(condicion);
     }
 
-    JsonElement jsonOrden = jsonObject.get("orden");
-    Orden orden = context.deserialize(jsonOrden, Orden.class);
+    // Ordenes
+    JsonArray ordenesJson = jsonObject.getAsJsonArray("ordenes");
+    Iterator<JsonElement> iterator2 = ordenesJson.iterator();
+
+    while (iterator2.hasNext()) {
+      JsonObject ordenJson = iterator2.next().getAsJsonObject();
+      
+      Orden orden = context.deserialize(ordenJson, Orden.class);
+      
+      ordenes.add(orden);
+    }
+    
     Metodologia metodologia = new Metodologia();
     metodologia.setNombre(nombre);
     metodologia.setCondiciones(condiciones);
-    metodologia.setOrden(orden);
+    metodologia.setOrdenes(ordenes);
     return metodologia;
 
   }

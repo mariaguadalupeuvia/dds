@@ -73,7 +73,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     Collections.sort(empresas, (e1, e2) -> {
       int comp = 0;
       try {
-        comp = compareEmpresasByMetodologia(e1, e2, metodologia.getOrden(), periodo);
+        comp = compareEmpresasByMetodologia(e1, e2, metodologia.getOrdenes(), periodo);
       } catch (Exception e3) {
         e3.getMessage();
       }
@@ -123,22 +123,27 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     return indicadorService;
   }
 
-  public int compareEmpresasByMetodologia(Empresa e1, Empresa e2, Orden orden, Periodo per) throws ServiceException {
+  public int compareEmpresasByMetodologia(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException {
     int flag = 0;
+    
+    for(Orden orden : ordenes){
+      Indicador indicador = orden.getIndicador();
 
-    Indicador indicador = orden.getIndicador();
+      Double valorE1 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e1).get(0).getValor();
+      Double valorE2 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e2).get(0).getValor();
 
-    Double valorE1 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e1).get(0).getValor();
-    Double valorE2 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e2).get(0).getValor();
+      if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.ASCENDENTE) {
+        flag = Double.compare(valorE1, valorE2);
+      }
 
-    if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.ASCENDENTE) {
-      return Double.compare(valorE1, valorE2);
+      if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.DESCENDENTE) {
+        flag = Double.compare(valorE2, valorE1);
+      }
+      
+      if(flag != 0){
+        break;
+      }
     }
-
-    if (orden.getTipoOrden().getIdTipoOrden() == TipoOrden.DESCENDENTE) {
-      return Double.compare(valorE2, valorE1);
-    }
-
     return flag;
   }
 

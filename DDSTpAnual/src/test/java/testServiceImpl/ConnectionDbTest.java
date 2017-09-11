@@ -18,6 +18,7 @@ import ar.org.utn.ddstpanual.model.metodologia.FiltroMayor;
 import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
+import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 
 public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
@@ -52,11 +53,17 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
     List<Condicion> condiciones = new ArrayList<>();
     condiciones.add(new Condicion(indicador, new FiltroMayor(), 500));
     condiciones.add(new Condicion(indicador, new FiltroMenor(), 1000));
+    
+    TipoOrden tipoOrdenTest = new TipoOrden();
+    tipoOrdenTest.setIdTipoOrden(TipoOrden.ASCENDENTE);
+    Orden ordenTest = new Orden(indicador, tipoOrdenTest);
+    
+    List<Orden> ordenes = new ArrayList<>();
+    ordenes.add(ordenTest);
 
-    Metodologia metodologia = new Metodologia("MET2", condiciones, new Orden());
+    Metodologia metodologia = new Metodologia("MET2", condiciones, ordenes);
 
     withTransaction(() -> {
-      entityManager().persist(indicador);
       entityManager().persist(metodologia);
     });
 
