@@ -28,9 +28,7 @@ public class MetodologiasWindow extends SimpleWindow<MetodologiasController> {
   public MetodologiasWindow(final WindowOwner parent) {
     super(parent, new MetodologiasController());
     getModelObject().setError("");
-    getModelObject().obtenerEmpresas();
-    getModelObject().obtenerMetodologias();
-    getModelObject().obtenerPeriodos();
+    getModelObject().inicializarVariables();
   }
 
   @Override

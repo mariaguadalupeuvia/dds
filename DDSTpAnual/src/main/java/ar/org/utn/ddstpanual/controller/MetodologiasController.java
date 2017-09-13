@@ -1,161 +1,92 @@
 package ar.org.utn.ddstpanual.controller;
 
 import org.uqbar.commons.utils.Observable;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import java.util.List;
 
+import ar.org.utn.ddstpanual.db.MetodologiaDb;
+import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
+import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.service.EmpresaService;
-import ar.org.utn.ddstpanual.service.MetodologiaService;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
-import ar.org.utn.ddstpanual.service.impl.MetodologiaServiceImpl;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Observable
-public class MetodologiasController {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class MetodologiasController implements WithGlobalEntityManager {
 
-  MetodologiaService metodologiaService;
-  EmpresaService empresaService;
-  List<Empresa> empresas;
-  List<Metodologia> metodologias;
-  Metodologia metodologiaCheckbox;
-  Periodo periodoCheckbox;
-  List<Periodo> periodos;
+	private MetodologiaDb metododologiaDb = new MetodologiaDbImpl();
+	EmpresaService empresaService = new EmpresaServiceImpl();
+	List<Empresa> empresas;
+	List<Metodologia> metodologias;
+	Metodologia metodologiaCheckbox;
+	Periodo periodoCheckbox;
+	List<Periodo> periodos;
+	List<Empresa> empresasResultado;
 
-  List<Empresa> empresasResultado;
+	String error;
 
-  String error;
+	public void obtenerEmpresas() {
+		error = "";
+		try {
+			empresas = getEmpresaService().obtenerEmpresas();
+		} catch (final ServiceException e) {
+			error = "Se produjo un error al obtener las empresas.";
+		}
+	}
 
-  public void inicializarVariables() {
-    error = "";
-    obtenerEmpresas();
-    obtenerMetodologias();
-    obtenerPeriodos();
-  }
+	public void obtenerMetodologia(String nombre) {
+		try {
+			metodologiaCheckbox = metododologiaDb.obtenerMetodologia(nombre);
+		} catch (ArchivoException e) {
+			e.printStackTrace();
+		}
+	}
 
-  public void obtenerEmpresas() {
-    error = "";
-    try {
-      empresas = getEmpresaService().obtenerEmpresas();
-    } catch (final ServiceException e) {
-      error = "Se produjo un error al obtener las empresas.";
-    }
-  }
+	public void obtenerMetodologias() {
+		try {
+			metodologias = metododologiaDb.obtenerMetodologias();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-  public void obtenerMetodologias() {
-    error = "";
-    try {
-      metodologias = getMetodologiaService().obtenerMetodologias();
-    } catch (final ServiceException e) {
-      error = "Se produjo un error al obtener las metodologias.";
-    }
-  }
+	public List<String> obtenerPeriodos() {
+		try {
+			periodos = entityManager().createQuery("from Periodo", Periodo.class).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-  public List<Periodo> obtenerPeriodos() {
-    error = "";
-    try {
-      periodos = getEmpresaService().obtenerPeriodos();
-    } catch (final ServiceException e) {
-      error = "Se produjo un error al obtener las empresas.";
-    } catch (final NullPointerException e) {
-      error = "No existen períodos para estas empresas";
-      System.out.println(error);
-    }
-    return periodos;
-  }
+	public void ejecutarMetodologia() {
+		error = "";
+		try {
+			empresasResultado = metodologiaCheckbox.ejecutarMetodologia(empresas, periodoCheckbox);
+			if (empresasResultado.isEmpty())
+				error = "No se encuentran empresas que cumplan estas condiciones \n para el año "
+						+ periodoCheckbox.getFecha();
+		} catch (final NullPointerException n) {
+			error = "Debe completar todos los campos";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-  public void ejecutarMetodologia() {
-    error = "";
-    try {
-      empresasResultado = getMetodologiaService().ejecutarMetodologia(empresas, metodologiaCheckbox, periodoCheckbox);
-      if (empresasResultado.isEmpty())
-        error = "No se encuentran empresas que cumplan estas condiciones \n para el año " + periodoCheckbox.getFecha();
-    } catch (final NullPointerException n) {
-      error = "Debe completar todos los campos";
-    } catch (ServiceException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
-
-  public EmpresaService getEmpresaService() {
-    if (empresaService != null) {
-      return empresaService;
-    }
-    empresaService = new EmpresaServiceImpl();
-    return empresaService;
-  }
-
-  public MetodologiaService getMetodologiaService() {
-    if (metodologiaService != null) {
-      return metodologiaService;
-    }
-    metodologiaService = new MetodologiaServiceImpl();
-    return metodologiaService;
-  }
-
-  public List<Empresa> getEmpresas() {
-    return empresas;
-  }
-
-  public void setEmpresas(List<Empresa> empresas) {
-    this.empresas = empresas;
-  }
-
-  public List<Empresa> getEmpresasResultado() {
-    return empresasResultado;
-  }
-
-  public void setEmpresasResultado(List<Empresa> empresasResultado) {
-    this.empresasResultado = empresasResultado;
-  }
-
-  public String getError() {
-    return error;
-  }
-
-  public void setError(String error) {
-    this.error = error;
-  }
-
-  public void setEmpresaService(EmpresaService empresaService) {
-    this.empresaService = empresaService;
-  }
-
-  public List<Metodologia> getMetodologias() {
-    return metodologias;
-  }
-
-  public void setMetodologias(List<Metodologia> metodologias) {
-    this.metodologias = metodologias;
-  }
-
-  public Metodologia getMetodologiaCheckbox() {
-    return metodologiaCheckbox;
-  }
-
-  public void setMetodologiaCheckbox(Metodologia metodologiaCheckbox) {
-    this.metodologiaCheckbox = metodologiaCheckbox;
-  }
-
-  public Periodo getPeriodoCheckbox() {
-    return periodoCheckbox;
-  }
-
-  public void setPeriodoCheckbox(final Periodo periodoCheckbox) {
-    this.periodoCheckbox = periodoCheckbox;
-  }
-
-  public List<Periodo> getPeriodos() {
-    return periodos;
-
-  }
-
-  public void setPeriodos(final List<Periodo> periodos) {
-    this.periodos = periodos;
-  }
-
-
+	public void inicializarVariables() {
+		error = "";
+		obtenerEmpresas();
+		obtenerMetodologias();
+		obtenerPeriodos();
+	}
 }

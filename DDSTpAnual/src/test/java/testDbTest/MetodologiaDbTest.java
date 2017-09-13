@@ -43,7 +43,7 @@ public class MetodologiaDbTest implements WithGlobalEntityManager{
 	    Orden ordenTest = new Orden(indicadorTest, "Ascendente");
 	    List<Orden> ordenes = new ArrayList<>();
 	    ordenes.add(ordenTest);
-    metodologiaDb.guardarMetodologia(new Metodologia("MET1", condiciones, ordenes));
+	    metodologiaDb.guardarMetodologia(new Metodologia("MET1", condiciones, ordenes));
   }
 
   @Test

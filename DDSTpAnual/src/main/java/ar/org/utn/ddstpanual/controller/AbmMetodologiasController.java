@@ -1,5 +1,6 @@
 package ar.org.utn.ddstpanual.controller;
 
+import org.uqbar.commons.model.ObservableUtils;
 import org.uqbar.commons.utils.Observable;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
@@ -14,21 +15,22 @@ import ar.org.utn.ddstpanual.model.metodologia.Filtro;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 import ar.org.utn.ddstpanual.service.IndicadorService;
-import ar.org.utn.ddstpanual.service.MetodologiaService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
-import ar.org.utn.ddstpanual.service.impl.MetodologiaServiceImpl;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Observable
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class AbmMetodologiasController implements WithGlobalEntityManager {
 
   IndicadorService indicadorService;
-  MetodologiaService metodologiaService;
 
   String nombre;
   List<Indicador> indicadores;
-
-  List<Indicador> indicadoresSeleccionados;
-
+  List<Indicador> indicadores2;
   Indicador indicadorCheckbox;
   Indicador indicadorOrdenCheckbox;
 
@@ -44,38 +46,6 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
   Integer valor;
   String error;
 
-
-
-  public void inicializarVariables() {
-
-    tiposCondiciones = new ArrayList<>();
-    tiposCondiciones = entityManager().createQuery("from Filtro", Filtro.class).getResultList();
-    tiposOrdenes = Arrays.asList("Ascendente", "Descendente");
-    condiciones = new ArrayList<>();
-    ordenes = new ArrayList<>();
-    indicadores = entityManager().createQuery("from Indicador", Indicador.class).getResultList();// obtenerIndicadores();
-
-    indicadoresSeleccionados = new ArrayList<>();
-
-    indicadorCheckbox = null;
-    indicadorOrdenCheckbox = null;
-    tipoCondicionCheckbox = null;
-    tipoOrdenCheckbox = "";
-
-    nombre = "";
-    valor = 0;
-    error = "";
-  }
-
-  public List<Indicador> obtenerIndicadores() {
-    try {
-      indicadores = getIndicadorService().obtenerIndicadores();
-    } catch (ServiceException e) {
-      error = "Error al obtener los indicadores";
-    }
-    return indicadores;
-  }
-
   public List<Condicion> cargarCondicion() {
     try {
       Condicion condicion = new Condicion();
@@ -83,9 +53,9 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
       Filtro filtro = tipoCondicionCheckbox;
       condicion.setValor(valor);
       condicion.setFiltro(filtro);
-      condiciones = getMetodologiaService().agregarCondicion(condiciones, condicion);
-      indicadoresSeleccionados = getMetodologiaService().agregarIndicadorSeleccionado(indicadoresSeleccionados, indicadorCheckbox);
-    } catch (ServiceException e) {
+      condiciones.add(condicion);
+      ObservableUtils.firePropertyChanged(this, "condiciones");
+    } catch (Exception e) {
       error = e.getMessage();
     }
     return condiciones;
@@ -96,13 +66,10 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
     try {
       Orden orden = new Orden();
       orden.setIndicador(indicadorOrdenCheckbox);
-
       orden.setTipoOrden(tipoOrdenCheckbox);
-      ordenes = getMetodologiaService().agregarOrden(ordenes, orden);
-      // indicadoresSeleccionados =
-      // getMetodologiaService().agregarIndicadorSeleccionado(indicadoresSeleccionados,
-      // indicadorCheckbox);
-    } catch (ServiceException e) {
+      ordenes.add(orden);
+      ObservableUtils.firePropertyChanged(this, "ordenes");
+    } catch (Exception e) {
       error = e.getMessage();
     }
     return ordenes;
@@ -114,12 +81,8 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
       metodologia.setCondiciones(condiciones);
       metodologia.setNombre(nombre);
       metodologia.setOrdenes(ordenes);
-      // Orden orden = new Orden();
-      // orden.setIndicador(indicadorOrdenCheckbox);
-      // orden.setTipoOrden(tipoOrdenCheckbox);
-
-
-      getMetodologiaService().guardarMetodologia(metodologia);
+      
+      metodologia.guardarMetodologia(metodologia);
     } catch (ServiceException e) {
       error = e.getMessage();
     }
@@ -133,122 +96,22 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
     return indicadorService;
   }
 
-  public MetodologiaService getMetodologiaService() {
-    if (metodologiaService != null) {
-      return metodologiaService;
-    }
-    metodologiaService = new MetodologiaServiceImpl();
-    return metodologiaService;
-  }
+  public void inicializarVariables() {
 
+	    tiposCondiciones = new ArrayList<>();
+	    tiposCondiciones = entityManager().createQuery("from Filtro", Filtro.class).getResultList();
+	    tiposOrdenes = Arrays.asList("Ascendente", "Descendente");
+	    condiciones = new ArrayList<>();
+	    ordenes = new ArrayList<>();
+	    indicadores = entityManager().createQuery("from Indicador", Indicador.class).getResultList();
+	    indicadores2 = indicadores;
+	    indicadorCheckbox = null;
+	    indicadorOrdenCheckbox = null;
+	    tipoCondicionCheckbox = null;
+	    tipoOrdenCheckbox = null;
 
-  public String getNombre() {
-    return nombre;
-  }
-
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
-  public List<Indicador> getIndicadores() {
-    return indicadores;
-  }
-
-  public List<Indicador> getIndicadores2() {
-    return indicadores;
-  }
-
-  public void setIndicadores(List<Indicador> indicadores) {
-    this.indicadores = indicadores;
-  }
-
-  public Indicador getIndicadorCheckbox() {
-    return indicadorCheckbox;
-  }
-
-  public void setIndicadorCheckbox(Indicador indicadorCheckbox) {
-    this.indicadorCheckbox = indicadorCheckbox;
-  }
-
-  public List<Filtro> getTiposCondiciones() {
-    return tiposCondiciones;
-  }
-
-  public List<String> getTiposOrdenes() {
-    return tiposOrdenes;
-  }
-
-  public void setTiposCondiciones(List<Filtro> tiposCondiciones) {
-    this.tiposCondiciones = tiposCondiciones;
-  }
-
-  public void setTiposOrdenes(List<Orden> tipos) {
-
-  }
-
-  public List<Condicion> getCondiciones() {
-    return condiciones;
-  }
-
-  public void setCondiciones(List<Condicion> condiciones) {
-    this.condiciones = condiciones;
-  }
-
-  public List<Orden> getOrdenes() {
-    return ordenes;
-  }
-
-  public void setOrdenes(List<Orden> ordenes) {
-    this.ordenes = ordenes;
-  }
-
-  public Filtro getTipoCondicionCheckbox() {
-    return tipoCondicionCheckbox;
-  }
-
-  public void setTipoCondicionCheckbox(Filtro tipoCondicionCheckbox) {
-    this.tipoCondicionCheckbox = tipoCondicionCheckbox;
-  }
-
-  public String getTipoOrdenCheckbox() {
-    return tipoOrdenCheckbox;
-  }
-
-  public void setTipoOrdenCheckbox(String tipo) {
-    this.tipoOrdenCheckbox = tipo;
-  }
-
-  public Integer getValor() {
-    return valor;
-  }
-
-  public void setValor(Integer valor) {
-    this.valor = valor;
-  }
-
-  public String getError() {
-    return error;
-  }
-
-  public void setError(String error) {
-    this.error = error;
-  }
-
-  public List<Indicador> getIndicadoresSeleccionados() {
-    return indicadoresSeleccionados;
-  }
-
-  public void setIndicadoresSeleccionados(List<Indicador> indicadoresSeleccionados) {
-    this.indicadoresSeleccionados = indicadoresSeleccionados;
-  }
-
-  public Indicador getIndicadorOrdenCheckbox() {
-    return indicadorOrdenCheckbox;
-  }
-
-  public void setIndicadorOrdenCheckbox(Indicador indicadorOrdenCheckbox) {
-    this.indicadorOrdenCheckbox = indicadorOrdenCheckbox;
-  }
-
-
+	    nombre = "";
+	    valor = 0;
+	    error = "";
+	  }
 }
