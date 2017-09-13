@@ -77,7 +77,7 @@ public class IndicadorServiceImpl implements IndicadorService {
 
   @Override
   public List<FormulaIndicador> ejecutarIndicador(final String formula, final String fechaPeriodo, final Empresa empresa)
-      throws ServiceException {
+      {
     final List<FormulaIndicador> result = new ArrayList<FormulaIndicador>();
     try {
       final ArbolUtil arbol = new ArbolUtil();
@@ -91,8 +91,9 @@ public class IndicadorServiceImpl implements IndicadorService {
       }
       return result;
     } catch (final ArbolException e) {
-      throw new ServiceException(e.getMessage());
+     // throw new ServiceException(e.getMessage());
     }
+	return result;
   }
 
   @Override

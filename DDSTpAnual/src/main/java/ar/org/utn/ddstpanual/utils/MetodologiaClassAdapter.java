@@ -20,13 +20,7 @@ import java.util.Map;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroCreciente;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroDecreciente;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroIgual;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMayor;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMayorIgual;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMenorIgual;
+
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
@@ -45,13 +39,7 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
   @Override
   public Metodologia deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     Map<String, Filtro> tiposFiltros = new HashMap<>();
-    tiposFiltros.put("Estrictamente creciente", new FiltroCreciente());
-    tiposFiltros.put("Estrictamente decreciente", new FiltroDecreciente());
-    tiposFiltros.put("Igual", new FiltroIgual());
-    tiposFiltros.put("Mayor", new FiltroMayor());
-    tiposFiltros.put("Mayor o igual", new FiltroMayorIgual());
-    tiposFiltros.put("Menor", new FiltroMenor());
-    tiposFiltros.put("Menor o igual", new FiltroMenorIgual());
+
 
     List<Condicion> condiciones = new ArrayList<>();
     List<Orden> ordenes = new ArrayList<>();

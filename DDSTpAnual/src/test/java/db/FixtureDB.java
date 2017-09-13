@@ -1,5 +1,6 @@
 package db;
 
+import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
@@ -13,24 +14,16 @@ import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroCreciente;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroDecreciente;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroIgual;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMayor;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMayorIgual;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMenor;
-import ar.org.utn.ddstpanual.model.metodologia.FiltroMenorIgual;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
 public class FixtureDB extends AbstractPersistenceTest implements WithGlobalEntityManager 
 {
-	
+	@Test
 	public void persistirFixture()
 	{
 	    try {
 		    withTransaction(() -> {
-		        getFiltros().stream().forEach((f -> entityManager().persist(f)));
 		        entityManager().persist(getIndicadoresMetodologia());
 		    	getEmpresas().stream().forEach((e -> entityManager().persist(e)));
 		    });
@@ -97,15 +90,16 @@ public class FixtureDB extends AbstractPersistenceTest implements WithGlobalEnti
 			return Arrays.asList(facebook, twitter, ebay, yahoo, google);
 	  }
 
-	private List<Filtro>  getFiltros() {
+	public List<Filtro>  getFiltros() {
 	    
 		List<Filtro> filtros = new ArrayList<>();
-	    filtros.add(new FiltroCreciente());
-	    filtros.add(new FiltroDecreciente());
-	    filtros.add(new FiltroIgual());
-	    //mayor y menor los agrega con la metodologia
-	    filtros.add(new FiltroMayorIgual());
-	    filtros.add(new FiltroMenorIgual());
+	    filtros.add(Filtro.CRECIENTE);
+	    filtros.add(Filtro.DECRECIENTE);
+	    filtros.add(Filtro.IGUAL);
+	    filtros.add(Filtro.MAYOR);
+	    filtros.add(Filtro.MENOR);
+	    filtros.add(Filtro.MAYORIGUAL);
+	    filtros.add(Filtro.MENORIGUAL);
 	    return filtros;
 
 	}
@@ -114,7 +108,7 @@ public class FixtureDB extends AbstractPersistenceTest implements WithGlobalEnti
 
 	    Indicador deuda = new Indicador("deuda", "[patrimonioNeto]-[pasivoTotal]");
 	    Indicador roe = new Indicador("roe", "[activoCorriente]/[pasivoTotal]");
-	    return new Metodologia("BUFFET", Arrays.asList(new Condicion(roe, new FiltroMayor() ,1),new Condicion(deuda, new FiltroMenor(),50000)), Arrays.asList(new Orden(deuda,"Ascendente"),new Orden(roe,"Descendente")));
+	    return new Metodologia("BUFFET", Arrays.asList(new Condicion(roe,Filtro.MAYOR ,1),new Condicion(deuda, Filtro.MENOR,50000)), Arrays.asList(new Orden(deuda,"Ascendente"),new Orden(roe,"Descendente")));
 
 	}
 }

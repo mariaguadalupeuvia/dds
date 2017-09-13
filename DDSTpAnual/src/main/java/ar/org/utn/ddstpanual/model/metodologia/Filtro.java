@@ -2,61 +2,99 @@ package ar.org.utn.ddstpanual.model.metodologia;
 
 import org.uqbar.commons.utils.Observable;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import java.time.Year;
+import java.util.List;
 
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Observable
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "FILTRO")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Data
-public abstract class Filtro implements Serializable {
+public enum Filtro {
 
-  private static final long serialVersionUID = 1L;
+	CRECIENTE("Estrictamente creciente"), DECRECIENTE("Estrictamente decreciente"), IGUAL("Igual"), MAYOR(
+			"Mayor"), MENOR("Menor"), MENORIGUAL("Menor Igual"), MAYORIGUAL("Mayor igual");
 
-  @Transient
-  private IndicadorService indicadorService;
+	private String nombre;
+	IndicadorService indicadorService = new IndicadorServiceImpl();
 
-  @Id
-  @GeneratedValue
-  private int id;
-  private String nombre;
+	Filtro(String nombre) {
+		this.setNombre(nombre);
+	}
 
-  public abstract boolean cumpleCondicion(Condicion condicion, Empresa empresa, Periodo periodo) throws FiltroException;
+	public boolean cumpleCondicion(Condicion condicion, Empresa empresa, Periodo periodo) throws FiltroException {
 
-  public IndicadorService getIndicadorService() {
-    if (indicadorService != null) {
-      return indicadorService;
-    }
-    indicadorService = new IndicadorServiceImpl();
-    return indicadorService;
-  }
+		List<FormulaIndicador> formulaIndicador = indicadorService
+				.ejecutarIndicador(condicion.getIndicador().getFormula(), periodo.getFecha(), empresa);
 
-  public String toJson() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("{");
-    builder.append("\"nombre\" : ");
-    builder.append("\"" + nombre + "\"");
-    builder.append("}");
-    return builder.toString();
-  }
+		switch (this) {
+		case CRECIENTE:
+			return comparadorEstricto(condicion, empresa, periodo, true);
+		case DECRECIENTE:
+			return comparadorEstricto(condicion, empresa, periodo, false);
+		case IGUAL:
+			return formulaIndicador.get(0).getValor() == condicion.getValor();
+		case MAYOR:
+			return formulaIndicador.get(0).getValor() > condicion.getValor();
+		case MENOR:
+			return formulaIndicador.get(0).getValor() < condicion.getValor();
+		case MENORIGUAL:
+			return formulaIndicador.get(0).getValor() <= condicion.getValor();
+		case MAYORIGUAL:
+			return formulaIndicador.get(0).getValor() >= condicion.getValor();
+		default:
+			throw new AssertionError("Filtro desconocido " + this);
+		}
+	}
 
+	public boolean comparadorEstricto(Condicion condicion, Empresa empresa, Periodo periodo, Boolean esCreciente) {
+
+		Year fechaPeriodoDesde = Year.now().minusYears(condicion.getValor());
+		FormulaIndicador valorIndicadorDesde = indicadorService
+				.ejecutarIndicador(condicion.getIndicador().getFormula(), fechaPeriodoDesde.toString(), empresa).get(0);
+		fechaPeriodoDesde.plusYears(1);
+		while (fechaPeriodoDesde.isBefore(Year.now()) || fechaPeriodoDesde.equals(Year.now())) {
+			FormulaIndicador valorIndicador = indicadorService
+					.ejecutarIndicador(condicion.getIndicador().getFormula(), fechaPeriodoDesde.toString(), empresa)
+					.get(0);
+			if (esCreciente) {
+				if (valorIndicador.getValor() < valorIndicadorDesde.getValor()) {
+					return false;
+				}
+			} else {
+				if (valorIndicador.getValor() > valorIndicadorDesde.getValor()) {
+					return false;
+				}
+			}
+			fechaPeriodoDesde.plusYears(1);
+		}
+		return true;
+
+	}
+
+	@Override
+	public String toString() {
+		return nombre;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String toJson() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{");
+		builder.append("\"nombre\" : ");
+		builder.append("\"" + nombre + "\"");
+		builder.append("}");
+		return builder.toString();
+	}
 }
+

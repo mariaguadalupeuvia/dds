@@ -17,7 +17,7 @@ public interface IndicadorService {
 
   public boolean validarFormula(String formula) throws ServiceException;
 
-  public List<FormulaIndicador> ejecutarIndicador(String formula, String fechaPeriodo, Empresa empresa) throws ServiceException;
+  public List<FormulaIndicador> ejecutarIndicador(String formula, String fechaPeriodo, Empresa empresa);
 
   public String obtenerFormula(String nombre) throws ServiceException;
 

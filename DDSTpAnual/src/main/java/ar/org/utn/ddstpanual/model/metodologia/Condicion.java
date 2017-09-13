@@ -4,6 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -31,7 +32,7 @@ public class Condicion {
   private Integer valor;
   @ManyToOne(cascade = CascadeType.PERSIST)
   private Indicador indicador;
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  @Enumerated
   private Filtro filtro;
 
 
