@@ -10,12 +10,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import ar.org.utn.ddstpanual.exception.ArbolException;
-import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -52,44 +47,38 @@ public class IndicadorServiceTest {
     ejemplo = new Empresa(1, cuentas, "Ejemplo");
   }
 
-  @Test
-  public void probandoPersistencia() {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.hibernate.tutorial.jpa");
-    EntityManager em = emf.createEntityManager();
-    Empresa empresa = new Empresa(1, null, "Ejemplo");
-    em.persist(empresa);
-  }
 
-  // Test sobre el guardado de indicadores
-  @Test(expected = ServiceException.class)
-  public void testGuardarIndicadorCorrectoDuplicado() throws ServiceException {
-    indicador = new Indicador("IndicadorCorrecto", indicadorSimpleCorrecto);
-    service.guardarIndicador(indicador);
-  }
 
-  @Test(expected = ServiceException.class)
-  public void testGuardarIndicadorError() throws ServiceException {
-    indicador = new Indicador("IndicadorIncorrecto", indicadorSimpleIncorrecto);
-    service.guardarIndicador(indicador);
-  }
+//  // Test sobre el guardado de indicadores
+//  @Test(expected = ServiceException.class)
+//  public void testGuardarIndicadorCorrectoDuplicado() throws ServiceException {
+//    indicador = new Indicador("IndicadorCorrecto", indicadorSimpleCorrecto);
+//    service.guardarIndicador(indicador);
+//  }
+//
+//  @Test(expected = ServiceException.class)
+//  public void testGuardarIndicadorError() throws ServiceException {
+//    indicador = new Indicador("IndicadorIncorrecto", indicadorSimpleIncorrecto);
+//    service.guardarIndicador(indicador);
+//  }
+//
+//  // Test sobre la validacion de las formulas
+//  @Test
+//  public void testValidarFormulaCorrecta() throws ServiceException {
+//    assertTrue(service.validarFormula(indicadorSimpleCorrecto));
+//  }
+//
+//  @Test
+//  public void testValidarFormulaIncorrectaCorrecta() throws ServiceException {
+//    assertFalse(service.validarFormula(indicadorSimpleIncorrecto));
+//  }
 
-  // Test sobre la validacion de las formulas
-  @Test
-  public void testValidarFormulaCorrecta() throws ServiceException {
-    assertTrue(service.validarFormula(indicadorSimpleCorrecto));
-  }
-
-  @Test
-  public void testValidarFormulaIncorrectaCorrecta() throws ServiceException {
-    assertFalse(service.validarFormula(indicadorSimpleIncorrecto));
-  }
-
-  // Test sobre la obtencion de Indicadores
-  // obtenerIndicadores
-  @Test
-  public void testObtenerIndicadores() throws ServiceException {
-    service.obtenerIndicadores();
-  }
+//  // Test sobre la obtencion de Indicadores
+//  // obtenerIndicadores
+//  @Test
+//  public void testObtenerIndicadores() throws ServiceException {
+//    service.obtenerIndicadores();
+//  }
 
 
   // Test sobre la ejecucion de los indicadores

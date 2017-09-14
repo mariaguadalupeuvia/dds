@@ -2,36 +2,50 @@ package ar.org.utn.ddstpanual.controller;
 
 import org.uqbar.commons.utils.Observable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import ar.org.utn.ddstpanual.db.IndicadorDb;
+import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
+import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.EmpresaService;
-import ar.org.utn.ddstpanual.service.IndicadorService;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
-import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Observable
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class IndicadoresController {
 
-  IndicadorService indicadorService;
+  IndicadorDb indicadorDb = new IndicadorDbImpl();
   EmpresaService empresaService;
   List<Indicador> indicadores;
   Indicador indicador;
   List<Empresa> empresas;
   Empresa empresaCheckbox;
   List<Periodo> periodos;
-  // Cuenta cuentaCheckbox;
   Periodo periodoCheckbox;
-  // List<EmpresaExcel> tabla;
-  List<FormulaIndicador> formulaIndicador;
+  private List<FormulaIndicador> indicadoresEvaluados = new ArrayList<>();
   String error;
 
+  public void limpiar()
+  {
+	  error = "";
+	  empresaCheckbox = null;
+	  periodoCheckbox = null;
+	  indicadoresEvaluados.clear();
+  }
+  
   public List<Empresa> obtenerEmpresas() {
-    error = "";
     try {
       empresas = getEmpresaService().obtenerEmpresas();
     } catch (final ServiceException e) {
@@ -41,46 +55,37 @@ public class IndicadoresController {
   }
 
   public List<Periodo> obtenerPeriodos() {
-    error = "";
     try {
       periodos = getEmpresaService().obtenerPeriodos();
     } catch (final ServiceException e) {
-      error = "Se produjo un error al obtener las empresas.";
+    	 error = "Se produjo un error al obtener las empresas.";
     } catch (final NullPointerException e) {
-      error = "No existen períodos para estas empresas";
-      System.out.println(error);
+    	 error = "No existen períodos para estas empresas";
     }
     return periodos;
   }
 
   public List<Indicador> obtenerIndicadores() {
-    error = "";
     try {
-      indicadores = getIndicadorService().obtenerIndicadores();
-    } catch (final ServiceException e) {
-      error = "Se produjo un error al obtener los indicadores.";
-    }
+      indicadores = indicadorDb.obtenerIndicadores();
+    } catch (ArchivoException e) {
+    	 error = e.getMessage();
+	}
     return indicadores;
   }
 
-  public List<FormulaIndicador> ejecutarIndicador() {
-    error = "";
+  public Double ejecutarIndicador() {
+	  error = "";
     try {
       if (periodoCheckbox == null)
+      {
         periodoCheckbox = new Periodo("");
-      formulaIndicador = getIndicadorService().ejecutarIndicador(indicador.getFormula(), periodoCheckbox.getFecha(), empresaCheckbox);
+      }
+     return indicador.ejecutarIndicador(periodoCheckbox.getFecha(), empresaCheckbox);
     } catch (final NullPointerException n) {
-      error = "Debe completar los campos \"Empresa\" e \"Indicador\"";
+    	 error = "Debe completar los campos \"Empresa\" y \"periodo\"";
     }
-    return formulaIndicador;
-  }
-
-  public IndicadorService getIndicadorService() {
-    if (indicadorService != null) {
-      return indicadorService;
-    }
-    indicadorService = new IndicadorServiceImpl();
-    return indicadorService;
+	return null;
   }
 
   public EmpresaService getEmpresaService() {
@@ -91,78 +96,20 @@ public class IndicadoresController {
     return empresaService;
   }
 
-  public Indicador getIndicador() {
-    return indicador;
-  }
+public void listarIndicadores(){
+	error = "";
+    if ((periodoCheckbox == null) || (empresaCheckbox == null))
+    {
+    	error = "Debe completar los campos \"Empresa\" y \"periodo\"";
+    	return;
+    }
+	try {
+		indicadores = indicadorDb.obtenerIndicadores();
+	} catch (ArchivoException e) {
+		 error = e.getMessage();
+	}
+	indicadoresEvaluados.clear();
+	indicadores.stream().map(indicador->indicadoresEvaluados.add( new FormulaIndicador(indicador.getNombre(), periodoCheckbox.getFecha(), indicador.ejecutarIndicador(periodoCheckbox.getFecha(), empresaCheckbox)))).collect(Collectors.toList());
+}
 
-  public void setIndicador(final Indicador indicador) {
-    this.indicador = indicador;
-  }
-
-  public List<Indicador> getIndicadores() {
-    return indicadores;
-  }
-
-  public void setIndicadores(final List<Indicador> indicadores) {
-    this.indicadores = indicadores;
-  }
-
-  public List<Empresa> getEmpresas() {
-    return empresas;
-  }
-
-  public void setEmpresas(final List<Empresa> empresas) {
-    this.empresas = empresas;
-  }
-
-  public Empresa getEmpresaCheckbox() {
-    return empresaCheckbox;
-  }
-
-  public void setEmpresaCheckbox(final Empresa empresaCheckbox) {
-    this.empresaCheckbox = empresaCheckbox;
-  }
-
-  /*
-   * public Cuenta getCuentaCheckbox() { return cuentaCheckbox; }
-   * 
-   * public void setCuentaCheckbox(Cuenta cuentaCheckbox) { this.cuentaCheckbox = cuentaCheckbox; }
-   */
-  public Periodo getPeriodoCheckbox() {
-    return periodoCheckbox;
-  }
-
-  public void setPeriodoCheckbox(final Periodo periodoCheckbox) {
-    this.periodoCheckbox = periodoCheckbox;
-  }
-
-  /*
-   * public List<EmpresaExcel> getTabla() { return tabla; }
-   * 
-   * public void setTabla(List<EmpresaExcel> tabla) { this.tabla = tabla; }
-   */
-  public String getError() {
-    return error;
-  }
-
-  public void setError(final String error) {
-    this.error = error;
-  }
-
-  public List<FormulaIndicador> getFormulaIndicador() {
-    return formulaIndicador;
-  }
-
-  public void setFormulaIndicador(final List<FormulaIndicador> formulaIndicador) {
-    this.formulaIndicador = formulaIndicador;
-  }
-
-  public List<Periodo> getPeriodos() {
-    return periodos;
-
-  }
-
-  public void setPeriodos(final List<Periodo> periodos) {
-    this.periodos = periodos;
-  }
 }

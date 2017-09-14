@@ -14,8 +14,6 @@ import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
-import ar.org.utn.ddstpanual.service.IndicadorService;
-import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 import db.FixtureDB;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +24,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class AbmMetodologiasController implements WithGlobalEntityManager {
-
-  IndicadorService indicadorService;
 
   String nombre;
   List<Indicador> indicadores;
@@ -44,7 +40,7 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
   List<Condicion> condiciones;
   List<Orden> ordenes;
 
-  Integer valor;
+  Double valor;
   String error;
 
   public List<Condicion> cargarCondicion() {
@@ -82,19 +78,10 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
       metodologia.setCondiciones(condiciones);
       metodologia.setNombre(nombre);
       metodologia.setOrdenes(ordenes);
-      
       metodologia.guardarMetodologia(metodologia);
     } catch (ServiceException e) {
       error = e.getMessage();
     }
-  }
-
-  public IndicadorService getIndicadorService() {
-    if (indicadorService != null) {
-      return indicadorService;
-    }
-    indicadorService = new IndicadorServiceImpl();
-    return indicadorService;
   }
 
   public void inicializarVariables() {
@@ -112,7 +99,7 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
 	    tipoOrdenCheckbox = null;
 
 	    nombre = "";
-	    valor = 0;
+	    valor = 0.0;
 	    error = "";
 	  }
 }

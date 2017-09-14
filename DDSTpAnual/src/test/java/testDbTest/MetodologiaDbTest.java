@@ -35,8 +35,7 @@ public class MetodologiaDbTest implements WithGlobalEntityManager{
   public void testGuardarMetodologia() throws ArchivoException {
 
 	    Indicador indicadorTest = new Indicador("IndicadorMetodologiaOrden", "{IndicadorA}+100");
-	    Filtro filtroTest = entityManager().find(Filtro.class, 1);
-	    Condicion condicion1 = new Condicion(indicadorTest, filtroTest, 100);
+	    Condicion condicion1 = new Condicion(indicadorTest, Filtro.MAYOR, 100.0);
 	    ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
 	    condiciones.add(condicion1);
 

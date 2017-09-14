@@ -2,9 +2,6 @@ package ar.org.utn.ddstpanual.db.impl;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
@@ -31,8 +28,7 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
   @Override
   public List<Indicador> obtenerIndicadores() throws ArchivoException {
     try {
-      EntityManager entity = PerThreadEntityManagers.getEntityManager();
-      return entity.createQuery("from Indicador", Indicador.class).getResultList();
+      return entityManager().createQuery("from Indicador", Indicador.class).getResultList();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -54,6 +50,7 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
     }
     return "";
   }
+  
   @Override
   public String obtenerNombre(String formula) {
 	try {

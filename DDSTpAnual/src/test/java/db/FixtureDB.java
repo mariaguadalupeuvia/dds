@@ -108,7 +108,7 @@ public class FixtureDB extends AbstractPersistenceTest implements WithGlobalEnti
 
 	    Indicador deuda = new Indicador("deuda", "[patrimonioNeto]-[pasivoTotal]");
 	    Indicador roe = new Indicador("roe", "[activoCorriente]/[pasivoTotal]");
-	    return new Metodologia("BUFFET", Arrays.asList(new Condicion(roe,Filtro.MAYOR ,1),new Condicion(deuda, Filtro.MENOR,50000)), Arrays.asList(new Orden(deuda,"Ascendente"),new Orden(roe,"Descendente")));
+	    return new Metodologia("BUFFET", Arrays.asList(new Condicion(roe,Filtro.MAYOR ,1.0),new Condicion(deuda, Filtro.MENOR,50000.0)), Arrays.asList(new Orden(deuda,"Ascendente"),new Orden(roe,"Descendente")));
 
 	}
 }

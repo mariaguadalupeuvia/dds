@@ -3,14 +3,11 @@ package ar.org.utn.ddstpanual.model.metodologia;
 import org.uqbar.commons.utils.Observable;
 
 import java.time.Year;
-import java.util.List;
 
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.FormulaIndicador;
+import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
-import ar.org.utn.ddstpanual.service.IndicadorService;
-import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 
 @Observable
 public enum Filtro {
@@ -19,7 +16,6 @@ public enum Filtro {
 			"Mayor"), MENOR("Menor"), MENORIGUAL("Menor Igual"), MAYORIGUAL("Mayor igual");
 
 	private String nombre;
-	IndicadorService indicadorService = new IndicadorServiceImpl();
 
 	Filtro(String nombre) {
 		this.setNombre(nombre);
@@ -27,8 +23,7 @@ public enum Filtro {
 
 	public boolean cumpleCondicion(Condicion condicion, Empresa empresa, Periodo periodo) throws FiltroException {
 
-		List<FormulaIndicador> formulaIndicador = indicadorService
-				.ejecutarIndicador(condicion.getIndicador().getFormula(), periodo.getFecha(), empresa);
+		Double valorIndicador = condicion.getIndicador().ejecutarIndicador(periodo.getFecha(), empresa);
 
 		switch (this) {
 		case CRECIENTE:
@@ -36,15 +31,15 @@ public enum Filtro {
 		case DECRECIENTE:
 			return comparadorEstricto(condicion, empresa, periodo, false);
 		case IGUAL:
-			return formulaIndicador.get(0).getValor() == condicion.getValor();
+			return valorIndicador == condicion.getValor();
 		case MAYOR:
-			return formulaIndicador.get(0).getValor() > condicion.getValor();
+			return valorIndicador > condicion.getValor();
 		case MENOR:
-			return formulaIndicador.get(0).getValor() < condicion.getValor();
+			return valorIndicador < condicion.getValor();
 		case MENORIGUAL:
-			return formulaIndicador.get(0).getValor() <= condicion.getValor();
+			return valorIndicador <= condicion.getValor();
 		case MAYORIGUAL:
-			return formulaIndicador.get(0).getValor() >= condicion.getValor();
+			return valorIndicador >= condicion.getValor();
 		default:
 			throw new AssertionError("Filtro desconocido " + this);
 		}
@@ -52,23 +47,25 @@ public enum Filtro {
 
 	public boolean comparadorEstricto(Condicion condicion, Empresa empresa, Periodo periodo, Boolean esCreciente) {
 
-		Year fechaPeriodoDesde = Year.now().minusYears(condicion.getValor());
-		FormulaIndicador valorIndicadorDesde = indicadorService
-				.ejecutarIndicador(condicion.getIndicador().getFormula(), fechaPeriodoDesde.toString(), empresa).get(0);
+		Year fechaPeriodoDesde = Year.now().minusYears(Math.round(condicion.getValor()));
+		Indicador indicador = condicion.getIndicador();
+
+		Double valorIndicadorDesde = indicador.ejecutarIndicador(fechaPeriodoDesde.toString(), empresa);
+
 		fechaPeriodoDesde.plusYears(1);
 		while (fechaPeriodoDesde.isBefore(Year.now()) || fechaPeriodoDesde.equals(Year.now())) {
-			FormulaIndicador valorIndicador = indicadorService
-					.ejecutarIndicador(condicion.getIndicador().getFormula(), fechaPeriodoDesde.toString(), empresa)
-					.get(0);
+			Double valorIndicador = indicador.ejecutarIndicador(fechaPeriodoDesde.toString(), empresa);
+
 			if (esCreciente) {
-				if (valorIndicador.getValor() < valorIndicadorDesde.getValor()) {
+				if (valorIndicador < valorIndicadorDesde) {
 					return false;
 				}
 			} else {
-				if (valorIndicador.getValor() > valorIndicadorDesde.getValor()) {
+				if (valorIndicador > valorIndicadorDesde) {
 					return false;
 				}
 			}
+
 			fechaPeriodoDesde.plusYears(1);
 		}
 		return true;
@@ -97,4 +94,3 @@ public enum Filtro {
 		return builder.toString();
 	}
 }
-

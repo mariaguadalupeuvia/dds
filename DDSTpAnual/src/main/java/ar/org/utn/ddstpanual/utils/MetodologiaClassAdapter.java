@@ -62,7 +62,7 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
       Condicion condicion = new Condicion();
       condicion.setFiltro(filtro);
       condicion.setIndicador(indicador);
-      condicion.setValor(condicionJson.get("valor").getAsInt());
+     // condicion.setValor(condicionJson.get("valor"));
       condiciones.add(condicion);
     }
 

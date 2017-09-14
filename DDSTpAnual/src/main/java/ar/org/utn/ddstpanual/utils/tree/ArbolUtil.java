@@ -1,6 +1,5 @@
 package ar.org.utn.ddstpanual.utils.tree;
 
-// import java.util.Scanner;
 import java.util.Stack;
 
 import ar.org.utn.ddstpanual.exception.ArbolException;

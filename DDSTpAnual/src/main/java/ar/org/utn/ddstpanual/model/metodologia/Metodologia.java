@@ -9,8 +9,6 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
-import ar.org.utn.ddstpanual.service.IndicadorService;
-import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,8 +52,6 @@ public class Metodologia {
 
 	@Transient
 	private MetodologiaDb metododologiaDb = new MetodologiaDbImpl();
-	@Transient
-	private IndicadorService indicadorService = new IndicadorServiceImpl();
 
 	public Metodologia(String nombre, List<Condicion> condiciones, List<Orden> ordenes) {
 		this.nombre = nombre;
@@ -98,11 +94,9 @@ public class Metodologia {
 		for (Orden orden : ordenes) {
 			Indicador indicador = orden.getIndicador();
 
-			Double valorE1 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e1).get(0)
-					.getValor();
-			Double valorE2 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e2).get(0)
-					.getValor();
-
+			Double valorE1 =indicador.ejecutarIndicador(per.getFecha(), e1);
+			Double valorE2 =indicador.ejecutarIndicador(per.getFecha(), e2);
+			
 			if (orden.getTipoOrden().equals("Ascendente")) {
 				flag = Double.compare(valorE1, valorE2);
 			}

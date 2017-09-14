@@ -29,14 +29,14 @@ public class Condicion {
   @Id
   @GeneratedValue
   private long id;
-  private Integer valor;
+  private Double valor;
   @ManyToOne(cascade = CascadeType.PERSIST)
   private Indicador indicador;
   @Enumerated
   private Filtro filtro;
 
 
-  public Condicion(Indicador indicador, Filtro filtro, Integer valor) {
+  public Condicion(Indicador indicador, Filtro filtro, Double valor) {
     this.indicador = indicador;
     this.valor = valor;
     this.filtro = filtro;

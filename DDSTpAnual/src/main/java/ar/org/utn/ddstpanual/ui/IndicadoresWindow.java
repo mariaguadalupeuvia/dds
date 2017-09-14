@@ -20,7 +20,6 @@ import java.util.List;
 import ar.org.utn.ddstpanual.controller.IndicadoresController;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
-import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 
 public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
@@ -30,7 +29,6 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
 
   public IndicadoresWindow(final WindowOwner parent) {
     super(parent, new IndicadoresController());
-    getModelObject().setError("");
     getModelObject().obtenerIndicadores();
     getModelObject().obtenerEmpresas();
     getModelObject().obtenerPeriodos();
@@ -39,10 +37,11 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
   @Override
   protected void addActions(final Panel actionsPanel) {
     new Button(actionsPanel).setCaption("Ejecutar").onClick(() -> {
-      getModelObject().ejecutarIndicador();
+		getModelObject().listarIndicadores();
     }).setAsDefault().disableOnError();
+    
+    new Button(actionsPanel).setCaption("Limpiar").onClick(() -> { getModelObject().limpiar(); });
   }
-
 
   @Override
   protected void createFormPanel(final Panel mainPanel) {
@@ -58,26 +57,6 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
         selectorEmpresa.bindItems(new ObservableProperty(getModelObject(), "empresas"));
     propiedadEmpresa.setAdapter(new PropertyAdapter(Empresa.class, "nombre"));
 
-
-    new Label(inputFormPanel).setText("Indicador").setForeground(Color.BLUE);
-    final Selector<Indicador> selectorIndicador = new Selector<Indicador>(inputFormPanel).allowNull(false);
-    selectorIndicador.bindValueToProperty("indicador");
-    selectorIndicador.setWidth(150);
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    final Binding<Indicador, Selector<Indicador>, ListBuilder<Indicador>> propiedadIndicador =
-        selectorIndicador.bindItems(new ObservableProperty(getModelObject(), "indicadores"));
-    propiedadIndicador.setAdapter(new PropertyAdapter(Indicador.class, "nombre"));
-
-    /*
-     * new Label(inputFormPanel).setText("Cuenta").setForeground(Color.BLUE); Selector<Cuenta>
-     * selectorCuenta = new Selector<Cuenta>(inputFormPanel).allowNull(false);
-     * selectorCuenta.bindValueToProperty("cuentaCheckbox"); selectorCuenta.setWidth(150);
-     * 
-     * @SuppressWarnings({"unchecked", "rawtypes"}) Binding<Cuenta, Selector<Cuenta>,
-     * ListBuilder<Cuenta>> propiedadCuenta = selectorCuenta .bindItems(new
-     * ObservableProperty(getModelObject(), "empresaCheckbox.cuentas"));
-     * propiedadCuenta.setAdapter(new PropertyAdapter(Cuenta.class, "nombre"));
-     */
     new Label(inputFormPanel).setText("Periodo").setForeground(Color.BLUE);
     final Selector<Periodo> selectorPeriodo = new Selector<Periodo>(inputFormPanel).allowNull(false);
     selectorPeriodo.bindValueToProperty("periodoCheckbox");
@@ -85,19 +64,12 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
     final Binding<Periodo, Selector<Periodo>, ListBuilder<Periodo>> propiedadPeriodo =
         selectorPeriodo.bindItems(new ObservableProperty<Periodo>(getModelObject(), "periodos"));
     propiedadPeriodo.setAdapter(new PropertyAdapter(Periodo.class, "fecha"));
-    // selectorPeriodo.bindItemsToProperty("periodos");
-    /*
-     * @SuppressWarnings({"unchecked", "rawtypes"}) Binding<Periodo, Selector<Periodo>,
-     * ListBuilder<Periodo>> propiedadPeriodo = selectorPeriodo .bindItems(new
-     * ObservableProperty(getModelObject(), "cuentaCheckbox.periodos"));
-     * propiedadPeriodo.setAdapter(new PropertyAdapter(Periodo.class, "fecha"));
-     */
 
   }
 
   @Override
   protected void createMainTemplate(final Panel mainPanel) {
-    this.setTitle("Indicador");
+    this.setTitle("Indicadores");
 
     final Label error = new Label(mainPanel);
     error.setForeground(Color.RED).bindValueToProperty("error");
@@ -110,11 +82,9 @@ public class IndicadoresWindow extends SimpleWindow<IndicadoresController> {
 
   protected void createResultsGridIndicadores(final Panel mainPanel) {
     final Table<FormulaIndicador> table = new Table<FormulaIndicador>(mainPanel, FormulaIndicador.class);
-    table.setNumberVisibleRows(4);
+    table.setNumberVisibleRows(6);
     table.setWidth(450);
-
-    table.bindItemsToProperty("formulaIndicador");
-
+    table.bindItemsToProperty("indicadoresEvaluados");
     this.describeResultsGridIndicador(table);
   }
 

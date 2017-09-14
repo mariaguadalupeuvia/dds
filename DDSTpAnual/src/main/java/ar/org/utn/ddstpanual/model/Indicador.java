@@ -3,10 +3,14 @@ package ar.org.utn.ddstpanual.model;
 import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +29,9 @@ public @Data class Indicador {
   String nombre;
   String formula;
 
+  @Transient
+  private ArbolUtil arbol = new ArbolUtil();
+  
   public void sacarEspacios() {
     nombre = StringUtils.remove(nombre, " ");
     formula = StringUtils.remove(formula, " ");
@@ -54,4 +61,17 @@ public @Data class Indicador {
     this.nombre = nombre;
     this.formula = formula;
   }
+
+	public Double ejecutarIndicador(String fecha, Empresa empresa) 
+	{
+		try 
+		{
+			return  arbol.obtenerValor(formula, fecha, empresa);
+		} catch (ArbolException e) 
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
