@@ -82,7 +82,7 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     return empresas;
   }
 
-@Override
+  @Override
   public List<Condicion> agregarCondicion(List<Condicion> condiciones, Condicion condicion) throws ServiceException {
     List<Condicion> nuevasCondiciones = new ArrayList<>();
     nuevasCondiciones.addAll(condiciones);
@@ -90,13 +90,14 @@ public class MetodologiaServiceImpl implements MetodologiaService {
     return nuevasCondiciones;
   }
 
-@Override
-public List<Orden> agregarOrden(List<Orden> ordenes, Orden orden) throws ServiceException {
+  @Override
+  public List<Orden> agregarOrden(List<Orden> ordenes, Orden orden) throws ServiceException {
     List<Orden> nuevosOrdenes = new ArrayList<>();
     nuevosOrdenes.addAll(ordenes);
     nuevosOrdenes.add(orden);
     return nuevosOrdenes;
-}
+  }
+
   @Override
   public List<Indicador> agregarIndicadorSeleccionado(List<Indicador> indicadores, Indicador indicador) throws ServiceException {
     List<Indicador> indicadoresSeleccionados = new ArrayList<>();
@@ -131,22 +132,22 @@ public List<Orden> agregarOrden(List<Orden> ordenes, Orden orden) throws Service
 
   public int compareEmpresasByMetodologia(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException {
     int flag = 0;
-    
-    for(Orden orden : ordenes){
+
+    for (Orden orden : ordenes) {
       Indicador indicador = orden.getIndicador();
 
       Double valorE1 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e1).get(0).getValor();
       Double valorE2 = getIndicadorService().ejecutarIndicador(indicador.getFormula(), per.getFecha(), e2).get(0).getValor();
 
-      if ( orden.getTipoOrden() == "Ascendente") {
+      if (orden.getTipoOrden() == "Ascendente") {
         flag = Double.compare(valorE1, valorE2);
       }
 
       if (orden.getTipoOrden() == "Descendente") {
         flag = Double.compare(valorE2, valorE1);
       }
-      
-      if(flag != 0){
+
+      if (flag != 0) {
         break;
       }
     }

@@ -3,7 +3,6 @@ package ar.org.utn.ddstpanual.ui;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
@@ -17,9 +16,9 @@ public class MenuPrincipalWindow extends SimpleWindow {
 
   @Override
   protected void addActions(final Panel actionsPanel) {
-	  actionsPanel.setLayout(new VerticalLayout());
+    actionsPanel.setLayout(new VerticalLayout());
 
-	  
+
     final Panel actions = new Panel(actionsPanel);
     actions.setLayout(new ColumnLayout(2));
 
@@ -46,16 +45,16 @@ public class MenuPrincipalWindow extends SimpleWindow {
     final Button ejecutarMetodologias = new Button(actions);
     ejecutarMetodologias.setCaption("Ejecutar Metodologia");
     ejecutarMetodologias.onClick(this::ejecutarMetodologia);
-    
+
     Graficos.graficarBorde(actionsPanel, 360);
   }
 
   @Override
   protected void createFormPanel(final Panel mainPanel) {
     this.setTitle("Donde Invierto");
-	  Graficos.graficarDolares(mainPanel);
-	  Graficos.graficarEspacio(mainPanel, 360);
-	 
+    Graficos.graficarDolares(mainPanel);
+    Graficos.graficarEspacio(mainPanel, 360);
+
   }
 
   // ********************************************************

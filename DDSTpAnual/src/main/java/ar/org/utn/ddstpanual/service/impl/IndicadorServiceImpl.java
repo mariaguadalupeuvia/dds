@@ -7,8 +7,8 @@ import java.util.List;
 
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
-import ar.org.utn.ddstpanual.archivo.IndicadorArchivo;
-import ar.org.utn.ddstpanual.archivo.impl.IndicadorArchivoImpl;
+import ar.org.utn.ddstpanual.db.IndicadorDb;
+import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
 import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
@@ -21,7 +21,7 @@ import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
 
 public class IndicadorServiceImpl implements IndicadorService {
 
-  IndicadorArchivo indicadorArchivo;
+  IndicadorDb indicadorDb;
   EmpresaArchivo empresaArchivo;
   List<FormulaIndicador> lista;
 
@@ -30,8 +30,8 @@ public class IndicadorServiceImpl implements IndicadorService {
     try {
       indicador.sacarEspacios();
       if (validarFormula(indicador.getFormula())) {
-        if (!getIndicadorArchivo().exists(indicador)) {
-          getIndicadorArchivo().guardarIndicador(indicador);
+        if (!getIndicadorDb().exists(indicador)) {
+          getIndicadorDb().guardarIndicador(indicador);
         } else {
           throw new ServiceException("El nombre o la formula que ingreso ya existe.");
         }
@@ -46,7 +46,7 @@ public class IndicadorServiceImpl implements IndicadorService {
   @Override
   public List<Indicador> obtenerIndicadores() throws ServiceException {
     try {
-      return getIndicadorArchivo().obtenerIndicadores();
+      return getIndicadorDb().obtenerIndicadores();
     } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
@@ -55,7 +55,7 @@ public class IndicadorServiceImpl implements IndicadorService {
   @Override
   public void eliminarIndicador(final Indicador indicador) throws ServiceException {
     try {
-      getIndicadorArchivo().eliminarIndicador(indicador);
+      getIndicadorDb().eliminarIndicador(indicador);
     } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }
@@ -67,12 +67,12 @@ public class IndicadorServiceImpl implements IndicadorService {
     return entrada.validarFormula(formula);
   }
 
-  public IndicadorArchivo getIndicadorArchivo() {
-    if (indicadorArchivo != null) {
-      return indicadorArchivo;
+  public IndicadorDb getIndicadorDb() {
+    if (indicadorDb != null) {
+      return indicadorDb;
     }
-    indicadorArchivo = new IndicadorArchivoImpl();
-    return indicadorArchivo;
+    indicadorDb = new IndicadorDbImpl();
+    return indicadorDb;
   }
 
   @Override
@@ -98,7 +98,7 @@ public class IndicadorServiceImpl implements IndicadorService {
   @Override
   public String obtenerFormula(final String nombre) throws ServiceException {
     try {
-      return getIndicadorArchivo().obtenerFormula(nombre);
+      return getIndicadorDb().obtenerFormula(nombre);
     } catch (final ArchivoException e) {
       throw new ServiceException(e.getMessage());
     }

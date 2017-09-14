@@ -1,4 +1,4 @@
-package testArchivoImpl;
+package testDbTest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import ar.org.utn.ddstpanual.model.metodologia.Orden;
 import ar.org.utn.ddstpanual.model.metodologia.TipoOrden;
 import db.FixtureDB;
 
-public class MetodologiaArchivoImplTest {
+public class MetodologiaDbTest {
   MetodologiaDb metodologiaDb;
   Metodologia metodologia;
   FixtureDB fixture;
@@ -36,14 +36,14 @@ public class MetodologiaArchivoImplTest {
     Condicion condicion1 = new Condicion(indicadorTest, filtroTest, 100);
     ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
     condiciones.add(condicion1);
-    
+
     TipoOrden tipoOrdenTest = new TipoOrden();
     tipoOrdenTest.setIdTipoOrden(TipoOrden.ASCENDENTE);
     Orden ordenTest = new Orden(indicadorTest, "Ascendente");
-    
+
     List<Orden> ordenes = new ArrayList<>();
     ordenes.add(ordenTest);
-    
+
     metodologia = new Metodologia(nombre, condiciones, ordenes);
 
   }

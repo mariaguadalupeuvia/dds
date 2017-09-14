@@ -33,6 +33,24 @@ public @Data class Periodo {
   }
 
   @Override
+  public boolean equals(final Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Periodo)) {
+      return false;
+    }
+    final Periodo periodo = (Periodo) o;
+    return periodo.fecha.equals(fecha);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 17;
+    result = 31 * result + fecha.hashCode();
+    return result;
+  }
+
+  @Override
   public String toString() {
     final StringBuilder builder = new StringBuilder();
     builder.append("{\n fecha : " + fecha + ", \n");

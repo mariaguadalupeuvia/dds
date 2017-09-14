@@ -33,13 +33,13 @@ public class Metodologia {
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "metodologia_id")
   private List<Condicion> condiciones;
-  
+
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "metodologia_id")
-  @OrderColumn(name="prioridad")
+  @OrderColumn(name = "prioridad")
   private List<Orden> ordenes;
 
-  
+
   public Metodologia(String nombre, List<Condicion> condiciones, List<Orden> ordenes) {
     this.nombre = nombre;
     this.condiciones = condiciones;

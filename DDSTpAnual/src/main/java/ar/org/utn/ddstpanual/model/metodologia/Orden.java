@@ -20,11 +20,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "ORDEN")
 @Data
 public class Orden {
-  
+
   @Id
   @GeneratedValue
   private int id;
-  
+
   @ManyToOne
   private Indicador indicador;
 
@@ -50,8 +50,8 @@ public class Orden {
   public void setTipoOrden(String tipoOrden) {
     this.tipoOrden = tipoOrden;
   }
-  
-  public String toJson(){
+
+  public String toJson() {
     return "orden: {\n" + indicador.toJson() + ", tipo orden: " + tipoOrden + "}";
   }
 

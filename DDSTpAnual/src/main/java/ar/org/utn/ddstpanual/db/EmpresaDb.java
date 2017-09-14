@@ -14,7 +14,7 @@ public interface EmpresaDb {
 
   public List<Empresa> obtenerEmpresas() throws ArchivoException;
 
-  public List<Periodo> obtenerPeriodos(String nombreEmpresa) throws ArchivoException;
+  public List<Periodo> obtenerPeriodos() throws ArchivoException;
 
   public Empresa obtenerEmpresa(String nombre) throws ArchivoException;
 

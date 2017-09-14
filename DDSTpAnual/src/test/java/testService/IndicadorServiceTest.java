@@ -1,4 +1,4 @@
-package testServiceImpl;
+package testService;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -23,7 +23,7 @@ import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
 
-public class IndicadorServiceImplTest {
+public class IndicadorServiceTest {
 
   IndicadorServiceImpl service = null;
   Indicador indicador = null;

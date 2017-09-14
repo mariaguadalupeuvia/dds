@@ -1,4 +1,4 @@
-package testServiceImpl;
+package testService;
 
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.junit.Before;
@@ -9,7 +9,7 @@ import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
 
-public class EmpresaServiceImplTest {
+public class EmpresaServiceTest {
   EmpresaServiceImpl empresaService = null;
 
   @Before

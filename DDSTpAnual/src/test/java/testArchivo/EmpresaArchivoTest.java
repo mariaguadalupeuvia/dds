@@ -1,4 +1,4 @@
-package testArchivoImpl;
+package testArchivo;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -15,7 +15,7 @@ import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Periodo;
 
-public class EmpresaArchivoImplTest {
+public class EmpresaArchivoTest {
   EmpresaArchivoImpl empresaArchivo;
   List<Periodo> periodos = new ArrayList<Periodo>();
   EmpresaExcel empresa;

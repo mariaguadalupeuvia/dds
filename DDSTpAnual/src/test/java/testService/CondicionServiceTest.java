@@ -1,4 +1,4 @@
-package testServiceImpl;
+package testService;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,7 +24,7 @@ import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.service.impl.CondicionServiceImpl;
 import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
 
-public class CondicionServiceImplTest {
+public class CondicionServiceTest {
   CondicionServiceImpl condicionService;
   EmpresaServiceImpl empresaService;
   Metodologia metodologia;

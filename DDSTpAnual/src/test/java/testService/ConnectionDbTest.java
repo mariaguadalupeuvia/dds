@@ -1,4 +1,4 @@
-package testServiceImpl;
+package testService;
 
 import static org.junit.Assert.assertTrue;
 
@@ -40,9 +40,6 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
     withTransaction(() -> {
       entityManager().persist(empresa);
     });
-
-    // entityManager().persist(empresa);
-    // entityManager().close();
   }
 
   @Test
@@ -53,11 +50,11 @@ public class ConnectionDbTest extends AbstractPersistenceTest implements WithGlo
     List<Condicion> condiciones = new ArrayList<>();
     condiciones.add(new Condicion(indicador, new FiltroMayor(), 500));
     condiciones.add(new Condicion(indicador, new FiltroMenor(), 1000));
-    
+
     TipoOrden tipoOrdenTest = new TipoOrden();
     tipoOrdenTest.setIdTipoOrden(TipoOrden.ASCENDENTE);
     Orden ordenTest = new Orden(indicador, "Ascendente");
-    
+
     List<Orden> ordenes = new ArrayList<>();
     ordenes.add(ordenTest);
 

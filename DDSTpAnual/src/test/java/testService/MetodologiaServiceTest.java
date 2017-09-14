@@ -1,6 +1,6 @@
-package testServiceImpl;
+package testService;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.service.impl.MetodologiaServiceImpl;
 
-public class MetodologiaServiceImplTest {
+public class MetodologiaServiceTest {
   MetodologiaServiceImpl service = null;
   Metodologia metodologia = null;
 
@@ -35,12 +35,12 @@ public class MetodologiaServiceImplTest {
     assertTrue(metodologia.getNombre().equals("MET2"));
   }
 
-//Test de Orden 
- @Test 
- public void testOrdenarAscendenteEmpresas(){
-   //service.compareEmpresasByMetodologia(e1, e2, ordenes, per)
- }
- 
+  // Test de Orden
+  @Test
+  public void testOrdenarAscendenteEmpresas() {
+    // service.compareEmpresasByMetodologia(e1, e2, ordenes, per)
+  }
+
   private Metodologia obtener() {
     try {
       EntityManager entity = PerThreadEntityManagers.getEntityManager();

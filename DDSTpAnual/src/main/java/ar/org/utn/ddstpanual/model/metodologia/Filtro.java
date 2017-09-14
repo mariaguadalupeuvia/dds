@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "FILTROS")
+@Table(name = "FILTRO")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 public abstract class Filtro implements Serializable {

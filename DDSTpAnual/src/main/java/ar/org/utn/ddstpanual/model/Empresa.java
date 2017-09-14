@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,14 +31,14 @@ public @Data class Empresa {
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "empresa_id")
   private List<Cuenta> cuentas;
+  @Column(unique = true)
   private String nombre;
 
-  public Empresa(String nombre, List<Cuenta> cuentas)
-  {
-	  this.nombre = nombre;
-	  this.cuentas = cuentas;
+  public Empresa(String nombre, List<Cuenta> cuentas) {
+    this.nombre = nombre;
+    this.cuentas = cuentas;
   }
-  
+
   public double obtenerValor(final String nombreCuenta, final String periodo) {
     double valor = 0;
     for (final Cuenta cue : cuentas) {
@@ -57,6 +58,24 @@ public @Data class Empresa {
       }
     }
     return periodos;
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Empresa)) {
+      return false;
+    }
+    final Empresa empresa = (Empresa) o;
+    return empresa.nombre.equals(nombre);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 17;
+    result = 31 * result + nombre.hashCode();
+    return result;
   }
 
   @Override
