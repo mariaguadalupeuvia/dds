@@ -33,7 +33,6 @@ public class AbmIndicadoresController {
   }
 
   public void obtenerIndicadores() {
-    error = "";
     try {
       indicadores = getIndicadorService().obtenerIndicadores();
     } catch (final ServiceException ex) {
@@ -83,7 +82,7 @@ public class AbmIndicadoresController {
   public void inicializarVariables() {
     nombre = "";
     formula = "";
-    error = "";
+    if(error == null) error = "";
     obtenerIndicadores();
   }
 

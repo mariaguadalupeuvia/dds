@@ -16,5 +16,7 @@ public interface IndicadorDb {
   public boolean exists(Indicador indicador) throws ArchivoException;
 
   public String obtenerFormula(String nombre) throws ArchivoException;
+  
+  public String obtenerNombre(String formula) throws ArchivoException;
 
 }

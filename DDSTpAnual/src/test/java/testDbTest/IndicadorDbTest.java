@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import ar.org.utn.ddstpanual.db.IndicadorDb;
 import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
@@ -18,6 +19,7 @@ public class IndicadorDbTest {
   Indicador indicador = null;
   Indicador indicadorBusqueda1;
   Indicador indicadorBusqueda2;
+  Indicador indicadorPrueba;
 
   @Before
   public void init() {
@@ -25,6 +27,7 @@ public class IndicadorDbTest {
 
     indicadorBusqueda1 = new Indicador("IndicadorBusqueda1", "[CuentaA]*2");
     indicadorBusqueda2 = new Indicador("IndicadorBusqueda2", "[CuentaA]*{IndicadorBusqueda1}");
+    indicadorPrueba = new Indicador("roa","[cuenta1]*45");
   }
 
   // Test guardar indicador en el archivo
@@ -62,12 +65,17 @@ public class IndicadorDbTest {
   }
 
   @Test
-  public void testObtenerFormulaROA() throws ArchivoException {
-    assertEquals("({activoTotal}/[patrimonioNeto])*100", indicadorDb.obtenerFormula("ROA"));
-  }
-
-  @Test
   public void testObtenerFormulaNoExistente() throws ArchivoException {
     assertEquals("", indicadorDb.obtenerFormula("IndicadorInexistente"));
   }
+  @Test
+  public void testObtenerNombreIndicador() throws ArchivoException {
+    assertEquals("roe",indicadorDb.obtenerNombre("[activoCorriente]/[pasivoTotal]"));
+  }
+  
+  @Test
+  public void testExisteIndicador() {
+    
+  }
+  
 }
