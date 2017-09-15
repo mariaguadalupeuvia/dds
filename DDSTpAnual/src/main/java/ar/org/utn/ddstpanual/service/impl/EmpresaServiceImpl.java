@@ -41,33 +41,69 @@ public class EmpresaServiceImpl implements EmpresaService {
       final Iterator<Row> rowIterator = sheet.iterator();
       Row row;
       rowIterator.next();
+      
+      String nombreEmpresa = "";
+      String nombreCuenta = "";
+      String fecha = "";
+      
+      Empresa empresa = null;
+      Cuenta cuenta = null;
+      Periodo periodo = null;
+      
       while (rowIterator.hasNext()) {
         row = rowIterator.next();
-        Empresa empresa = new Empresa();
-        empresa.setCuentas(new ArrayList<>());
-        empresa.setNombre(row.getCell(0).getStringCellValue());
-        Cuenta cuenta = new Cuenta();
-        cuenta.setPeriodos(new ArrayList<>());
-        cuenta.setNombre(row.getCell(1).getStringCellValue());
-        Periodo periodo = new Periodo();
-        periodo.setFecha(String.valueOf((float) row.getCell(2).getNumericCellValue()));
-        periodo.setValor((float) row.getCell(3).getNumericCellValue());
-        cuenta.getPeriodos().add(periodo);
-        empresa.getCuentas().add(cuenta);
+        
+        nombreEmpresa = row.getCell(0).getStringCellValue();
+        nombreCuenta = row.getCell(1).getStringCellValue();
+        fecha = String.valueOf((float) row.getCell(2).getNumericCellValue());
+        
+        empresa = getEmpresaDb().obtenerEmpresa(nombreEmpresa);
+        
+        if(empresa != null){
+          cuenta = getEmpresaDb().obtenerCuenta(empresa.getId(), nombreCuenta);
+          
+          if(cuenta != null){
+            periodo = getEmpresaDb().obtenerPeriodo(cuenta.getId(), fecha);
+            
+            if(periodo != null){
+              periodo.setValor((float) row.getCell(3).getNumericCellValue());
+            } else {
+              periodo = new Periodo();
+              periodo.setFecha(fecha);
+              periodo.setValor((float) row.getCell(3).getNumericCellValue());
+              
+              cuenta.getPeriodos().add(periodo);
+            }
+          } else {
+            cuenta = new Cuenta();
+            cuenta.setPeriodos(new ArrayList<>());
+            cuenta.setNombre(nombreCuenta);
+            
+            periodo = new Periodo();
+            periodo.setFecha(fecha);
+            periodo.setValor((float) row.getCell(3).getNumericCellValue());
+            
+            cuenta.getPeriodos().add(periodo);
+            empresa.getCuentas().add(cuenta);
+          }
+        } else {
+          empresa = new Empresa();
+          empresa.setNombre(nombreEmpresa);
+          empresa.setCuentas(new ArrayList<>());
+        
+          cuenta = new Cuenta();
+          cuenta.setPeriodos(new ArrayList<>());
+          cuenta.setNombre(nombreCuenta);
+          
+          periodo = new Periodo();
+          periodo.setFecha(String.valueOf((float) row.getCell(2).getNumericCellValue()));
+          periodo.setValor((float) row.getCell(3).getNumericCellValue());
+          
+          cuenta.getPeriodos().add(periodo);
+          empresa.getCuentas().add(cuenta);
+        
+        }
         getEmpresaDb().guardarEmpresa(empresa);
-        // empresaExcel = new EmpresaExcel();
-        // empresaExcel.setNombreEmpresa(row.getCell(0).getStringCellValue());
-        // empresaExcel.setNombreCuenta(row.getCell(1).getStringCellValue());
-        // empresaExcel.setFecha(String.valueOf((float)
-        // row.getCell(2).getNumericCellValue()));
-        // empresaExcel.setValor((float) row.getCell(3).getNumericCellValue());
-        // if (!getEmpresaArchivo().exists(empresaExcel)) {
-        // getEmpresaDb().guardarEmpresa(empresaExcel);
-        // } else {
-        // LogData.EscribirLogText(row.getRowNum() + ": Ya se ingreso un valor para este
-        // periodo en
-        // el archivo.");
-        // }
       }
       workbook.close();
     } catch (final IOException ex) {
