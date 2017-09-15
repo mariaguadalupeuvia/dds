@@ -12,19 +12,22 @@ import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.service.impl.MetodologiaServiceImpl;
+import db.FixtureDB;
+
 import java.util.List;
 
 public class MetodologiaServiceTest implements WithGlobalEntityManager{
   MetodologiaServiceImpl service = null;
   Metodologia metodologia = null;
   List<Empresa> empresas = null;
+  FixtureDB fixture = new FixtureDB();
   
   @Before
   public void init() throws ServiceException 
   {
     service = new MetodologiaServiceImpl();
     metodologia = service.obtenerMetodologia("BUFFET");
-    empresas = entityManager().createQuery("from Empresa", Empresa.class).getResultList();
+    empresas = fixture.getEmpresas();//entityManager().createQuery("from Empresa", Empresa.class).getResultList();
   }
   
   // Test sobre la obtencion de metodologias
