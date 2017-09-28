@@ -6,8 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-import ar.org.utn.ddstpanual.db.MetodologiaDb;
-import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
+import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -21,12 +20,11 @@ public class MetodologiaTest implements WithGlobalEntityManager{
   Metodologia metodologia = null;
   List<Empresa> empresas = null;
   FixtureDB fixture = new FixtureDB();
-  private MetodologiaDb metododologiaDb = new MetodologiaDbImpl();
   
   @Before
   public void init() throws ServiceException, ArchivoException 
   {
-    metodologia = metododologiaDb.obtenerMetodologia("BUFFET");
+    metodologia = RepositorioMetodologias.instancia.obtenerMetodologia("BUFFET");
     empresas = fixture.getEmpresas();
   }
   

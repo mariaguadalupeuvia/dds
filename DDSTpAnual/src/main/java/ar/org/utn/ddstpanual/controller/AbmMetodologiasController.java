@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
@@ -79,7 +78,7 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
       metodologia.setNombre(nombre);
       metodologia.setOrdenes(ordenes);
       metodologia.guardarMetodologia(metodologia);
-    } catch (ServiceException e) {
+    } catch (Exception e) {
       error = e.getMessage();
     }
   }

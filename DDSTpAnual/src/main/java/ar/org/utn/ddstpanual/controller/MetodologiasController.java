@@ -1,92 +1,46 @@
 package ar.org.utn.ddstpanual.controller;
 
-import org.uqbar.commons.utils.Observable;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import ar.org.utn.ddstpanual.db.MetodologiaDb;
-import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
-import ar.org.utn.ddstpanual.exception.ServiceException;
+import ar.org.utn.ddstpanual.db.impl.RepositorioEmpresas;
+import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import ar.org.utn.ddstpanual.service.EmpresaService;
-import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Observable
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class MetodologiasController implements WithGlobalEntityManager {
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 
-	private MetodologiaDb metododologiaDb = new MetodologiaDbImpl();
-	EmpresaService empresaService = new EmpresaServiceImpl();
-	List<Empresa> empresas;
-	List<Metodologia> metodologias;
-	Metodologia metodologiaCheckbox;
-	Periodo periodoCheckbox;
-	List<Periodo> periodos;
-	List<Empresa> empresasResultado;
-
-	String error;
-
-	public void obtenerEmpresas() {
-		error = "";
-		try {
-			empresas = getEmpresaService().obtenerEmpresas();
-		} catch (final ServiceException e) {
-			error = "Se produjo un error al obtener las empresas.";
-		}
+public class MetodologiasController 
+{
+	public ModelAndView listar(Request req, Response res){
+		List<Metodologia> metodologias = RepositorioMetodologias.instancia.obtenerMetodologias();
+		
+		Map<String, List<Metodologia>> model = new HashMap<>();
+		model.put("metodologias", metodologias);
+		return new ModelAndView(model, "metodologias/listado.hbs");
 	}
-
-	public void obtenerMetodologia(String nombre) {
-		try {
-			metodologiaCheckbox = metododologiaDb.obtenerMetodologia(nombre);
-		} catch (ArchivoException e) {
-			e.printStackTrace();
-		}
+	
+	public ModelAndView mostrar(Request req, Response res){
+		String id = req.params("id");
+		Metodologia metodologia = RepositorioMetodologias.instancia.buscar(Integer.parseInt(id));
+		
+		Map<String, Metodologia> model = new HashMap<>();
+		model.put("metodologia", metodologia);
+		return new ModelAndView(model, "metodologias/detalle.hbs");
 	}
-
-	public void obtenerMetodologias() {
-		try {
-			metodologias = metododologiaDb.obtenerMetodologias();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public List<String> obtenerPeriodos() {
-		try {
-			periodos = entityManager().createQuery("from Periodo", Periodo.class).getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public void ejecutarMetodologia() {
-		error = "";
-		try {
-			empresasResultado = metodologiaCheckbox.ejecutarMetodologia(empresas, periodoCheckbox);
-			if (empresasResultado.isEmpty())
-				error = "No se encuentran empresas que cumplan estas condiciones \n para el año "
-						+ periodoCheckbox.getFecha();
-		} catch (final NullPointerException n) {
-			error = "Debe completar todos los campos";
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void inicializarVariables() {
-		error = "";
-		obtenerEmpresas();
-		obtenerMetodologias();
-		obtenerPeriodos();
+	
+	public ModelAndView ejecutar(Request req, Response res){
+		String id = req.params("id");
+		String periodo = req.params("periodo");
+		Metodologia metodologia = RepositorioMetodologias.instancia.buscar(Integer.parseInt(id));
+		List<Empresa> empresas = metodologia.ejecutarMetodologia(RepositorioEmpresas.instancia.obtenerEmpresas(), new Periodo(periodo));
+		
+		Map<String, List<Empresa>> model = new HashMap<>();
+		model.put("empresas", empresas);
+		return new ModelAndView(model, "metodologias/ejecutado.hbs");
 	}
 }

@@ -7,8 +7,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.org.utn.ddstpanual.db.MetodologiaDb;
-import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
+import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -20,13 +19,11 @@ import ar.org.utn.ddstpanual.model.metodologia.Orden;
 import db.FixtureDB;
 
 public class MetodologiaDbTest implements WithGlobalEntityManager{
-  MetodologiaDb metodologiaDb;
 
   FixtureDB fixture;
 
   @Before
   public void init() {
-    metodologiaDb = new MetodologiaDbImpl();
     fixture = new FixtureDB();
   }
   
@@ -42,17 +39,17 @@ public class MetodologiaDbTest implements WithGlobalEntityManager{
 	    Orden ordenTest = new Orden(indicadorTest, "Ascendente");
 	    List<Orden> ordenes = new ArrayList<>();
 	    ordenes.add(ordenTest);
-	    metodologiaDb.guardarMetodologia(new Metodologia("MET1", condiciones, ordenes));
+	    RepositorioMetodologias.instancia.guardarMetodologia(new Metodologia("MET1", condiciones, ordenes));
   }
 
   @Test
   public void testMostrarMetodologiaGuardada() throws ServiceException, ArchivoException {
-    System.out.println(metodologiaDb.obtenerMetodologia("BUFFET").toJson());
+    System.out.println(RepositorioMetodologias.instancia.obtenerMetodologia("BUFFET").toJson());
   }
 
   @Test
   public void testObtenerMetodologiasGuardadas() throws ArchivoException {
-    for (Metodologia m : metodologiaDb.obtenerMetodologias()) {
+    for (Metodologia m : RepositorioMetodologias.instancia.obtenerMetodologias()) {
       System.out.println(m.toJson());
     } ;
   }

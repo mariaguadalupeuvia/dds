@@ -1,0 +1,21 @@
+{{#partial "contenido"}}
+
+{{#with metodologias}}
+    <h1>Metodologias</h1>
+	<table class="table table-stripped">
+	<tr>
+	   <th>Nombre</th>
+	   <th>Id</th>
+	</tr>
+	
+	{{#each metodologias}}
+	<tr>
+	   <td>{{nombre}}</td>
+	   <td>{{id}}</td>		
+	</tr>
+	{{/each}}
+    </table>
+{{/with}}
+
+{{/partial}}
+{{>layout.hbs}}

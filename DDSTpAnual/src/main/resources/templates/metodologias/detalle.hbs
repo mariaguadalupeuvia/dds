@@ -1,0 +1,19 @@
+{{#partial "contenido"}}
+
+{{#with metodologia}}
+	<h1> metodologia {{nombre}} </h1>
+	<p><strong>Id:</strong> {{id}}</p>
+
+	{{#each condiciones}}
+	<p>
+           <td><strong>Condicion:</strong> {{id}}</td>
+           <td><strong>Filtro:</strong> {{filtro}}</td>
+	   <td><strong>Valor:</strong> {{valor}}</td>
+	</p>
+	{{/each}}
+
+
+{{/with}}
+
+{{/partial}}
+{{>layout.hbs}}

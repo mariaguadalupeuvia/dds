@@ -27,14 +27,14 @@ public class MetodologiasWindow extends SimpleWindow<MetodologiasController> {
 
   public MetodologiasWindow(final WindowOwner parent) {
     super(parent, new MetodologiasController());
-    getModelObject().setError("");
-    getModelObject().inicializarVariables();
+//    getModelObject().setError("");
+//    getModelObject().inicializarVariables();
   }
 
   @Override
   protected void addActions(final Panel actionsPanel) {
     new Button(actionsPanel).setCaption("Ejecutar").onClick(() -> {
-      getModelObject().ejecutarMetodologia();
+//      getModelObject().ejecutarMetodologia();
     }).setAsDefault().disableOnError();
   }
 

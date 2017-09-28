@@ -1,0 +1,20 @@
+{{#partial "contenido"}}
+
+	<h1>Invertir en:</h1>
+	<table class="table table-stripped">
+	<tr>
+	   <th>Empresa</th>
+	   <th>Id</th>
+	</tr>
+	
+	{{#each empresas}}
+	<tr>
+	   <td>{{nombre}}</td>
+	   <td>{{id}}</td>
+			
+	</tr>
+	{{/each}}
+	</table>
+
+{{/partial}}
+{{>layout.hbs}}

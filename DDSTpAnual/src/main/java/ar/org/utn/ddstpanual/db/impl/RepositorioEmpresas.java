@@ -4,42 +4,37 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import java.util.List;
-
 import javax.persistence.NoResultException;
 
-import ar.org.utn.ddstpanual.db.EmpresaDb;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 
 
-public class EmpresaDbImpl implements EmpresaDb, WithGlobalEntityManager, TransactionalOps {
+public class RepositorioEmpresas implements WithGlobalEntityManager, TransactionalOps {
 
-  @Override
+	public static RepositorioEmpresas instancia = new RepositorioEmpresas();
+	
   public void guardarEmpresa(Empresa empresa) throws ArchivoException {
     withTransaction(() -> {
-      entityManager().persist(empresa);//persist(empresa);
+      entityManager().persist(empresa);
     });
   }
 
-  @Override
-  public boolean exists(Empresa empresa) throws ArchivoException {
+  public boolean exists(Empresa empresa) {
     return entityManager().contains(empresa);
   }
 
-  @Override
-  public List<Empresa> obtenerEmpresas() throws ArchivoException {
+  public List<Empresa> obtenerEmpresas() {
     return entityManager().createQuery("from Empresa", Empresa.class).getResultList();
   }
 
-  @Override
-  public List<Periodo> obtenerPeriodos() throws ArchivoException {
+  public List<Periodo> obtenerPeriodos() {
     return entityManager().createQuery("from Periodo", Periodo.class).getResultList();
   }
 
-  @Override
-  public Empresa obtenerEmpresa(String nombre) throws ArchivoException {
+  public Empresa obtenerEmpresa(String nombre) {
     Empresa empresa;
     try{
       empresa =  entityManager().createQuery("from Empresa where nombre = :nombre", Empresa.class).setParameter("nombre", nombre).getSingleResult();
@@ -51,8 +46,7 @@ public class EmpresaDbImpl implements EmpresaDb, WithGlobalEntityManager, Transa
     return empresa;
   }
 
-  @Override
-  public Cuenta obtenerCuenta(Integer idEmpresa, String nombreCuenta) throws ArchivoException {
+  public Cuenta obtenerCuenta(Integer idEmpresa, String nombreCuenta) {
     Cuenta cuenta;
     try{
       cuenta =  entityManager().createQuery("from Cuenta where nombre = :nombre and empresa_id = :empresa_id", Cuenta.class)
@@ -67,8 +61,7 @@ public class EmpresaDbImpl implements EmpresaDb, WithGlobalEntityManager, Transa
     return cuenta;
   }
 
-  @Override
-  public Periodo obtenerPeriodo(Integer idCuenta, String fecha) throws ArchivoException {
+  public Periodo obtenerPeriodo(Integer idCuenta, String fecha) {
     Periodo periodo;
     try{
       periodo =  entityManager().createQuery("from Periodo where fecha = :fecha and cuenta_id = :cuenta_id", Periodo.class)

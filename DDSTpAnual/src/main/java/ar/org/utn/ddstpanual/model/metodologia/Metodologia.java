@@ -2,9 +2,7 @@ package ar.org.utn.ddstpanual.model.metodologia;
 
 import org.uqbar.commons.utils.Observable;
 
-import ar.org.utn.ddstpanual.db.MetodologiaDb;
-import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -22,7 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -50,21 +47,14 @@ public class Metodologia {
 	@OrderColumn(name = "prioridad")
 	private List<Orden> ordenes;
 
-	@Transient
-	private MetodologiaDb metododologiaDb = new MetodologiaDbImpl();
-
 	public Metodologia(String nombre, List<Condicion> condiciones, List<Orden> ordenes) {
 		this.nombre = nombre;
 		this.condiciones = condiciones;
 		this.ordenes = ordenes;
 	}
 
-	public void guardarMetodologia(Metodologia metodologia) throws ServiceException {
-		try {
-			metododologiaDb.guardarMetodologia(metodologia);
-		} catch (ArchivoException e) {
-			throw new ServiceException(e.getMessage());
-		}
+	public void guardarMetodologia(Metodologia metodologia) {
+		RepositorioMetodologias.instancia.guardarMetodologia(metodologia);
 	}
 
 	public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Periodo periodo) {

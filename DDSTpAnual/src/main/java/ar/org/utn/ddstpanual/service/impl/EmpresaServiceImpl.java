@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
 import ar.org.utn.ddstpanual.db.EmpresaDb;
-import ar.org.utn.ddstpanual.db.impl.EmpresaDbImpl;
+import ar.org.utn.ddstpanual.db.impl.RepositorioEmpresas;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
@@ -57,13 +57,13 @@ public class EmpresaServiceImpl implements EmpresaService {
         nombreCuenta = row.getCell(1).getStringCellValue();
         fecha = String.valueOf((float) row.getCell(2).getNumericCellValue());
         
-        empresa = getEmpresaDb().obtenerEmpresa(nombreEmpresa);
+        empresa = RepositorioEmpresas.instancia.obtenerEmpresa(nombreEmpresa);
         
         if(empresa != null){
-          cuenta = getEmpresaDb().obtenerCuenta(empresa.getId(), nombreCuenta);
+          cuenta =RepositorioEmpresas.instancia.obtenerCuenta(empresa.getId(), nombreCuenta);
           
           if(cuenta != null){
-            periodo = getEmpresaDb().obtenerPeriodo(cuenta.getId(), fecha);
+            periodo = RepositorioEmpresas.instancia.obtenerPeriodo(cuenta.getId(), fecha);
             
             if(periodo != null){
               periodo.setValor((float) row.getCell(3).getNumericCellValue());
@@ -103,7 +103,7 @@ public class EmpresaServiceImpl implements EmpresaService {
           empresa.getCuentas().add(cuenta);
         
         }
-        getEmpresaDb().guardarEmpresa(empresa);
+        RepositorioEmpresas.instancia.guardarEmpresa(empresa);
       }
       workbook.close();
     } catch (final IOException ex) {
@@ -115,12 +115,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
   @Override
   public List<Empresa> obtenerEmpresas() throws ServiceException {
-    try {
-      final List<Empresa> empresas = getEmpresaDb().obtenerEmpresas();
-      return empresas;
-    } catch (final ArchivoException e) {
-      throw new ServiceException(e.getMessage());
-    }
+    	return RepositorioEmpresas.instancia.obtenerEmpresas();
   }
 
   @Override
@@ -157,12 +152,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
   @Override
   public List<Periodo> obtenerPeriodos() throws ServiceException {
-    try {
-      return getEmpresaDb().obtenerPeriodos();
-    } catch (ArchivoException e) {
-      // TODO Auto-generated catch block
-      throw new ServiceException(e.getMessage());
-    }
+      return RepositorioEmpresas.instancia.obtenerPeriodos();
   }
 
   @Override
@@ -171,7 +161,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     try {
       empresa = getEmpresaArchivo().obtenerEmpresa(nombre);
       if (empresa == null) {
-        empresa = getEmpresaDb().obtenerEmpresa(nombre);
+        empresa = RepositorioEmpresas.instancia.obtenerEmpresa(nombre);
       }
       return empresa;
     } catch (ArchivoException e) {
@@ -187,12 +177,6 @@ public class EmpresaServiceImpl implements EmpresaService {
     return empresaArchivo;
   }
 
-  public EmpresaDb getEmpresaDb() {
-    if (empresaDb != null) {
-      return empresaDb;
-    }
-    empresaDb = new EmpresaDbImpl();
-    return empresaDb;
-  }
+
 
 }
