@@ -1,0 +1,82 @@
+<html>
+<head>
+   <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   <link rel="stylesheet"  href="main.css">
+
+   <nav class="navbar navbar-inverse">
+     <div class="container-fluid">
+       <div class="navbar-header">
+	  <a class="navbar-brand" href="/login">Iniciar sesion</a>
+       </div>
+     </div>
+   </nav>
+</head>
+
+<body>
+  <div class="contenedor">
+
+    <div class="header">
+      <div class="rowHeader">
+        <div class="columnHeader ">
+          <h1>DONDE INVIERTO</h1>
+        </div>
+      </div>
+      <div class="rowDescripcion">
+          <p style="color: #ffffff; text-align: left;"><span style="color:#bfd93a; font-size: 20px;">DondeInvierto</span> 
+           es una herramienta pensada para dar soporte a pequeños inversores.
+           Recopile toda la informacion relevante a su negocio en un solo lugar. 
+           Acceda a sus datos en linea desde cualquier computadora.
+          </p>
+     </div>
+   </div>  
+
+   <div class="row">
+      <div class="column side">
+        <h3>CUENTAS</h3>
+        <img src="cuentas.jpg" alt="cuentas">
+        <div class="section">
+           <p>
+           Todos sus datos historicos en un solo lugar.
+           Mantenga los valores de las cuentas mas importantes de cada empresa para obtener analisis precisos.
+           </p>
+         </div>
+      </div>
+      <div class="column middle">
+        <h3><a href="/metodologias">METODOLOGIAS</a></h3>
+        <img src="metodologias.jpg" alt="metodologias">
+        <div class="section">
+          <p>
+          Analice y compare distintas empresas utilizando decenas de metodologias de inversion.
+          Personalice sus analisis creando metodologias a medida.
+          </p>
+        </div>
+      </div>
+  
+      <div class="column side">
+        <h3>INDICADORES</h3>
+        <img src="indicadores.jpg" alt="indicadores">
+        <div class="section">
+          <p>
+          Cree sus propios indicadores para analisis mas precisos.
+          Configure formulas complejas combinando cuentas e indicadores en segundos.
+          </p>
+         </div>
+      </div>
+   </div>
+
+   <div class="container">
+	{{#block "contenido"}}
+	{{/block}}
+   </div>
+
+  </div>
+</body>
+
+<footer class="footer">
+    <p>
+      &copy; 2017 dondeInvierto.com
+   </p>
+</footer>
+
+</html>
+

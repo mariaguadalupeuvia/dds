@@ -8,7 +8,7 @@ package ar.org.utn.ddstpanual.server;
 			new Bootstrap().init();
 			Spark.port(8080);
 			DebugScreen.enableDebugScreen();
-			Router.configure();
+			Rutas.configure();
 		}
 
 	}
