@@ -11,6 +11,7 @@ import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Empresa;
 
 public class CargaDatosTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
+
   public CargaDatosTest() {
     try {
       List<Empresa> empresas = new EmpresaArchivoImpl().obtenerEmpresas();

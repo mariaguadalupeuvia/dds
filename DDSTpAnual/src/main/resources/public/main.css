@@ -6,34 +6,6 @@ html {
     box-sizing: border-box;
 }
 
-.button
-{
-    background-color: #f44336;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.boton:link, .boton:visited {
-    background-color: #f44336;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.boton:hover, .boton:active {
-    background-color: red;
-}
-
-
-
-
-
-
 .contenedor
 {
     background-color: #5b5c4d;  /*696e36; caf080;*/
@@ -100,6 +72,16 @@ p {
     width: 40%;
     font-family: verdana;
     background-color: #cfca8a; /*background-color: #e5dad6; f1e9c5;*/
+}
+.column.side2 {
+    width: 10%;
+    font-family: verdana;
+    background-color: #5b5c4d;
+}
+.column.middle2 {
+    width: 80%;
+    font-family: verdana;
+    background-color: #5b5c4d; /*background-color: #e5dad6; f1e9c5;*/
 }
 .column.Body {
     padding: 40px;

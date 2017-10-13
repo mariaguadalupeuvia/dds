@@ -6,8 +6,7 @@ import org.uqbar.commons.utils.Observable;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
-import ar.org.utn.ddstpanual.db.IndicadorDb;
-import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
+import ar.org.utn.ddstpanual.db.impl.RepositorioIndicadores;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import lombok.AllArgsConstructor;
@@ -24,35 +23,28 @@ public class AbmIndicadoresController {
   private String nombre;
   private String formula;
   private String error;
-  IndicadorDb indicadorDb = new IndicadorDbImpl();
   
   public void guardarIndicador() 
   {
-    error = "";
-    try {
       final Indicador indicador = new Indicador(nombre, formula);
       if (validarIndicador() ) 
       {
           indicador.sacarEspacios();
           if (validarFormula(indicador.getFormula())) 
           {
-            if (!indicadorDb.exists(indicador)) 
+            if (!RepositorioIndicadores.instancia.exists(indicador)) 
             {
-            	indicadorDb.guardarIndicador(indicador);
+            	RepositorioIndicadores.instancia.guardarIndicador(indicador);
             	obtenerIndicadores();
             } 
           }
       }
-    } catch (ArchivoException e) 
-    {
-		e.printStackTrace();
-	}
   }
   
   
   public void obtenerIndicadores() {
     try {
-      indicadores = indicadorDb.obtenerIndicadores();
+      indicadores = RepositorioIndicadores.instancia.obtenerIndicadores();
     } catch (Exception ex) {
       error = "Se produjo un error al obtener los indicadores.";
     }

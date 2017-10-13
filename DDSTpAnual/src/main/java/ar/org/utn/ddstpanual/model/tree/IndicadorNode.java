@@ -1,9 +1,7 @@
 package ar.org.utn.ddstpanual.model.tree;
 
-import ar.org.utn.ddstpanual.db.IndicadorDb;
-import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
+import ar.org.utn.ddstpanual.db.impl.RepositorioIndicadores;
 import ar.org.utn.ddstpanual.exception.ArbolException;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
 import ar.org.utn.ddstpanual.exception.NodeException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -57,21 +55,19 @@ public class IndicadorNode extends Node {
   @Override
   public double obtenerValor(final String fechaPeriodo, final Empresa empresa) throws NodeException {
     String formula;
-    IndicadorDb indicadorDb = new IndicadorDbImpl();
     
     try {
-      formula = indicadorDb.obtenerFormula(nombreIndicador.substring(1, nombreIndicador.length() - 1));
-      if (formula.equals("[]") || formula.isEmpty() || formula.equals("{}") || formula == null || formula.contains("nombreindicador")) {
+      formula = RepositorioIndicadores.instancia.obtenerFormula(nombreIndicador.substring(1, nombreIndicador.length() - 1));
+      if (formula.equals("[]") || formula.isEmpty() || formula.equals("{}") || formula == null || formula.contains("nombreindicador")) 
+      {
         throw new NodeException("No se encuentra la formula del indicador " + nombreIndicador + ". No puede calcularse su valor \n");
       }
       getIndicadorUtil().verificarAnalisisFormula();
       return getUtil().obtenerValor(formula, fechaPeriodo, empresa);
-    } catch ( ArbolException | FormulaInfinitaException e) {
+    } 
+    catch ( ArbolException | FormulaInfinitaException e) 
+    {
       throw new NodeException(e.getMessage());
-    } catch (ArchivoException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	return 0;
+    }
   }
 }

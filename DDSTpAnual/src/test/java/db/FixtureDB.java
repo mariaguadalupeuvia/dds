@@ -91,7 +91,6 @@ public class FixtureDB extends AbstractPersistenceTest implements WithGlobalEnti
 	  }
 
 	public List<Filtro>  getFiltros() {
-	    
 		List<Filtro> filtros = new ArrayList<>();
 	    filtros.add(Filtro.CRECIENTE);
 	    filtros.add(Filtro.DECRECIENTE);
@@ -101,14 +100,21 @@ public class FixtureDB extends AbstractPersistenceTest implements WithGlobalEnti
 	    filtros.add(Filtro.MAYORIGUAL);
 	    filtros.add(Filtro.MENORIGUAL);
 	    return filtros;
-
 	}
-
+	
+	public List<String>  getOrdenes() {
+	    return Arrays.asList("Ascendente", "Descendente");
+	}
+	
 	private Metodologia getIndicadoresMetodologia() {
 
 	    Indicador deuda = new Indicador("deuda", "[patrimonioNeto]-[pasivoTotal]");
 	    Indicador roe = new Indicador("roe", "[activoCorriente]/[pasivoTotal]");
 	    return new Metodologia("BUFFET", Arrays.asList(new Condicion(roe,Filtro.MAYOR ,1.0),new Condicion(deuda, Filtro.MENOR,50000.0)), Arrays.asList(new Orden(deuda,"Ascendente"),new Orden(roe,"Descendente")));
+	}
 
+	public List<Indicador> getIndicadores() {
+		
+		return entityManager().createQuery("from Indicador", Indicador.class).getResultList();
 	}
 }

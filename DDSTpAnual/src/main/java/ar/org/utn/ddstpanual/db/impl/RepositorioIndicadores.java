@@ -5,28 +5,17 @@ import java.util.List;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
-import ar.org.utn.ddstpanual.db.IndicadorDb;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Indicador;
 
-public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, TransactionalOps {
 
-  @Override
-  public void guardarIndicador(Indicador indicador) throws ArchivoException {
-    withTransaction(() -> {
+public class RepositorioIndicadores implements WithGlobalEntityManager, TransactionalOps {
+	 public static RepositorioIndicadores instancia = new RepositorioIndicadores();
+	 
+  public void guardarIndicador(Indicador indicador){
       entityManager().persist(indicador);
-    });
-
   }
 
-  @Override
-  public void eliminarIndicador(Indicador indicador) throws ArchivoException {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public List<Indicador> obtenerIndicadores() throws ArchivoException {
+  public List<Indicador> obtenerIndicadores() {
     try {
       return entityManager().createQuery("from Indicador", Indicador.class).getResultList();
     } catch (Exception e) {
@@ -35,13 +24,13 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
     return null;
   }
 
-  @Override
-  public boolean exists(Indicador indicador) throws ArchivoException {
+//--------------------------------------------------------------------
+  public boolean exists(Indicador indicador) {
     return (obtenerFormula(indicador.getNombre()).equals(indicador.getFormula())) || (obtenerNombre(indicador.getFormula()).equals(indicador.getNombre()));
   }
 
-  @Override
-  public String obtenerFormula(String nombre) throws ArchivoException {
+  public String obtenerFormula(String nombre)
+  {
     try {
       return entityManager().createQuery("from Indicador i WHERE i.nombre LIKE '" + nombre + "'", Indicador.class)
           .setMaxResults(1).getSingleResult().getFormula();
@@ -51,7 +40,6 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
     return "";
   }
   
-  @Override
   public String obtenerNombre(String formula) {
 	try {
 	  return entityManager().createQuery("from Indicador i WHERE i.formula LIKE '" + formula + "'",Indicador.class)

@@ -1,6 +1,7 @@
 package ar.org.utn.ddstpanual.server;
 
 
+import ar.org.utn.ddstpanual.controller.IndicadoresController;
 import ar.org.utn.ddstpanual.controller.MenuPrincipalController;
 import ar.org.utn.ddstpanual.controller.MetodologiasController;
 import ar.org.utn.ddstpanual.spark.utils.BooleanHelper;
@@ -27,7 +28,12 @@ public class Rutas {
 		//Spark.get("/metodologias/:id", metodologiasController::mostrar, engine);
 		Spark.get("/metodologias/ejecutar", metodologiasController::ejecutar, engine);
 		//Spark.get("/metodologias/:id/:periodo/ejecutar", metodologiasController::ejecutar, engine);
-		Spark.post("/metodologias",  metodologiasController::crear);
+		Spark.post("/metodologias/crear",  metodologiasController::crear);
+		Spark.get("/metodologias/crear",  metodologiasController::crear, engine);
+		
+		IndicadoresController indicadoresController = new IndicadoresController();
+		Spark.get("/indicadores/ejecutar", indicadoresController::ejecutar, engine);
+		Spark.get("/indicadores", indicadoresController::listar, engine);
 	}
 
 }

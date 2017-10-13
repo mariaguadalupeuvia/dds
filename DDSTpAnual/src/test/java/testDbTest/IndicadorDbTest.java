@@ -7,9 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import ar.org.utn.ddstpanual.db.IndicadorDb;
-import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Indicador;
 
@@ -23,7 +21,7 @@ public class IndicadorDbTest {
 
   @Before
   public void init() {
-    indicadorDb = new IndicadorDbImpl();
+    indicadorDb = null;// new IndicadorDbImpl();
 
     indicadorBusqueda1 = new Indicador("IndicadorBusqueda1", "[CuentaA]*2");
     indicadorBusqueda2 = new Indicador("IndicadorBusqueda2", "[CuentaA]*{IndicadorBusqueda1}");
