@@ -4,6 +4,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
+import Repositorio.RepositorioEmpresas;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,22 +15,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
-import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
-import ar.org.utn.ddstpanual.db.EmpresaDb;
-import ar.org.utn.ddstpanual.db.impl.RepositorioEmpresas;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
-import ar.org.utn.ddstpanual.service.EmpresaService;
 
 public class EmpresaServiceImpl {
 
   EmpresaArchivo empresaArchivo;
 
-  EmpresaDb empresaDb;
 
 
   public void subirExcel(final String rutaArchivo) throws ServiceException {
@@ -154,19 +151,7 @@ public class EmpresaServiceImpl {
       return RepositorioEmpresas.instancia.obtenerPeriodos();
   }
 
-//  @Override
-//  public Empresa obtenerEmpresa(String nombre) throws ServiceException {
-//    Empresa empresa = new Empresa();
-//    try {
-//      empresa = getEmpresaArchivo().obtenerEmpresa(nombre);
-//      if (empresa == null) {
-//        empresa = RepositorioEmpresas.instancia.obtenerEmpresa(nombre);
-//      }
-//      return empresa;
-//    } catch (ArchivoException e) {
-//      throw new ServiceException(e.getMessage());
-//    }
-//  }
+
 
 
 

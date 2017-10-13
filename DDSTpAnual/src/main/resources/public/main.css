@@ -20,6 +20,11 @@ html {
     background-size: 100%;
     background-attachment: fixed;
 }
+.label
+{
+    color: #f1f1f1;
+    background-color: #5b5c4d;
+}
 .contenido
 {
     width: 100%;
@@ -54,7 +59,9 @@ p {
     font-size: 14px;
     /*color: #002000*/
 }
-
+a {
+/*color: #5cb85c;*/
+}
 .column {
     float: left;
     padding:10px;

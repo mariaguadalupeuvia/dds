@@ -1,6 +1,6 @@
 package ar.org.utn.ddstpanual.model.tree;
 
-import ar.org.utn.ddstpanual.db.impl.RepositorioIndicadores;
+import Repositorio.RepositorioIndicadores;
 import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
 import ar.org.utn.ddstpanual.exception.NodeException;

@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ar.org.utn.ddstpanual.db.impl.RepositorioEmpresas;
-import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
+import Repositorio.RepositorioEmpresas;
+import Repositorio.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
@@ -29,15 +29,6 @@ public class MetodologiasController
 		return new ModelAndView(model, "metodologias/listado.hbs");
 	}
 	
-//	public ModelAndView mostrar(Request req, Response res){
-//		String id = req.params("id");
-//		Metodologia metodologia = RepositorioMetodologias.instancia.buscar(Integer.parseInt(id));
-//		
-//		Map<String, Metodologia> model = new HashMap<>();
-//		model.put("metodologia", metodologia);
-//		return new ModelAndView(model, "metodologias/detalle.hbs");
-//	}
-	
 	public ModelAndView ejecutar(Request req, Response res){
 		String metodologiaSeleccionada = req.queryParams("metodologiaSeleccionada");
 		String periodoSeleccionado = req.queryParams("periodoSeleccionado");
@@ -57,12 +48,8 @@ public class MetodologiasController
 	}
 	public void guardar(Request req, Response res){
 		 List<Condicion> condiciones = new ArrayList<Condicion>();
-		 
-		 //List<Orden> ordenes = (List<Orden>)req.queryParams("ordenes");
-		 // req.queryParams("filtros").forEach(unFiltro -> condiciones.add());
-         //model.put(condiciones, req.queryParams("condiciones"));
-
-	//	Metodologia metodologia = new Metodologia();//req.queryParams("nombre"),condiciones, ordenes);
+		
+	//	Metodologia metodologia = new Metodologia();
 		//RepositorioMetodologias.instancia.guardarMetodologia(metodologia);
 		
 		res.redirect("/metodologias");

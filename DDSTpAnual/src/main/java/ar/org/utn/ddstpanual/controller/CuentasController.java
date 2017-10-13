@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import ar.org.utn.ddstpanual.db.impl.RepositorioEmpresas;
-import ar.org.utn.ddstpanual.db.impl.RepositorioIndicadores;
+import Repositorio.RepositorioEmpresas;
+import Repositorio.RepositorioIndicadores;
 import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;

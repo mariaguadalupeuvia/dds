@@ -1,4 +1,4 @@
-package ar.org.utn.ddstpanual.db.impl;
+package Repositorio;
 
 import java.util.List;
 

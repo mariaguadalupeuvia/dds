@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
+import Repositorio.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;

@@ -3,10 +3,11 @@ package ar.org.utn.ddstpanual.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
 
+import Repositorio.RepositorioIndicadores;
+
 import java.util.List;
 
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
-import ar.org.utn.ddstpanual.db.impl.RepositorioIndicadores;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import lombok.AllArgsConstructor;

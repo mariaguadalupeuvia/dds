@@ -1,4 +1,4 @@
-package ar.org.utn.ddstpanual.db.impl;
+package Repositorio;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;

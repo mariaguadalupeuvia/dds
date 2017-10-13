@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
+import Repositorio.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import spark.ModelAndView;
 import spark.Request;

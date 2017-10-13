@@ -15,12 +15,11 @@ import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
-import ar.org.utn.ddstpanual.service.impl.IndicadorServiceImpl;
 import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
 
 public class IndicadorServiceTest {
 
-  IndicadorServiceImpl service = null;
+  
   Indicador indicador = null;
   String indicadorSimpleCorrecto = null;
   String indicadorSimpleIncorrecto = null;
@@ -31,7 +30,7 @@ public class IndicadorServiceTest {
 
   @Before
   public void init() {
-    service = new IndicadorServiceImpl();
+   
     indicadorSimpleCorrecto = "[Cuenta]+12";
     indicadorSimpleIncorrecto = "Cuenta+ 3";
 

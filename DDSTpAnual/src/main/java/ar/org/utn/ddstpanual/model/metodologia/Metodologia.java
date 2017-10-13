@@ -2,7 +2,7 @@ package ar.org.utn.ddstpanual.model.metodologia;
 
 import org.uqbar.commons.utils.Observable;
 
-import ar.org.utn.ddstpanual.db.impl.RepositorioMetodologias;
+import Repositorio.RepositorioMetodologias;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;

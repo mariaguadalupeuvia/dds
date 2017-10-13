@@ -2,14 +2,15 @@ package ar.org.utn.ddstpanual.controller;
 
 import org.uqbar.commons.utils.Observable;
 
+import Repositorio.RepositorioEmpresas;
+import Repositorio.RepositorioIndicadores;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import ar.org.utn.ddstpanual.db.impl.RepositorioEmpresas;
-import ar.org.utn.ddstpanual.db.impl.RepositorioIndicadores;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;

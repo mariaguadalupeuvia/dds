@@ -10,8 +10,8 @@
   <form action="/metodologias/ejecutar" method= "GET">
 
     {{#with metodologias}}
- 
-       <div class="row">
+     <h3>Seleccione:</h3>
+       <div class="row"">
 					
          <div class="col-md-2">
 					
@@ -33,13 +33,10 @@
         </div>
 
       </div>
-		
-			
-
-       <div class="row">
-					
-         <div class="col-md-2">
-					
+	
+				
+      <div class="row">			
+         <div class="col-md-2">				
              <label for="periodoSeleccionado">Periodo</label>		
 				
          </div>
@@ -59,10 +56,13 @@
 				
         </div>
 
+        <div class="col-md-2">	
+            <button type="submit" class="btn btn-success btn-lg">Ejecutar</button>
+        </div>
+
+
       </div>
 
-
-      <button type="submit" class="btn btn-success btn-lg">Ejecutar</button>
 
      {{/with}}
   </form>
