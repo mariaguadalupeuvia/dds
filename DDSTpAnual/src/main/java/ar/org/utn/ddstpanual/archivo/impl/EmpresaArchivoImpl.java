@@ -15,13 +15,13 @@ import java.util.List;
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.model.Cuenta;
+import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Periodo;
 
-public class EmpresaArchivoImpl implements EmpresaArchivo {
+public class EmpresaArchivoImpl {
 
-  public void guardarEmpresa(final EmpresaExcel empresa) throws ArchivoException {
+  public void guardarEmpresa(final CuentaValor empresa) throws ArchivoException {
     final String path = System.getProperty("user.dir");
     FileWriter filewriter = null;
     PrintWriter printwriten = null;
@@ -43,8 +43,7 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     }
   }
 
-  @Override
-  public boolean exists(final EmpresaExcel empresa) throws ArchivoException {
+  public boolean exists(final CuentaValor empresa) throws ArchivoException {
     final String path = System.getProperty("user.dir");
     final File file = new File(path + "\\src\\main\\resources\\empresas\\" + empresa.getNombreEmpresa());
     FileReader filereader = null;
@@ -77,7 +76,7 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     return existe;
   }
 
-  @Override
+
   public Empresa obtenerEmpresa(final String nombreEmpresa) throws ArchivoException {
     Empresa empresa = new Empresa();
     final String path = System.getProperty("user.dir");
@@ -131,7 +130,7 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     return empresa;
   }
 
-  @Override
+
   public List<Empresa> obtenerEmpresas() throws ArchivoException {
     final String path = System.getProperty("user.dir");
     final File dir = new File(path + "\\src\\main\\resources\\empresas\\");
@@ -192,7 +191,6 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     return empresas;
   }
 
-  @Override
   public List<Periodo> obtenerPeriodos(final String nombreEmpresa) throws ArchivoException {
     final String path = System.getProperty("user.dir");
     final File dir = new File(path + "\\src\\main\\resources\\empresas\\" + nombreEmpresa);
@@ -228,5 +226,9 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
      */
     return periodos;
   }
+
+
+
+
 
 }

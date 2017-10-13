@@ -4,8 +4,8 @@ import java.util.List;
 
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
+import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Periodo;
 
 public interface EmpresaService {
@@ -14,7 +14,7 @@ public interface EmpresaService {
 
   public List<Empresa> obtenerEmpresas() throws ServiceException;
 
-  public List<EmpresaExcel> buscar(Empresa empresa, Cuenta cuenta, Periodo periodo) throws ServiceException;
+  public List<CuentaValor> buscar(Empresa empresa, Cuenta cuenta, Periodo periodo) throws ServiceException;
 
   public List<Periodo> obtenerPeriodos() throws ServiceException;
 

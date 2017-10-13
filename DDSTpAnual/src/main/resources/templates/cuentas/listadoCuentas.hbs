@@ -1,0 +1,72 @@
+{{# partial "titulo" }}	
+	
+<title>Cuentas</title>
+
+{{/partial}}
+	
+
+{{#partial "contenido"}}
+
+  <form action="/cuentas/ejecutar" method= "GET">
+
+    {{#with empresas}}
+ 
+       <div class="row">
+					
+         <div class="col-md-2">
+					
+             <label for="empresaSeleccionada">Empresa</label>		
+				
+         </div>
+
+
+	<div class="col-md-2">
+				
+            <select class="form-control" name="empresaSeleccionada">
+				
+	       {{#each empresas}}
+ 		  <option>{{nombre}}</option>
+  
+ 	       {{/each}}									
+            </select>
+				
+        </div>
+
+      </div>
+		
+			
+
+       <div class="row">
+					
+         <div class="col-md-2">
+					
+             <label for="periodoSeleccionado">Periodo</label>		
+				
+         </div>
+
+
+	<div class="col-md-4">
+				
+            <select class="form-control" name="periodoSeleccionado">
+				
+ 	       <option>2015</option>
+  
+	       <option>2016</option>
+ 
+               <option>2017</option>
+ 						
+            </select>
+				
+        </div>
+
+      </div>
+
+
+      <button type="submit" class="btn btn-success btn-lg">Ejecutar</button>
+
+     {{/with}}
+  </form>
+
+
+{{/partial}}
+{{>layout.hbs}}

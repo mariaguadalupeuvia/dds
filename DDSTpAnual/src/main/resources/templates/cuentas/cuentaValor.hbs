@@ -1,23 +1,25 @@
 {{# partial "titulo" }}	
 	
-<title>Indicadores</title>
+<title>Cuentas</title>
 
 {{/partial}}
 	
 
 {{#partial "contenido"}}
-{{#with indicadoresEvaluados}}
-	<h1>Indicadores evaluados:</h1>
+{{#with cuentas}}
+	<h1>Valores:</h1>
 	<table class="table table-stripped">
 	<tr>
-	   <th>Nombre</th>
+	   <th>Empresa</th>
+           <th>Cuenta</th>
 	   <th>Fecha</th>
            <th>Valor</th>
 	</tr>
 	
-	{{#each indicadoresEvaluados}}
+	{{#each cuentas}}
 	<tr>
-	   <td>{{nombre}}</td>
+	   <td>{{nombreEmpresa}}</td>
+           <td>{{nombreCuenta}}</td>
 	   <td>{{fecha}}</td>
 	   <td>{{valor}}</td>	
 	</tr>

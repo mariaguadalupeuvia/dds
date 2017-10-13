@@ -27,7 +27,7 @@ public class CargaExcelController {
     if (empresaService != null) {
       return empresaService;
     }
-    empresaService = new EmpresaServiceImpl();
+   // empresaService = new EmpresaServiceImpl();
     return empresaService;
   }
 

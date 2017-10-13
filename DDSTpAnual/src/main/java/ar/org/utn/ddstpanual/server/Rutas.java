@@ -1,6 +1,7 @@
 package ar.org.utn.ddstpanual.server;
 
 
+import ar.org.utn.ddstpanual.controller.CuentasController;
 import ar.org.utn.ddstpanual.controller.IndicadoresController;
 import ar.org.utn.ddstpanual.controller.MenuPrincipalController;
 import ar.org.utn.ddstpanual.controller.MetodologiasController;
@@ -23,17 +24,28 @@ public class Rutas {
 		Spark.staticFiles.location("/public");
 		MenuPrincipalController menu = new MenuPrincipalController();
 		Spark.get("/", menu::home, engine);
+		
+		Spark.get("/indicadores/estilo.css", menu::css, engine);
+		Spark.get("/cuentas/estilo.css", menu::css, engine);
+		Spark.get("/metodologias/estilo.css", menu::css, engine);
+		Spark.get("/estilo.css", menu::css, engine);
+		
+	
+		
 		MetodologiasController metodologiasController = new MetodologiasController();
 		Spark.get("/metodologias", metodologiasController::listar, engine);
-		//Spark.get("/metodologias/:id", metodologiasController::mostrar, engine);
 		Spark.get("/metodologias/ejecutar", metodologiasController::ejecutar, engine);
-		//Spark.get("/metodologias/:id/:periodo/ejecutar", metodologiasController::ejecutar, engine);
+		
 		Spark.post("/metodologias/crear",  metodologiasController::crear);
 		Spark.get("/metodologias/crear",  metodologiasController::crear, engine);
 		
 		IndicadoresController indicadoresController = new IndicadoresController();
-		Spark.get("/indicadores/ejecutar", indicadoresController::ejecutar, engine);
 		Spark.get("/indicadores", indicadoresController::listar, engine);
+		Spark.get("/indicadores/ejecutar", indicadoresController::ejecutar, engine);
+		
+		CuentasController cuentasController = new CuentasController();
+		Spark.get("/cuentas", cuentasController::listar, engine);
+		Spark.get("/cuentas/ejecutar", cuentasController::ejecutar, engine);
 	}
 
 }

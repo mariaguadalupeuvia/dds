@@ -18,4 +18,10 @@ public class MenuPrincipalController {
 		model.put("metodologias", metodologias);
 		return new ModelAndView(model, "home.hbs");
 	}
+	
+	public ModelAndView css(Request req, Response res){
+		
+		return new ModelAndView(null, "estilo.css");
+	}
+
 }

@@ -19,18 +19,18 @@ import ar.org.utn.ddstpanual.db.impl.RepositorioEmpresas;
 import ar.org.utn.ddstpanual.exception.ArchivoException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
+import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 
-public class EmpresaServiceImpl implements EmpresaService {
+public class EmpresaServiceImpl {
 
   EmpresaArchivo empresaArchivo;
 
   EmpresaDb empresaDb;
 
-  @Override
+
   public void subirExcel(final String rutaArchivo) throws ServiceException {
     try {
       final File file = new File(rutaArchivo);
@@ -113,14 +113,13 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
   }
 
-  @Override
   public List<Empresa> obtenerEmpresas() throws ServiceException {
     	return RepositorioEmpresas.instancia.obtenerEmpresas();
   }
 
-  @Override
-  public List<EmpresaExcel> buscar(final Empresa empresa, final Cuenta cuenta, final Periodo periodo) throws ServiceException {
-    List<EmpresaExcel> empresas = new ArrayList<EmpresaExcel>();
+
+  public List<CuentaValor> buscar(final Empresa empresa, final Cuenta cuenta, final Periodo periodo) throws ServiceException {
+    List<CuentaValor> empresas = new ArrayList<CuentaValor>();
     if (cuenta != null) {
       final List<Cuenta> cuentas =
           empresa.getCuentas().stream().filter(c -> c.getNombre().equals(cuenta.getNombre())).collect(Collectors.toList());
@@ -135,11 +134,11 @@ public class EmpresaServiceImpl implements EmpresaService {
     return empresas;
   }
 
-  public List<EmpresaExcel> convertToEmpresaExcel(final Empresa empresa) {
-    final List<EmpresaExcel> empresas = new ArrayList<EmpresaExcel>();
+  public List<CuentaValor> convertToEmpresaExcel(final Empresa empresa) {
+    final List<CuentaValor> empresas = new ArrayList<CuentaValor>();
     for (final Cuenta cuenta : empresa.getCuentas()) {
       for (final Periodo periodo : cuenta.getPeriodos()) {
-        final EmpresaExcel empresaExcel = new EmpresaExcel();
+        final CuentaValor empresaExcel = new CuentaValor();
         empresaExcel.setFecha(periodo.getFecha());
         empresaExcel.setValor(periodo.getValor());
         empresaExcel.setNombreCuenta(cuenta.getNombre());
@@ -150,32 +149,25 @@ public class EmpresaServiceImpl implements EmpresaService {
     return empresas;
   }
 
-  @Override
+
   public List<Periodo> obtenerPeriodos() throws ServiceException {
       return RepositorioEmpresas.instancia.obtenerPeriodos();
   }
 
-  @Override
-  public Empresa obtenerEmpresa(String nombre) throws ServiceException {
-    Empresa empresa = new Empresa();
-    try {
-      empresa = getEmpresaArchivo().obtenerEmpresa(nombre);
-      if (empresa == null) {
-        empresa = RepositorioEmpresas.instancia.obtenerEmpresa(nombre);
-      }
-      return empresa;
-    } catch (ArchivoException e) {
-      throw new ServiceException(e.getMessage());
-    }
-  }
+//  @Override
+//  public Empresa obtenerEmpresa(String nombre) throws ServiceException {
+//    Empresa empresa = new Empresa();
+//    try {
+//      empresa = getEmpresaArchivo().obtenerEmpresa(nombre);
+//      if (empresa == null) {
+//        empresa = RepositorioEmpresas.instancia.obtenerEmpresa(nombre);
+//      }
+//      return empresa;
+//    } catch (ArchivoException e) {
+//      throw new ServiceException(e.getMessage());
+//    }
+//  }
 
-  public EmpresaArchivo getEmpresaArchivo() {
-    if (empresaArchivo != null) {
-      return empresaArchivo;
-    }
-    empresaArchivo = new EmpresaArchivoImpl();
-    return empresaArchivo;
-  }
 
 
 
