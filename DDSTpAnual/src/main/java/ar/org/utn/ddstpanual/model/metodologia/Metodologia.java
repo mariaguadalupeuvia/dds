@@ -64,7 +64,7 @@ public class Metodologia {
 		Collections.sort(empresas, (e1, e2) -> {
 			int comp = 0;
 			try {
-				comp = compararEmpresas(e1, e2, ordenes, periodo);
+				comp = compararEmpresas(e1, e2, periodo.getFecha());
 			} catch (Exception e3) {
 				e3.getMessage();
 			}
@@ -78,14 +78,14 @@ public class Metodologia {
 		return condiciones.stream().allMatch(c -> c.cumpleCondicion(empresa, periodo));
 	}
 
-	private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException {
+	public int compararEmpresas(Empresa e1, Empresa e2, String periodo)  {
 		int flag = 0;
-
+     
 		for (Orden orden : ordenes) {
 			Indicador indicador = orden.getIndicador();
 
-			Double valorE1 =indicador.ejecutarIndicador(per.getFecha(), e1);
-			Double valorE2 =indicador.ejecutarIndicador(per.getFecha(), e2);
+			Double valorE1 =indicador.ejecutarIndicador(periodo, e1);
+			Double valorE2 =indicador.ejecutarIndicador(periodo, e2);
 			
 			if (orden.getTipoOrden().equals("Ascendente")) {
 				flag = Double.compare(valorE1, valorE2);

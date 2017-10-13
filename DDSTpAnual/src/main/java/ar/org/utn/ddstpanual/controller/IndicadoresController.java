@@ -1,7 +1,5 @@
 package ar.org.utn.ddstpanual.controller;
 
-import org.uqbar.commons.utils.Observable;
-
 import Repositorio.RepositorioEmpresas;
 import Repositorio.RepositorioIndicadores;
 
@@ -47,7 +45,18 @@ public class IndicadoresController {
 		model.put("empresas", empresas);
 		return new ModelAndView(model, "indicadores/listadoIndicadores.hbs");
 	}
-  
+	
+	public ModelAndView nuevo(Request req, Response res)
+	{
+		return new ModelAndView(null, "indicadores/nuevo.hbs");
+	}
+	public ModelAndView crear(Request req, Response res)
+	{
+		RepositorioIndicadores.instancia.guardarIndicador(new Indicador(req.queryParams("nombre"),req.queryParams("formula")));
+		res.redirect("/indicadores/nuevo");
+		return null;
+	}
+
   public List<Indicador> obtenerIndicadores() 
   {
     return RepositorioIndicadores.instancia.obtenerIndicadores();
@@ -57,7 +66,5 @@ public class IndicadoresController {
   {
      return indicador.ejecutarIndicador(periodoCheckbox.getFecha(), empresaCheckbox);
   }
-
-
 
 }

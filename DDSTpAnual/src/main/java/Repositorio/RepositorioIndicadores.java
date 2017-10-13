@@ -9,10 +9,16 @@ import ar.org.utn.ddstpanual.model.Indicador;
 
 
 public class RepositorioIndicadores implements WithGlobalEntityManager, TransactionalOps {
-	 public static RepositorioIndicadores instancia = new RepositorioIndicadores();
+  public static RepositorioIndicadores instancia = new RepositorioIndicadores();
 	 
   public void guardarIndicador(Indicador indicador){
-      entityManager().persist(indicador);
+	    try {
+	    	  withTransaction(() -> {
+	    		  entityManager().persist(indicador);
+	    	  });
+	      } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	      }
   }
 
   public List<Indicador> obtenerIndicadores() {

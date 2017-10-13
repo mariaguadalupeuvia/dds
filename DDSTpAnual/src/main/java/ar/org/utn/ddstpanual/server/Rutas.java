@@ -37,11 +37,12 @@ public class Rutas {
 		Spark.get("/metodologias/ejecutar", metodologiasController::ejecutar, engine);
 		
 		Spark.post("/metodologias/crear",  metodologiasController::crear);
-		Spark.get("/metodologias/crear",  metodologiasController::crear, engine);
 		
 		IndicadoresController indicadoresController = new IndicadoresController();
+		Spark.post("/indicadores",  indicadoresController::crear);
 		Spark.get("/indicadores", indicadoresController::listar, engine);
 		Spark.get("/indicadores/ejecutar", indicadoresController::ejecutar, engine);
+		Spark.get("/indicadores/nuevo", indicadoresController::nuevo, engine);
 		
 		CuentasController cuentasController = new CuentasController();
 		Spark.get("/cuentas", cuentasController::listar, engine);

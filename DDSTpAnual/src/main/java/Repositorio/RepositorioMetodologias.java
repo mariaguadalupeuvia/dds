@@ -13,7 +13,15 @@ public class RepositorioMetodologias implements WithGlobalEntityManager, Transac
 	
   public void guardarMetodologia(Metodologia metodologia)
   {
-      entityManager().persist(metodologia);
+	    try {
+	    	  withTransaction(() -> {
+	    		   entityManager().persist(metodologia);
+	    	  });
+	      } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	      }
+	  
+   
   }
 
   public Metodologia obtenerMetodologia(String nombre) {
