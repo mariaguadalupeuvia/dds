@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Periodo;
@@ -34,27 +34,27 @@ public class EmpresaArchivoTest {
 
   // Test guardar empresa
   @Test
-  public void testGuardarEmpresaEnExcel() throws ArchivoException {
+  public void testGuardarEmpresaEnExcel() throws DbException {
     empresa = new EmpresaExcel("EmpresaArchivo", "Cuenta1", "2016", 500);
     empresaArchivo.guardarEmpresa(empresa);
   }
 
   // Test sobre la existencia de datos en un archivo
   @Test
-  public void testExisteEmpresaEnArchivo() throws ArchivoException {
+  public void testExisteEmpresaEnArchivo() throws DbException {
     empresa = new EmpresaExcel("EmpresaArchivo", "Cuenta1", "2016", 500);
     assertTrue(empresaArchivo.exists(empresa));
   }
 
   @Test
-  public void testNoExisteEmpresaEnArchivo() throws ArchivoException {
+  public void testNoExisteEmpresaEnArchivo() throws DbException {
     empresa = new EmpresaExcel("EmpresaArchivo", "Cuenta2", "2016", 500);
     assertFalse(empresaArchivo.exists(empresa));
   }
 
   // Test sobre los datos guardados
   @Test
-  public void testObtenerEmpresaGuardada() throws ArchivoException {
+  public void testObtenerEmpresaGuardada() throws DbException {
     if (!empresaArchivo.exists(empresaBusqueda1)) {
       empresaArchivo.guardarEmpresa(empresaBusqueda1);
     }
@@ -71,7 +71,7 @@ public class EmpresaArchivoTest {
   }
 
   @Test
-  public void testEncontrarPeriodosDeEmpresaGuardadas() throws ArchivoException {
+  public void testEncontrarPeriodosDeEmpresaGuardadas() throws DbException {
     if (!empresaArchivo.exists(empresaBusqueda1)) {
       empresaArchivo.guardarEmpresa(empresaBusqueda1);
     }
@@ -84,8 +84,8 @@ public class EmpresaArchivoTest {
     }
   }
 
-  @Test(expected = ArchivoException.class)
-  public void testBuscarPeriodosDeUnaEmpresaQueNoExiste() throws ArchivoException {
+  @Test(expected = DbException.class)
+  public void testBuscarPeriodosDeUnaEmpresaQueNoExiste() throws DbException {
     empresaArchivo.obtenerPeriodos("EmpresaInexistente");
   }
 }

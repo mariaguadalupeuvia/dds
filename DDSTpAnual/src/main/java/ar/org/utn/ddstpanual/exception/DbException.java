@@ -3,25 +3,25 @@ package ar.org.utn.ddstpanual.exception;
 import org.apache.commons.lang3.StringUtils;
 
 
-public class ArchivoException extends Exception {
+public class DbException extends Exception {
 
   private static final long serialVersionUID = 7089689275742164242L;
   private String code;
 
-  public ArchivoException(final String mensaje) {
+  public DbException(final String mensaje) {
     super(mensaje);
   }
 
-  public ArchivoException(final String mensaje, final String code) {
+  public DbException(final String mensaje, final String code) {
     super(mensaje);
     this.code = code;
   }
 
-  public ArchivoException(final String mensaje, final Exception ex) {
+  public DbException(final String mensaje, final Exception ex) {
     super(mensaje, ex);
   }
 
-  public ArchivoException(final String mensaje, final String code, final Exception ex) {
+  public DbException(final String mensaje, final String code, final Exception ex) {
     super(mensaje, ex);
     this.code = code;
   }

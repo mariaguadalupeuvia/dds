@@ -16,7 +16,7 @@ import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
 import ar.org.utn.ddstpanual.db.EmpresaDb;
 import ar.org.utn.ddstpanual.db.impl.EmpresaDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -108,7 +108,7 @@ public class EmpresaServiceImpl implements EmpresaService {
       workbook.close();
     } catch (final IOException ex) {
       throw new ServiceException("Error al abrir el archivo.");
-    } catch (final ArchivoException e) {
+    } catch (final DbException e) {
       throw new ServiceException(e.getMessage());
     }
   }
@@ -118,7 +118,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     try {
       final List<Empresa> empresas = getEmpresaDb().obtenerEmpresas();
       return empresas;
-    } catch (final ArchivoException e) {
+    } catch (final DbException e) {
       throw new ServiceException(e.getMessage());
     }
   }
@@ -159,7 +159,7 @@ public class EmpresaServiceImpl implements EmpresaService {
   public List<Periodo> obtenerPeriodos() throws ServiceException {
     try {
       return getEmpresaDb().obtenerPeriodos();
-    } catch (ArchivoException e) {
+    } catch (DbException e) {
       // TODO Auto-generated catch block
       throw new ServiceException(e.getMessage());
     }
@@ -174,7 +174,7 @@ public class EmpresaServiceImpl implements EmpresaService {
         empresa = getEmpresaDb().obtenerEmpresa(nombre);
       }
       return empresa;
-    } catch (ArchivoException e) {
+    } catch (DbException e) {
       throw new ServiceException(e.getMessage());
     }
   }

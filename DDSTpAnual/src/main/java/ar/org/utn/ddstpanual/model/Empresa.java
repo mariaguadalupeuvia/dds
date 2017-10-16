@@ -30,7 +30,6 @@ public @Data class Empresa {
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "empresa_id")
   private List<Cuenta> cuentas;
-  //@Column(unique = true)
   private String nombre;
 
   public Empresa(String nombre, List<Cuenta> cuentas) {

@@ -1,4 +1,4 @@
-package ar.org.utn.ddstpanual.controller;
+package ar.org.utn.ddstpanual.controllerOld;
 
 import org.uqbar.commons.utils.Observable;
 
@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import ar.org.utn.ddstpanual.db.IndicadorDb;
 import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
@@ -68,7 +68,7 @@ public class IndicadoresController {
   public List<Indicador> obtenerIndicadores() {
     try {
       indicadores = indicadorDb.obtenerIndicadores();
-    } catch (ArchivoException e) {
+    } catch (DbException e) {
     	 error = e.getMessage();
 	}
     return indicadores;
@@ -105,7 +105,7 @@ public void listarIndicadores(){
     }
 	try {
 		indicadores = indicadorDb.obtenerIndicadores();
-	} catch (ArchivoException e) {
+	} catch (DbException e) {
 		 error = e.getMessage();
 	}
 	indicadoresEvaluados.clear();

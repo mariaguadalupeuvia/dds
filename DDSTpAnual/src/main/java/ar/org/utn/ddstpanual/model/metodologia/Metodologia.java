@@ -4,7 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
 import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -62,7 +62,7 @@ public class Metodologia {
 	public void guardarMetodologia(Metodologia metodologia) throws ServiceException {
 		try {
 			metododologiaDb.guardarMetodologia(metodologia);
-		} catch (ArchivoException e) {
+		} catch (DbException e) {
 			throw new ServiceException(e.getMessage());
 		}
 	}

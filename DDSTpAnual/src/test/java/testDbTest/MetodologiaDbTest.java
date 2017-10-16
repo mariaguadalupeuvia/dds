@@ -9,7 +9,7 @@ import java.util.List;
 
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
 import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
@@ -32,7 +32,7 @@ public class MetodologiaDbTest implements WithGlobalEntityManager{
   
   // Test guardar metodologia
   @Test
-  public void testGuardarMetodologia() throws ArchivoException {
+  public void testGuardarMetodologia() throws DbException {
 
 	    Indicador indicadorTest = new Indicador("IndicadorMetodologiaOrden", "{IndicadorA}+100");
 	    Condicion condicion1 = new Condicion(indicadorTest, Filtro.MAYOR, 100.0);
@@ -46,12 +46,12 @@ public class MetodologiaDbTest implements WithGlobalEntityManager{
   }
 
   @Test
-  public void testMostrarMetodologiaGuardada() throws ServiceException, ArchivoException {
+  public void testMostrarMetodologiaGuardada() throws ServiceException, DbException {
     System.out.println(metodologiaDb.obtenerMetodologia("BUFFET").toJson());
   }
 
   @Test
-  public void testObtenerMetodologiasGuardadas() throws ArchivoException {
+  public void testObtenerMetodologiasGuardadas() throws DbException {
     for (Metodologia m : metodologiaDb.obtenerMetodologias()) {
       System.out.println(m.toJson());
     } ;

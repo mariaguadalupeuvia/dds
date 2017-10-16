@@ -658,10 +658,10 @@ public class formulaParser extends Parser {
       enterOuterAlt(_localctx, 1);
       {
         setState(67);
-        ((IndicadorContext) _localctx).INDICADOR = match(INDICADOR);
+        _localctx.INDICADOR = match(INDICADOR);
         indicadores
-            .add((((IndicadorContext) _localctx).INDICADOR != null ? ((IndicadorContext) _localctx).INDICADOR.getText() : null).substring(1,
-                (((IndicadorContext) _localctx).INDICADOR != null ? ((IndicadorContext) _localctx).INDICADOR.getText() : null).length()
+            .add((_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).substring(1,
+                (_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).length()
                     - 2));
       }
     } catch (final RecognitionException re) {
@@ -710,9 +710,9 @@ public class formulaParser extends Parser {
       enterOuterAlt(_localctx, 1);
       {
         setState(70);
-        ((CuentaContext) _localctx).CUENTA = match(CUENTA);
-        cuentas.add((((CuentaContext) _localctx).CUENTA != null ? ((CuentaContext) _localctx).CUENTA.getText() : null).substring(1,
-            (((CuentaContext) _localctx).CUENTA != null ? ((CuentaContext) _localctx).CUENTA.getText() : null).length() - 2));
+        _localctx.CUENTA = match(CUENTA);
+        cuentas.add((_localctx.CUENTA != null ? _localctx.CUENTA.getText() : null).substring(1,
+            (_localctx.CUENTA != null ? _localctx.CUENTA.getText() : null).length() - 2));
       }
     } catch (final RecognitionException re) {
       _localctx.exception = re;

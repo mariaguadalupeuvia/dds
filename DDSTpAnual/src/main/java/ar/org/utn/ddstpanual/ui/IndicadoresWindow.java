@@ -17,7 +17,7 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 import java.awt.Color;
 import java.util.List;
 
-import ar.org.utn.ddstpanual.controller.IndicadoresController;
+import ar.org.utn.ddstpanual.controllerOld.IndicadoresController;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Periodo;

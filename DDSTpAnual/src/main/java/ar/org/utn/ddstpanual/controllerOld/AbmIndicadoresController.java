@@ -1,4 +1,4 @@
-package ar.org.utn.ddstpanual.controller;
+package ar.org.utn.ddstpanual.controllerOld;
 
 import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
@@ -8,7 +8,7 @@ import java.util.List;
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
 import ar.org.utn.ddstpanual.db.IndicadorDb;
 import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,7 +43,7 @@ public class AbmIndicadoresController {
             } 
           }
       }
-    } catch (ArchivoException e) 
+    } catch (DbException e) 
     {
 		e.printStackTrace();
 	}

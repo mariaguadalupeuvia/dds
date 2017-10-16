@@ -12,7 +12,7 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import java.awt.Color;
 
-import ar.org.utn.ddstpanual.controller.AbmIndicadoresController;
+import ar.org.utn.ddstpanual.controllerOld.AbmIndicadoresController;
 import ar.org.utn.ddstpanual.model.Indicador;
 
 

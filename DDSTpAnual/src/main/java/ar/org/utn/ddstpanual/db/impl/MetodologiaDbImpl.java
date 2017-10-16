@@ -9,38 +9,40 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MetodologiaDbImpl implements MetodologiaDb, WithGlobalEntityManager, TransactionalOps {
 
   @Override
-  public void guardarMetodologia(Metodologia metodologia) throws ArchivoException {
+  public void guardarMetodologia(Metodologia metodologia) throws DbException {
     withTransaction(() -> {
       entityManager().persist(metodologia);
     });
   }
 
   @Override
-  public Metodologia obtenerMetodologia(String nombre) throws ArchivoException {
+  public Metodologia obtenerMetodologia(String nombre) throws DbException {
     try {
       return entityManager().createQuery("from Metodologia m WHERE m.nombre LIKE :nombreX", Metodologia.class)
           .setParameter("nombreX", nombre).setMaxResults(1).getSingleResult();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      log.error(e.getMessage());
+      throw new DbException(e.getMessage());
     }
-    return null;
   }
 
   @Override
-  public List<Metodologia> obtenerMetodologias() throws ArchivoException {
+  public List<Metodologia> obtenerMetodologias() throws DbException {
     try {
       EntityManager entity = PerThreadEntityManagers.getEntityManager();
       return entity.createQuery("from Metodologia", Metodologia.class).getResultList();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      log.error(e.getMessage());
+      throw new DbException(e.getMessage());
     }
-    return null;
   }
 
 

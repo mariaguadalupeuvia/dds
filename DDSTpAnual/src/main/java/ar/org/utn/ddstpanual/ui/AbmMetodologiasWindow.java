@@ -14,7 +14,7 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import java.awt.Color;
 
-import ar.org.utn.ddstpanual.controller.AbmMetodologiasController;
+import ar.org.utn.ddstpanual.controllerOld.AbmMetodologiasController;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;

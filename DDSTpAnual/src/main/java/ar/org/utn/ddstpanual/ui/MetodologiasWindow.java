@@ -16,7 +16,7 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 
 import java.awt.Color;
 
-import ar.org.utn.ddstpanual.controller.MetodologiasController;
+import ar.org.utn.ddstpanual.controllerOld.MetodologiasController;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;

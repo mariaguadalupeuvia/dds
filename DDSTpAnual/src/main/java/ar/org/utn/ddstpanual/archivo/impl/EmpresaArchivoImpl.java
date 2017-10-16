@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
@@ -21,7 +21,7 @@ import ar.org.utn.ddstpanual.model.Periodo;
 
 public class EmpresaArchivoImpl implements EmpresaArchivo {
 
-  public void guardarEmpresa(final EmpresaExcel empresa) throws ArchivoException {
+  public void guardarEmpresa(final EmpresaExcel empresa) throws DbException {
     final String path = System.getProperty("user.dir");
     FileWriter filewriter = null;
     PrintWriter printwriten = null;
@@ -31,20 +31,20 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
       final String linea = empresa.getNombreCuenta() + "|" + empresa.getFecha() + "|" + empresa.getValor();
       printwriten.println(linea);
     } catch (final IOException e) {
-      throw new ArchivoException("Error al abrir el archivo");
+      throw new DbException("Error al abrir el archivo");
     } finally {
       try {
         if (null != filewriter) {
           filewriter.close();
         }
       } catch (final Exception ex) {
-        throw new ArchivoException("Error al intentar cerrar el archivo.");
+        throw new DbException("Error al intentar cerrar el archivo.");
       }
     }
   }
 
   @Override
-  public boolean exists(final EmpresaExcel empresa) throws ArchivoException {
+  public boolean exists(final EmpresaExcel empresa) throws DbException {
     final String path = System.getProperty("user.dir");
     final File file = new File(path + "\\src\\main\\resources\\empresas\\" + empresa.getNombreEmpresa());
     FileReader filereader = null;
@@ -64,21 +64,21 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
     } catch (final FileNotFoundException fnfe) {
       existe = false;
     } catch (final IOException e) {
-      throw new ArchivoException("Error al abrir el archivo");
+      throw new DbException("Error al abrir el archivo");
     } finally {
       try {
         if (null != filereader) {
           filereader.close();
         }
       } catch (final Exception ex) {
-        throw new ArchivoException("Error al intentar cerrar el archivo.");
+        throw new DbException("Error al intentar cerrar el archivo.");
       }
     }
     return existe;
   }
 
   @Override
-  public Empresa obtenerEmpresa(final String nombreEmpresa) throws ArchivoException {
+  public Empresa obtenerEmpresa(final String nombreEmpresa) throws DbException {
     Empresa empresa = new Empresa();
     final String path = System.getProperty("user.dir");
     final File file = new File(path + "\\src\\main\\resources\\empresas\\" + nombreEmpresa);
@@ -116,23 +116,23 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
         empresa.getCuentas().add(cuenta);
       }
     } catch (final FileNotFoundException fnfe) {
-      throw new ArchivoException("No existe la empresa " + nombreEmpresa);
+      throw new DbException("No existe la empresa " + nombreEmpresa);
     } catch (final IOException e) {
-      throw new ArchivoException("Error al abrir el archivo");
+      throw new DbException("Error al abrir el archivo");
     } finally {
       try {
         if (null != filereader) {
           filereader.close();
         }
       } catch (final Exception ex) {
-        throw new ArchivoException("Error al intentar cerrar el archivo.");
+        throw new DbException("Error al intentar cerrar el archivo.");
       }
     }
     return empresa;
   }
 
   @Override
-  public List<Empresa> obtenerEmpresas() throws ArchivoException {
+  public List<Empresa> obtenerEmpresas() throws DbException {
     final String path = System.getProperty("user.dir");
     final File dir = new File(path + "\\src\\main\\resources\\empresas\\");
     final String[] ficheros = dir.list();
@@ -176,14 +176,14 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
             empresa.getCuentas().add(cuenta);
           }
         } catch (final IOException e) {
-          throw new ArchivoException("Error al abrir el archivo");
+          throw new DbException("Error al abrir el archivo");
         } finally {
           try {
             if (null != filereader) {
               filereader.close();
             }
           } catch (final Exception ex) {
-            throw new ArchivoException("Error al intentar cerrar el archivo.");
+            throw new DbException("Error al intentar cerrar el archivo.");
           }
         }
         empresas.add(empresa);
@@ -193,7 +193,7 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
   }
 
   @Override
-  public List<Periodo> obtenerPeriodos(final String nombreEmpresa) throws ArchivoException {
+  public List<Periodo> obtenerPeriodos(final String nombreEmpresa) throws DbException {
     final String path = System.getProperty("user.dir");
     final File dir = new File(path + "\\src\\main\\resources\\empresas\\" + nombreEmpresa);
     FileReader filereader = null;
@@ -210,16 +210,16 @@ public class EmpresaArchivoImpl implements EmpresaArchivo {
         }
       }
     } catch (final FileNotFoundException fnfe) {
-      throw new ArchivoException("No existe una empresa con ese nombre");
+      throw new DbException("No existe una empresa con ese nombre");
     } catch (final IOException e) {
-      throw new ArchivoException("Error al abrir el archivo");
+      throw new DbException("Error al abrir el archivo");
     } finally {
       try {
         if (null != filereader) {
           filereader.close();
         }
       } catch (final Exception ex) {
-        throw new ArchivoException("Error al intentar cerrar el archivo.");
+        throw new DbException("Error al intentar cerrar el archivo.");
       }
     }
     /*

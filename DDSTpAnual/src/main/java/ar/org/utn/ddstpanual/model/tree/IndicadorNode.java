@@ -3,7 +3,7 @@ package ar.org.utn.ddstpanual.model.tree;
 import ar.org.utn.ddstpanual.db.IndicadorDb;
 import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
 import ar.org.utn.ddstpanual.exception.ArbolException;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.FormulaInfinitaException;
 import ar.org.utn.ddstpanual.exception.NodeException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -68,7 +68,7 @@ public class IndicadorNode extends Node {
       return getUtil().obtenerValor(formula, fechaPeriodo, empresa);
     } catch ( ArbolException | FormulaInfinitaException e) {
       throw new NodeException(e.getMessage());
-    } catch (ArchivoException e) {
+    } catch (DbException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}

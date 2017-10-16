@@ -1,4 +1,4 @@
-package ar.org.utn.ddstpanual.controller;
+package ar.org.utn.ddstpanual.controllerOld;
 
 import org.uqbar.commons.utils.Observable;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
 import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
@@ -47,7 +47,7 @@ public class MetodologiasController implements WithGlobalEntityManager {
 	public void obtenerMetodologia(String nombre) {
 		try {
 			metodologiaCheckbox = metododologiaDb.obtenerMetodologia(nombre);
-		} catch (ArchivoException e) {
+		} catch (DbException e) {
 			e.printStackTrace();
 		}
 	}

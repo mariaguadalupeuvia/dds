@@ -8,7 +8,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
 import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
-import ar.org.utn.ddstpanual.exception.ArchivoException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
@@ -24,7 +24,7 @@ public class MetodologiaTest implements WithGlobalEntityManager{
   private MetodologiaDb metododologiaDb = new MetodologiaDbImpl();
   
   @Before
-  public void init() throws ServiceException, ArchivoException 
+  public void init() throws ServiceException, DbException 
   {
     metodologia = metododologiaDb.obtenerMetodologia("BUFFET");
     empresas = fixture.getEmpresas();
@@ -39,7 +39,7 @@ public class MetodologiaTest implements WithGlobalEntityManager{
 
   // Test ejecutar metodologia
   @Test
-  public void testEjecutarMetodologiaPara2017() throws ArchivoException, ServiceException 
+  public void testEjecutarMetodologiaPara2017() throws DbException, ServiceException 
   {
 	  try 
 	  {
@@ -55,7 +55,7 @@ public class MetodologiaTest implements WithGlobalEntityManager{
   }
 
   @Test
-  public void testEjecutarMetodologiaPara2016() throws ArchivoException, ServiceException 
+  public void testEjecutarMetodologiaPara2016() throws DbException, ServiceException 
   {
 	  try 
 	  {
@@ -71,7 +71,7 @@ public class MetodologiaTest implements WithGlobalEntityManager{
   }
   
   @Test
-  public void testEjecutarMetodologiaPara2015() throws ArchivoException, ServiceException 
+  public void testEjecutarMetodologiaPara2015() throws DbException, ServiceException 
   {
 	  try 
 	  {
