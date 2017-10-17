@@ -26,16 +26,25 @@ public class LogInController {
     Usuario usuario = new Usuario(req.queryParams("usuario"), req.queryParams("password"));
     try {
       if (getUsuarioService().verificarUsuario(usuario)) {
-        model.put("usuario", usuario);
-        return new ModelAndView(model, "home/home.hbs");
+        usuario = getUsuarioService().obtenerUsuario(usuario.getNombre());
+        req.session().attribute("currentUser", usuario);
+        res.redirect("/home");
       } else {
-        return new ModelAndView(model, "/");
+        throw new ServiceException("El usuario no paso la verificación.");
       }
+      return null;
     } catch (ServiceException e) {
       log.error(e.getMessage());
-      return new ModelAndView(model, "/");
+      model.put("ERROR_LOGIN", "El usuario o contraseña son incorrectos. Inténtalo de nuevo.");
+      return new ModelAndView(model, "login/login.hbs");
     }
 
+  }
+  
+  public static ModelAndView logout(Request req, Response res) {
+    req.session().removeAttribute("currentUser");
+    res.redirect("/login");
+    return null;
   }
 
   public static UsuarioService getUsuarioService() {

@@ -11,3 +11,9 @@ body {
   width: 100%;
   height: 60px;
 }
+
+.error_login{
+  color: #d50000;
+  padding-bottom: 8px;
+  font: 400 12px Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+}

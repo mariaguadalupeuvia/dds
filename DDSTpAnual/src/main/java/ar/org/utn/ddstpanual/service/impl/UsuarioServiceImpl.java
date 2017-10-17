@@ -18,7 +18,7 @@ public class UsuarioServiceImpl implements UsuarioService {
   @Override
   public boolean verificarUsuario(Usuario usuario) throws ServiceException {
     try {
-      String passwordHash = DigestUtils.md5Hex(usuario.getPassword()).toUpperCase();
+      String passwordHash = DigestUtils.md5Hex(usuario.getPassword());
       usuario.setPassword(passwordHash);
       return getUsuarioDb().verificarUsuario(usuario);
     } catch (DbException e) {
@@ -33,6 +33,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
     usuarioDb = new UsuarioDbImpl();
     return usuarioDb;
+  }
+
+  @Override
+  public Usuario obtenerUsuario(String nombreUsuario) throws ServiceException {
+    try {
+      return usuarioDb.obtenerUsuario(nombreUsuario);
+    } catch (DbException e) {
+      log.error(e.getMessage());
+      throw new ServiceException(e.getMessage());
+    }
   }
 
 

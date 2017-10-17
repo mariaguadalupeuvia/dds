@@ -2,22 +2,54 @@
 <head>
 	<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   	<link rel="stylesheet"  href="style.css">
+  	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<div>
-{{usuario.nombre}}
-</div>
-<nav class="navbar navbar-default">
+<nav id="barra-navegacion" class="navbar navbar-inverse">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand"href="/">Consultorea.me</a>
+        <a class="navbar-brand"href="/home">Donde Invierto</a>
       </div>
       <div>
         <ul class="nav navbar-nav">
-          <li><a href="/consultoras">Consultoras</a></li>
-          <li><a href="/proyectos">Proyectos</a></li>
+          <li><a href="/home">Home</a></li>
+          <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Empresas
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Cuentas</a></li>
         </ul>
+      </li>
+         <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Indicadores
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">ABM Indicador</a></li>
+          <li><a href="#">Ejecutar Indicador</a></li>
+        </ul>
+      </li>
+          <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Metodologias
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">ABM Metodologia</a></li>
+          <li><a href="#">Ejecutar Metodologia</a></li>
+        </ul>
+      </li>
+        </ul>
+        
+         <ul class="nav navbar-nav navbar-right">
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          {{usuario.nombre}} <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="/logout">Cerrar Sesión</a></li>
+        </ul>
+      </li>
+    </ul>
       </div>
     </div>
   </nav>
