@@ -1,0 +1,39 @@
+{{#partial "contenido"}}
+	
+   <form action="/indicadores" method="POST">
+		
+      <div class="row">
+
+        <div class="col-md-2">
+
+	   <label for="nombre">Nombre</label>
+        </div>
+
+        <div class="col-md-2">
+
+	   <input type="text" placeholder="Nombre del indicador" name="nombre">
+        </div>
+     </div>
+
+     <div class="row">
+
+        <div class="col-md-2">
+	
+          <label for="formula">Formula</label>
+        </div> 
+        <div class="col-md-2">
+
+	   <input type="text" placeholder="formula" name="formula">
+        </div> 
+    </div> 
+
+     <div class="col-md-2">
+
+         <button type="submit" class="btn btn-success btn-lg">Guardar</button>		
+     </div>
+	
+    
+   </form>
+{{/partial}}
+
+{{>layout.hbs}}

@@ -1,0 +1,34 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
+
+.error_login {
+  color: #d50000;
+  padding-bottom: 8px;
+  font: 400 12px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+}
+
+.panelMenu {
+  padding: 0px;
+  width: 32%;
+  margin: 5px;
+  cursor: pointer;
+  height: 360px;
+}
+
+.tituloDescripcion {
+  margin-bottom: 5px;
+  padding: 15px;
+}

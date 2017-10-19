@@ -1,0 +1,31 @@
+{{# partial "titulo" }}	
+	
+<title>Indicadores</title>
+
+{{/partial}}
+	
+
+{{#partial "contenido"}}
+{{#with indicadoresEvaluados}}
+	<h1>Indicadores evaluados:</h1>
+	<table class="table table-stripped">
+	<tr>
+	   <th>Nombre</th>
+	   <th>Fecha</th>
+           <th>Valor</th>
+	</tr>
+	
+	{{#each indicadoresEvaluados}}
+	<tr>
+	   <td>{{nombre}}</td>
+	   <td>{{fecha}}</td>
+	   <td>{{valor}}</td>	
+	</tr>
+	{{/each}}
+	</table>
+
+{{/with}}
+
+			
+{{/partial}}
+{{>layout.hbs}}

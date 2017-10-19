@@ -1,0 +1,30 @@
+{{# partial "titulo" }}	
+	
+<title>Empresas</title>
+
+{{/partial}}
+	
+
+{{#partial "contenido"}}
+{{#with empresas}}
+	<h1>Invertir en:</h1>
+	<table class="table table-stripped">
+	<tr>
+	   <th>Empresa</th>
+	   <th>Id</th>
+	</tr>
+	
+	{{#each empresas}}
+	<tr>
+	   <td>{{nombre}}</td>
+	   <td>{{id}}</td>
+			
+	</tr>
+	{{/each}}
+	</table>
+
+{{/with}}
+
+			
+{{/partial}}
+{{>layout.hbs}}
