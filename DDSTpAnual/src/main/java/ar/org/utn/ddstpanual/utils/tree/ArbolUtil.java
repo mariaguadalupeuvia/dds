@@ -3,6 +3,7 @@ package ar.org.utn.ddstpanual.utils.tree;
 import java.util.Stack;
 
 import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.FormulaException;
 import ar.org.utn.ddstpanual.exception.NodeException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -47,7 +48,7 @@ public class ArbolUtil {
     return nodo;
   }
 
-  public double obtenerValor(final Arbol arbol, final String fechaPeriodo, final Empresa empresa) throws ArbolException {
+  public double obtenerValor(final Arbol arbol, final String fechaPeriodo, final Empresa empresa) throws ArbolException, DbException {
     double valor = 0;
     try {
       valor = arbol.getRoot().obtenerValor(fechaPeriodo, empresa);

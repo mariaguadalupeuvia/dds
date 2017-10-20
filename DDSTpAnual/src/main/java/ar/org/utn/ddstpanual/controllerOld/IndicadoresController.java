@@ -73,7 +73,7 @@ public class IndicadoresController {
 		return indicadores;
 	}
 
-	public Double ejecutarIndicador() throws ArbolException {
+	public Double ejecutarIndicador() throws ArbolException, DbException {
 		error = "";
 		try {
 			if (periodoCheckbox == null) {

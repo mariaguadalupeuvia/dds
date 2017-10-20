@@ -1,5 +1,7 @@
 package ar.org.utn.ddstpanual.model.tree;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.NodeException;
 import ar.org.utn.ddstpanual.model.Empresa;
 
@@ -12,7 +14,7 @@ public abstract class Node {
 
   private Integer typeNode;
 
-  public abstract double obtenerValor(String fechaPeriodo, Empresa empresa) throws NodeException;
+  public abstract double obtenerValor(String fechaPeriodo, Empresa empresa) throws NodeException, DbException, ArbolException;
 
   public Integer getTypeNode() {
     return typeNode;

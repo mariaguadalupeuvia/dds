@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
 
 import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.tree.Arbol;
 import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
 import lombok.AllArgsConstructor;
@@ -64,7 +65,7 @@ public @Data class Indicador {
 		this.formula = formula;
 	}
 
-	public Double ejecutarIndicador(String fecha, Empresa empresa) throws ArbolException {
+	public Double ejecutarIndicador(String fecha, Empresa empresa) throws ArbolException, DbException {
 		Double resultado;
 		try {
 			resultado = util.obtenerValor(obtenerArbol(), fecha, empresa);

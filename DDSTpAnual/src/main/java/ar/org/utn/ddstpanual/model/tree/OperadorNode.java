@@ -1,5 +1,7 @@
 package ar.org.utn.ddstpanual.model.tree;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.NodeException;
 import ar.org.utn.ddstpanual.model.Empresa;
 
@@ -15,7 +17,7 @@ public class OperadorNode extends Node {
   }
 
   @Override
-	public double obtenerValor(final String fechaPeriodo, final Empresa empresa) throws NodeException {
+	public double obtenerValor(final String fechaPeriodo, final Empresa empresa) throws NodeException, DbException, ArbolException {
     double valor = 0;
     if (operador.equals("+")) {
       valor = (leftNode.obtenerValor(fechaPeriodo, empresa) + rigthNode.obtenerValor(fechaPeriodo, empresa));

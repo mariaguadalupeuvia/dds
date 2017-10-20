@@ -96,13 +96,13 @@ public class Metodologia {
 			return condiciones.stream().allMatch(c -> {
 				try {
 					return c.cumpleCondicion(empresa, periodo);
-				} catch (ArbolException e) {
+				} catch (ArbolException | DbException e) {
 					return false;
 				}
 			});		
 	}
 
-	private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException, ArbolException {
+	private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException, ArbolException, DbException {
 		int flag = 0;
 
 		for (Orden orden : ordenes) {

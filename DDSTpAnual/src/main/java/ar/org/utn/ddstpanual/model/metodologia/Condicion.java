@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -43,7 +44,7 @@ public class Condicion {
     this.filtro = filtro;
   }
 
-  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws ArbolException  {
+  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws ArbolException, DbException  {
     try {
       return filtro.cumpleCondicion(this, empresa, periodo);
     } catch (FiltroException e) {
