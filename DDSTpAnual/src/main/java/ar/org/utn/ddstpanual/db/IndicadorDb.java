@@ -12,6 +12,8 @@ public interface IndicadorDb {
   public void eliminarIndicador(Indicador indicador) throws DbException;
 
   public List<Indicador> obtenerIndicadores() throws DbException;
+  
+  public List<Indicador> obtenerIndicadoresPorUsuario(int usuario_id) throws DbException;
 
   public boolean exists(Indicador indicador) throws DbException;
 

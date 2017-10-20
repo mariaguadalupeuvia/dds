@@ -7,10 +7,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import ar.org.utn.ddstpanual.db.IndicadorDb;
 import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
+import ar.org.utn.ddstpanual.db.impl.UsuarioDbImpl;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Usuario;
 
 public class IndicadorDbTest {
 
@@ -19,48 +23,55 @@ public class IndicadorDbTest {
   Indicador indicadorBusqueda1;
   Indicador indicadorBusqueda2;
   Indicador indicadorPrueba;
+  Usuario usuario;
 
   @Before
-  public void init() {
+  public void init() throws DbException {
     indicadorDb = new IndicadorDbImpl();
+    UsuarioDbImpl usuarioDb = new UsuarioDbImpl();
+    usuario = usuarioDb.obtenerUsuario("miguel");
 
-    indicadorBusqueda1 = new Indicador("IndicadorBusqueda1", "[CuentaA]*2");
-    indicadorBusqueda2 = new Indicador("IndicadorBusqueda2", "[CuentaA]*{IndicadorBusqueda1}");
-    indicadorPrueba = new Indicador("roa", "[cuenta1]*45");
+    indicadorBusqueda1 = new Indicador("IndicadorBusqueda1", "[pasivoNoCorriente]*2", usuario.getId());
+    indicadorBusqueda2 = new Indicador("IndicadorBusqueda2", "[pasivoNoCorriente]*{IndicadorBusqueda1}", usuario.getId());
   }
 
-  // Test guardar indicador en el archivo
+  // Test guardar indicador
   @Test
-  public void testGuardarIndicadorEnArchivo() throws DbException {
-    indicador = new Indicador("IndicadorArchivo", "(2*[CuentaA])");
+  public void testGuardar() throws DbException {
+    indicador = new Indicador("IndicadorDb", "(2*[pasivoCorriente])", usuario.getId());
     indicadorDb.guardarIndicador(indicador);
   }
 
-  // Test sobre la existencia de datos en un archivo
+  // Test sobre la existencia de datos
   @Test
-  public void testExisteIndicadorEnArchivo() throws DbException {
-    indicador = new Indicador("ROE", "([beneficioNeto]/[patrimonioNeto])*100");
+  public void testExisteIndicador() throws DbException {
+    indicador = new Indicador("ROE", "([beneficioNeto]/[patrimonioNeto])*100", usuario.getId());
+    indicadorDb.guardarIndicador(indicador);
     assertTrue(indicadorDb.exists(indicador));
   }
 
   @Test
-  public void testNoExisteIndicadorEnArchivo() throws DbException {
-    indicador = new Indicador("IndicadorArchivoNoExistente", "[CuentaB]+200");
+  public void testNoExisteIndicador() throws DbException {
+    indicador = new Indicador("IndicadorArchivoNoExistente", "[CuentaB]+200", usuario.getId());
     assertFalse(indicadorDb.exists(indicador));
   }
 
   // Test sobre los datos guardados
   @Test
-  public void testObtenerIndicadorGuardado() throws DbException {
+  public void testObtenerIndicadorDeUsuario() throws DbException {    
     if (!indicadorDb.exists(indicadorBusqueda1)) {
       indicadorDb.guardarIndicador(indicadorBusqueda1);
     }
+    
+    if (!indicadorDb.exists(indicadorBusqueda2)) {
+      indicadorDb.guardarIndicador(indicadorBusqueda2);
+    }
 
-    for (Indicador indicador : indicadorDb.obtenerIndicadores()) {
-      if (indicador.getNombre().equals("IndicadorBusqueda1")) {
-        System.out.println(indicador.toString());
-      }
-    } ;
+    ArrayList<Indicador> lista = new ArrayList<Indicador>();
+    lista.add(indicadorBusqueda1);
+    lista.add(indicadorBusqueda2);
+    
+    assertTrue(indicadorDb.obtenerIndicadoresPorUsuario(usuario.getId()).containsAll(lista));
   }
 
   @Test
@@ -70,12 +81,7 @@ public class IndicadorDbTest {
 
   @Test
   public void testObtenerNombreIndicador() throws DbException {
-    assertEquals("roe", indicadorDb.obtenerNombre("[activoCorriente]/[pasivoTotal]"));
-  }
-
-  @Test
-  public void testExisteIndicador() {
-
+    assertEquals("ROE", indicadorDb.obtenerNombre("([beneficioNeto]/[patrimonioNeto])*100"));
   }
 
 }

@@ -27,7 +27,8 @@ public @Data class Indicador {
   private int id;
 
   String nombre;
-  String formula;
+  String formula;  
+  int usuario_id;
 
   @Transient
   private ArbolUtil util = new ArbolUtil();
@@ -45,6 +46,8 @@ public @Data class Indicador {
     builder.append(this.nombre);
     builder.append(": ");
     builder.append(this.formula);
+    builder.append(": ");
+    builder.append(this.usuario_id);
     return builder.toString();
   }
 
@@ -55,10 +58,18 @@ public @Data class Indicador {
     builder.append("\"" + nombre + "\",");
     builder.append("\"formula\" : ");
     builder.append("\"" + formula + "\"");
+    builder.append("\"usuario\" : ");
+    builder.append("\"" + usuario_id + "\"");
     builder.append("}");
     return builder.toString();
   }
 
+  public Indicador(String nombre, String formula, int usuario) {
+    this.nombre = nombre;
+    this.formula = formula;
+    this.usuario_id = usuario;
+  }
+  
   public Indicador(String nombre, String formula) {
     this.nombre = nombre;
     this.formula = formula;

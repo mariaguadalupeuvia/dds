@@ -44,8 +44,8 @@ public class UsuarioDbImpl implements UsuarioDb, WithGlobalEntityManager, Transa
       return usuarioDb;
     } catch (Exception e) {
       log.error(e.getMessage());
-      throw new DbException(e.getMessage());
     }
+    return null;
   }
 
 }

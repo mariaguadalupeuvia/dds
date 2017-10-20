@@ -16,18 +16,17 @@ import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
-
-import db.FixtureDB;
+import db.FixtureMetodologiaDB;
 
 public class MetodologiaDbTest implements WithGlobalEntityManager{
   MetodologiaDb metodologiaDb;
 
-  FixtureDB fixture;
+  FixtureMetodologiaDB fixture;
 
   @Before
   public void init() {
     metodologiaDb = new MetodologiaDbImpl();
-    fixture = new FixtureDB();
+    fixture = new FixtureMetodologiaDB();
   }
   
   // Test guardar metodologia

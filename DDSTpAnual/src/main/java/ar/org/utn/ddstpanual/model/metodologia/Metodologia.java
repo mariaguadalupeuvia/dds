@@ -41,6 +41,7 @@ public class Metodologia {
 	private int id;
 
 	private String nombre;
+	int usuario_id;
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "metodologia_id")
 	private List<Condicion> condiciones;

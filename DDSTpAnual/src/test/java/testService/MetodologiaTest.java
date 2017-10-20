@@ -13,14 +13,14 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import db.FixtureDB;
+import db.FixtureMetodologiaDB;
 
 import java.util.List;
 
 public class MetodologiaTest implements WithGlobalEntityManager{
   Metodologia metodologia = null;
   List<Empresa> empresas = null;
-  FixtureDB fixture = new FixtureDB();
+  FixtureMetodologiaDB fixture = new FixtureMetodologiaDB();
   private MetodologiaDb metododologiaDb = new MetodologiaDbImpl();
   
   @Before

@@ -17,7 +17,7 @@ import ar.org.utn.ddstpanual.model.metodologia.Filtro;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
-public class FixtureDB extends AbstractPersistenceTest implements WithGlobalEntityManager {
+public class FixtureMetodologiaDB extends AbstractPersistenceTest implements WithGlobalEntityManager {
   @Test
   public void persistirFixture() {
     try {

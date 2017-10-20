@@ -32,15 +32,28 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
     try {
       return entityManager().createQuery("from Indicador", Indicador.class).getResultList();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      log.error(e.getMessage());
     }
     return null;
   }
 
   @Override
+  public List<Indicador> obtenerIndicadoresPorUsuario(int usuario_id) throws DbException {
+    try {
+      return entityManager().createQuery("from Indicador i WHERE i.usuario_id = " + usuario_id, Indicador.class).getResultList();
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
+    return null;
+  }
+  
+  @Override
   public boolean exists(Indicador indicador) throws DbException {
-    return (obtenerFormula(indicador.getNombre()).equals(indicador.getFormula()))
-        || (obtenerNombre(indicador.getFormula()).equals(indicador.getNombre()));
+    return (
+          (obtenerFormula(indicador.getNombre()).equals(indicador.getFormula()))
+          || 
+          (obtenerNombre(indicador.getFormula()).equals(indicador.getNombre()))
+        );
   }
 
   @Override
@@ -50,8 +63,8 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
           .getSingleResult().getFormula();
     } catch (Exception e) {
       log.error(e.getMessage());
-      throw new DbException(e.getMessage());
     }
+    return "";
   }
 
   @Override
@@ -61,8 +74,8 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
           .getSingleResult().getNombre();
     } catch (Exception e) {
       log.error(e.getMessage());
-      throw new DbException(e.getMessage());
     }
+    return "";
   }
 
 	@Override
