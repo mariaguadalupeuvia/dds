@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -42,11 +43,13 @@ public class Condicion {
     this.filtro = filtro;
   }
 
-  public boolean cumpleCondicion(Empresa empresa, Periodo periodo)  {
+  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws ArbolException  {
     try {
       return filtro.cumpleCondicion(this, empresa, periodo);
     } catch (FiltroException e) {
     	return false;
+    } catch (ArbolException a) {
+    	throw new ArbolException(a.getMessage());
     }
   }
 

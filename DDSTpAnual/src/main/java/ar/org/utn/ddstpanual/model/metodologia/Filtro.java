@@ -4,6 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import java.time.Year;
 
+import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -21,7 +22,7 @@ public enum Filtro {
 		this.setNombre(nombre);
 	}
 
-	public boolean cumpleCondicion(Condicion condicion, Empresa empresa, Periodo periodo) throws FiltroException {
+	public boolean cumpleCondicion(Condicion condicion, Empresa empresa, Periodo periodo) throws FiltroException, ArbolException {
 
 		Double valorIndicador = condicion.getIndicador().ejecutarIndicador(periodo.getFecha(), empresa);
 
@@ -45,7 +46,7 @@ public enum Filtro {
 		}
 	}
 
-	public boolean comparadorEstricto(Condicion condicion, Empresa empresa, Periodo periodo, Boolean esCreciente) {
+	public boolean comparadorEstricto(Condicion condicion, Empresa empresa, Periodo periodo, Boolean esCreciente) throws ArbolException {
 
 		Year fechaPeriodoDesde = Year.now().minusYears(Math.round(condicion.getValor()));
 		Indicador indicador = condicion.getIndicador();

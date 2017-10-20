@@ -22,67 +22,68 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "INDICADOR")
 public @Data class Indicador {
-  @Id
-  @GeneratedValue
-  private int id;
+	@Id
+	@GeneratedValue
+	private int id;
 
-  String nombre;
-  String formula;
+	String nombre;
+	String formula;
 
-  @Transient
-  private ArbolUtil util = new ArbolUtil();
-  @Transient
-  private Arbol arbol = new Arbol();
-  
-  public void sacarEspacios() {
-    nombre = StringUtils.remove(nombre, " ");
-    formula = StringUtils.remove(formula, " ");
-  }
+	@Transient
+	private ArbolUtil util = new ArbolUtil();
+	@Transient
+	private Arbol arbol = new Arbol();
 
-  @Override
-  public String toString() {
-    final StringBuilder builder = new StringBuilder();
-    builder.append(this.nombre);
-    builder.append(": ");
-    builder.append(this.formula);
-    return builder.toString();
-  }
-
-  public String toJson() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("{");
-    builder.append("\"nombre\" : ");
-    builder.append("\"" + nombre + "\",");
-    builder.append("\"formula\" : ");
-    builder.append("\"" + formula + "\"");
-    builder.append("}");
-    return builder.toString();
-  }
-
-  public Indicador(String nombre, String formula) {
-    this.nombre = nombre;
-    this.formula = formula;
-  }
-
-	public Double ejecutarIndicador(String fecha, Empresa empresa) 
-	{
-		try 
-		{
-			return  util.obtenerValor(getArbol(), fecha, empresa);
-		} catch (ArbolException e) 
-		{
-			return 0.0;
-		}
+	public void sacarEspacios() {
+		nombre = StringUtils.remove(nombre, " ");
+		formula = StringUtils.remove(formula, " ");
 	}
-	
-	private Arbol getArbol() {
-		if(arbol.getRoot() == null)
+
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(this.nombre);
+		builder.append(": ");
+		builder.append(this.formula);
+		return builder.toString();
+	}
+
+	public String toJson() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{");
+		builder.append("\"nombre\" : ");
+		builder.append("\"" + nombre + "\",");
+		builder.append("\"formula\" : ");
+		builder.append("\"" + formula + "\"");
+		builder.append("}");
+		return builder.toString();
+	}
+
+	public Indicador(String nombre, String formula) {
+		this.nombre = nombre;
+		this.formula = formula;
+	}
+
+	public Double ejecutarIndicador(String fecha, Empresa empresa) throws ArbolException {
+		Double resultado;
+		try {
+			resultado = util.obtenerValor(obtenerArbol(), fecha, empresa);
+		} catch (ArbolException e) {
+			throw new ArbolException(e.getMessage());
+		}
+		return resultado;
+	}
+
+	private Arbol obtenerArbol() throws ArbolException {
+		if (arbol.getRoot() == null) {
 			try {
 				arbol = ArbolUtil.convertFormulaToArbol(formula);
-			} catch (ArbolException e) {
-				return null;
 			}
+			catch(ArbolException e) {
+				throw new ArbolException(e.getMessage());
+			}
+		}
 		return arbol;
 	}
-	
+
 }

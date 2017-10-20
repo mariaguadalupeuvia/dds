@@ -4,6 +4,7 @@ import org.uqbar.commons.utils.Observable;
 
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
 import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
+import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -67,9 +68,16 @@ public class Metodologia {
 		}
 	}
 
-	public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Periodo periodo) {
+	public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Periodo periodo) throws ArbolException{
 
-		empresas = empresas.stream().filter(e -> cumpleCondiciones(e, periodo)).collect(Collectors.toList());
+		empresas = empresas.stream().filter(e -> {
+			try {
+				return cumpleCondiciones(e, periodo);
+			} catch (ArbolException a) {
+				return false;
+			}
+			
+		}).collect(Collectors.toList());
 
 		Collections.sort(empresas, (e1, e2) -> {
 			int comp = 0;
@@ -84,11 +92,17 @@ public class Metodologia {
 		return empresas;
 	}
 
-	private Boolean cumpleCondiciones(Empresa empresa, Periodo periodo) {
-		return condiciones.stream().allMatch(c -> c.cumpleCondicion(empresa, periodo));
+	private Boolean cumpleCondiciones(Empresa empresa, Periodo periodo) throws ArbolException{
+			return condiciones.stream().allMatch(c -> {
+				try {
+					return c.cumpleCondicion(empresa, periodo);
+				} catch (ArbolException e) {
+					return false;
+				}
+			});		
 	}
 
-	private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException {
+	private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException, ArbolException {
 		int flag = 0;
 
 		for (Orden orden : ordenes) {
