@@ -14,6 +14,7 @@ import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -25,12 +26,20 @@ public class IndicadoresController {
 	public static ModelAndView ejecutar(Request req, Response res) throws DbException, ArbolException {
 		String periodoSeleccionado = req.queryParams("periodoSeleccionado");
 		Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
-		Map<String, List<FormulaIndicador>> model = new HashMap<>();
+		Map<String, Object> model = new HashMap<>();
 		double monto;
 		List<FormulaIndicador> indicadoresEvaluados = new ArrayList<>();
-
+		
+		// Importante para mantener el usuario en pantalla
+		Usuario usuarioLoggeado = req.session().attribute("currentUser");
+        if(usuarioLoggeado == null){
+          return new ModelAndView(model, "login/login.hbs");
+        }
+        model.put("usuario", usuarioLoggeado);
+		////
+        
 		try {
-			for (Indicador ind : indicadorDb.obtenerIndicadores()) {
+			for (Indicador ind : indicadorDb.obtenerIndicadoresPorUsuario(usuarioLoggeado.getId())) {
 				monto = ind.ejecutarIndicador(periodoSeleccionado, empresa);
 				if (monto >= 0)
 					indicadoresEvaluados.add(new FormulaIndicador(ind.getNombre(), periodoSeleccionado, monto));
@@ -59,7 +68,8 @@ public class IndicadoresController {
 	}
 
 	public static ModelAndView crear(Request req, Response res) throws DbException {
-		indicadorDb.guardarIndicador(new Indicador(req.queryParams("nombre"), req.queryParams("formula")));
+	    Usuario usuarioLoggeado = req.session().attribute("currentUser");
+		indicadorDb.guardarIndicador(new Indicador(req.queryParams("nombre"), req.queryParams("formula"),usuarioLoggeado.getId()));
 		res.redirect("/indicadores/nuevo");
 		return null;
 	}

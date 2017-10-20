@@ -14,7 +14,7 @@ import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
-import db.FixtureDB;
+import db.FixtureMetodologiaDB;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -86,7 +86,7 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
 
   public void inicializarVariables() {
 
-	   FixtureDB fixture = new FixtureDB();
+    FixtureMetodologiaDB fixture = new FixtureMetodologiaDB();
 	    tiposCondiciones = fixture.getFiltros();
 	    tiposOrdenes = Arrays.asList("Ascendente", "Descendente");
 	    condiciones = new ArrayList<>();

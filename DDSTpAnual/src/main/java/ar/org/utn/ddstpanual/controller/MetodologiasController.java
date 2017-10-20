@@ -15,7 +15,7 @@ import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import db.FixtureDB;
+import db.FixtureMetodologiaDB;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -44,7 +44,7 @@ public class MetodologiasController {
 	}
 
 	public static ModelAndView crear(Request req, Response res) {
-		FixtureDB fixture = new FixtureDB();
+	  FixtureMetodologiaDB fixture = new FixtureMetodologiaDB();
 		Map<String, Object> model = new HashMap<>();
 		// model.put("filtros", fixture.getFiltros());
 		// model.put("indicadores", fixture.getIndicadores());
