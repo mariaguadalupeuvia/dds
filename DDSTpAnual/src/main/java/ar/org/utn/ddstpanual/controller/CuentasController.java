@@ -6,18 +6,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import ar.org.utn.ddstpanual.db.EmpresaDb;
+import ar.org.utn.ddstpanual.db.impl.EmpresaDbImpl;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.repositorio.EmpresasRepositorio;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 public class CuentasController {
-
-  public static ModelAndView ejecutar(Request req, Response res) {
+	private static EmpresaDb empresaDb = new EmpresaDbImpl();
+	
+  public static ModelAndView ejecutar(Request req, Response res) throws DbException {
     String periodoSeleccionado = req.queryParams("periodoSeleccionado");
-    Empresa empresa = EmpresasRepositorio.instancia.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
+    
+    Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
 
     Map<String, List<CuentaValor>> model = new HashMap<>();
     List<CuentaValor> cuentas = new ArrayList<>();
@@ -29,8 +33,8 @@ public class CuentasController {
     return new ModelAndView(model, "cuentas/cuentaValor.hbs");
   }
 
-  public static ModelAndView listar(Request req, Response res) {
-    List<Empresa> empresas = EmpresasRepositorio.instancia.obtenerEmpresas();
+  public static ModelAndView listar(Request req, Response res) throws DbException {
+    List<Empresa> empresas = empresaDb.obtenerEmpresas();
 
     Map<String, List<Empresa>> model = new HashMap<>();
     model.put("empresas", empresas);

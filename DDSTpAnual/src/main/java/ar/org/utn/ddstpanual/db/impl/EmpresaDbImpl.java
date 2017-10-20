@@ -42,7 +42,7 @@ public class EmpresaDbImpl implements EmpresaDb, WithGlobalEntityManager, Transa
   @Override
   public Empresa obtenerEmpresa(String nombre) throws DbException {
     try {
-      return entityManager().createQuery("from Empresa where nombre = :nombre", Empresa.class).setParameter("nombre", nombre)
+      return entityManager().createQuery("from " + Empresa.class.getName() + " where nombre = :nombre", Empresa.class).setParameter("nombre", nombre)
           .getSingleResult();
     } catch (NoResultException ex) {
       return null;

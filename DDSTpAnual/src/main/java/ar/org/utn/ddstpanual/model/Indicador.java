@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.uqbar.commons.utils.Observable;
 
 import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.tree.Arbol;
 import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
 import lombok.AllArgsConstructor;
@@ -22,23 +23,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "INDICADOR")
 public @Data class Indicador {
-  @Id
-  @GeneratedValue
-  private int id;
+	@Id
+	@GeneratedValue
+	private int id;
 
   String nombre;
   String formula;  
   int usuario_id;
 
-  @Transient
-  private ArbolUtil util = new ArbolUtil();
-  @Transient
-  private Arbol arbol = new Arbol();
-  
-  public void sacarEspacios() {
-    nombre = StringUtils.remove(nombre, " ");
-    formula = StringUtils.remove(formula, " ");
-  }
+	@Transient
+	private ArbolUtil util = new ArbolUtil();
+	@Transient
+	private Arbol arbol = new Arbol();
+
 
   @Override
   public String toString() {
@@ -74,26 +71,30 @@ public @Data class Indicador {
     this.nombre = nombre;
     this.formula = formula;
   }
-
-	public Double ejecutarIndicador(String fecha, Empresa empresa) 
-	{
-		try 
-		{
-			return  util.obtenerValor(getArbol(), fecha, empresa);
-		} catch (ArbolException e) 
-		{
-			return 0.0;
-		}
+	public void sacarEspacios() {
+		nombre = StringUtils.remove(nombre, " ");
+		formula = StringUtils.remove(formula, " ");
 	}
-	
-	private Arbol getArbol() {
-		if(arbol.getRoot() == null)
+	public Double ejecutarIndicador(String fecha, Empresa empresa) throws ArbolException, DbException {
+		Double resultado;
+		try {
+			resultado = util.obtenerValor(obtenerArbol(), fecha, empresa);
+		} catch (ArbolException e) {
+			throw new ArbolException(e.getMessage());
+		}
+		return resultado;
+	}
+
+	private Arbol obtenerArbol() throws ArbolException {
+		if (arbol.getRoot() == null) {
 			try {
 				arbol = ArbolUtil.convertFormulaToArbol(formula);
-			} catch (ArbolException e) {
-				return null;
 			}
+			catch(ArbolException e) {
+				throw new ArbolException(e.getMessage());
+			}
+		}
 		return arbol;
 	}
-	
+
 }

@@ -1,9 +1,9 @@
 package ar.org.utn.ddstpanual.db.impl;
 
+import java.util.List;
+
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
-
-import java.util.List;
 
 import ar.org.utn.ddstpanual.db.IndicadorDb;
 import ar.org.utn.ddstpanual.exception.DbException;
@@ -13,20 +13,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, TransactionalOps {
 
-  @Override
-  public void guardarIndicador(Indicador indicador) throws DbException {
-    withTransaction(() -> {
-      entityManager().persist(indicador);
-    });
+	@Override
+	public void guardarIndicador(Indicador indicador) throws DbException {
+		try {
+			withTransaction(() -> {
+				entityManager().persist(indicador);
+			});
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		}
+	}
 
-  }
+	@Override
+	public void eliminarIndicador(Indicador indicador) throws DbException {
+		// TODO Auto-generated method stub
 
-  @Override
-  public void eliminarIndicador(Indicador indicador) throws DbException {
-    // TODO Auto-generated method stub
-
-  }
-
+	}
+	
   @Override
   public List<Indicador> obtenerIndicadores() throws DbException {
     try {
@@ -80,11 +84,20 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
 
 	@Override
 	public Indicador obtenerIndicador(String nombreIndicador) throws DbException {
-		return entityManager().find(Indicador.class, obtenerId(nombreIndicador));
+		try {
+			return entityManager().find(Indicador.class, obtenerId(nombreIndicador));
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new DbException(e.getMessage());
+		}
+
 	}
-	
+
 	private int obtenerId(String nombreIndicador) {
-		return entityManager().createQuery("from "+ Indicador.class.getName() +" i where i.nombre = '"+ nombreIndicador +"'", Indicador.class).getSingleResult().getId();
+		return entityManager()
+				.createQuery("from " + Indicador.class.getName() + " i where i.nombre = '" + nombreIndicador + "'",
+						Indicador.class)
+				.getSingleResult().getId();
 	}
 
 }
