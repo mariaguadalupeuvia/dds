@@ -65,4 +65,13 @@ public class IndicadorDbImpl implements IndicadorDb, WithGlobalEntityManager, Tr
     }
   }
 
+	@Override
+	public Indicador obtenerIndicador(String nombreIndicador) throws DbException {
+		return entityManager().find(Indicador.class, obtenerId(nombreIndicador));
+	}
+	
+	private int obtenerId(String nombreIndicador) {
+		return entityManager().createQuery("from "+ Indicador.class.getName() +" i where i.nombre = '"+ nombreIndicador +"'", Indicador.class).getSingleResult().getId();
+	}
+
 }

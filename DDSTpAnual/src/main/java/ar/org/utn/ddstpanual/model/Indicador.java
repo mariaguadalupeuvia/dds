@@ -1,17 +1,17 @@
 package ar.org.utn.ddstpanual.model;
 
-import org.apache.commons.lang3.StringUtils;
-import org.uqbar.commons.utils.Observable;
-
-import ar.org.utn.ddstpanual.exception.ArbolException;
-import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
+import org.uqbar.commons.utils.Observable;
+
+import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.model.tree.Arbol;
+import ar.org.utn.ddstpanual.utils.tree.ArbolUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,9 @@ public @Data class Indicador {
   String formula;
 
   @Transient
-  private ArbolUtil arbol = new ArbolUtil();
+  private ArbolUtil util = new ArbolUtil();
+  @Transient
+  private Arbol arbol = new Arbol();
   
   public void sacarEspacios() {
     nombre = StringUtils.remove(nombre, " ");
@@ -66,12 +68,21 @@ public @Data class Indicador {
 	{
 		try 
 		{
-			return  arbol.obtenerValor(formula, fecha, empresa);
+			return  util.obtenerValor(getArbol(), fecha, empresa);
 		} catch (ArbolException e) 
 		{
-			e.printStackTrace();
+			return 0.0;
 		}
-		return null;
+	}
+	
+	private Arbol getArbol() {
+		if(arbol.getRoot() == null)
+			try {
+				arbol = ArbolUtil.convertFormulaToArbol(formula);
+			} catch (ArbolException e) {
+				return null;
+			}
+		return arbol;
 	}
 	
 }

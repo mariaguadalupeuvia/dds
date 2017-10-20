@@ -47,10 +47,9 @@ public class ArbolUtil {
     return nodo;
   }
 
-  public double obtenerValor(final String formula, final String fechaPeriodo, final Empresa empresa) throws ArbolException {
+  public double obtenerValor(final Arbol arbol, final String fechaPeriodo, final Empresa empresa) throws ArbolException {
     double valor = 0;
     try {
-      final Arbol arbol = convertFormulaToArbol(formula);
       valor = arbol.getRoot().obtenerValor(fechaPeriodo, empresa);
     } catch (final NodeException e) {
       throw new ArbolException(e.getMessage());

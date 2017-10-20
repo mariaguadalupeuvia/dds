@@ -18,5 +18,7 @@ public interface IndicadorDb {
   public String obtenerFormula(String nombre) throws DbException;
   
   public String obtenerNombre(String formula) throws DbException;
+  
+  public Indicador obtenerIndicador(String nombreIndicador) throws DbException;
 
 }
