@@ -44,13 +44,13 @@ public class Condicion {
     this.filtro = filtro;
   }
 
-  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws ArbolException, DbException  {
+  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws ArbolException, DbException {
     try {
       return filtro.cumpleCondicion(this, empresa, periodo);
     } catch (FiltroException e) {
-    	return false;
+      return false;
     } catch (ArbolException a) {
-    	throw new ArbolException(a.getMessage());
+      throw new ArbolException(a.getMessage());
     }
   }
 

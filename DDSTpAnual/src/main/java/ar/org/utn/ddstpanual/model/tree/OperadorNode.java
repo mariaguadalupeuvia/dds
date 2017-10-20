@@ -17,7 +17,7 @@ public class OperadorNode extends Node {
   }
 
   @Override
-	public double obtenerValor(final String fechaPeriodo, final Empresa empresa) throws NodeException, DbException, ArbolException {
+  public double obtenerValor(final String fechaPeriodo, final Empresa empresa) throws NodeException, DbException, ArbolException {
     double valor = 0;
     if (operador.equals("+")) {
       valor = (leftNode.obtenerValor(fechaPeriodo, empresa) + rigthNode.obtenerValor(fechaPeriodo, empresa));
@@ -29,21 +29,21 @@ public class OperadorNode extends Node {
       valor = (leftNode.obtenerValor(fechaPeriodo, empresa) * rigthNode.obtenerValor(fechaPeriodo, empresa));
     }
     if (operador.equals("/")) {
-      valor = verificarCociente(leftNode.obtenerValor(fechaPeriodo, empresa),rigthNode.obtenerValor(fechaPeriodo, empresa));
+      valor = verificarCociente(leftNode.obtenerValor(fechaPeriodo, empresa), rigthNode.obtenerValor(fechaPeriodo, empresa));
     }
     return valor;
   }
 
-  
+
   private double verificarCociente(double numerador, double denominador) {
-  	return (denominador != 0) ? (numerador/denominador):-1;
-  	
+    return (denominador != 0) ? (numerador / denominador) : -1;
+
   }
-  
+
   public String getOperador() {
     return operador;
   }
-  
+
 
   public void setOperador(final String operador) {
     this.operador = operador;

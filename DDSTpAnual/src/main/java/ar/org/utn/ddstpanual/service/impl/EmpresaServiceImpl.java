@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
 import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
 import ar.org.utn.ddstpanual.db.EmpresaDb;
-import ar.org.utn.ddstpanual.db.impl.EmpresaDbImpl;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Cuenta;
@@ -41,48 +40,48 @@ public class EmpresaServiceImpl implements EmpresaService {
       final Iterator<Row> rowIterator = sheet.iterator();
       Row row;
       rowIterator.next();
-      
+
       String nombreEmpresa = "";
       String nombreCuenta = "";
       String fecha = "";
-      
+
       Empresa empresa = null;
       Cuenta cuenta = null;
       Periodo periodo = null;
-      
+
       while (rowIterator.hasNext()) {
         row = rowIterator.next();
-        
+
         nombreEmpresa = row.getCell(0).getStringCellValue();
         nombreCuenta = row.getCell(1).getStringCellValue();
         fecha = String.valueOf((float) row.getCell(2).getNumericCellValue());
-        
+
         empresa = getEmpresaDb().obtenerEmpresa(nombreEmpresa);
-        
-        if(empresa != null){
+
+        if (empresa != null) {
           cuenta = getEmpresaDb().obtenerCuenta(empresa.getId(), nombreCuenta);
-          
-          if(cuenta != null){
+
+          if (cuenta != null) {
             periodo = getEmpresaDb().obtenerPeriodo(cuenta.getId(), fecha);
-            
-            if(periodo != null){
+
+            if (periodo != null) {
               periodo.setValor((float) row.getCell(3).getNumericCellValue());
             } else {
               periodo = new Periodo();
               periodo.setFecha(fecha);
               periodo.setValor((float) row.getCell(3).getNumericCellValue());
-              
+
               cuenta.getPeriodos().add(periodo);
             }
           } else {
             cuenta = new Cuenta();
             cuenta.setPeriodos(new ArrayList<>());
             cuenta.setNombre(nombreCuenta);
-            
+
             periodo = new Periodo();
             periodo.setFecha(fecha);
             periodo.setValor((float) row.getCell(3).getNumericCellValue());
-            
+
             cuenta.getPeriodos().add(periodo);
             empresa.getCuentas().add(cuenta);
           }
@@ -90,18 +89,18 @@ public class EmpresaServiceImpl implements EmpresaService {
           empresa = new Empresa();
           empresa.setNombre(nombreEmpresa);
           empresa.setCuentas(new ArrayList<>());
-        
+
           cuenta = new Cuenta();
           cuenta.setPeriodos(new ArrayList<>());
           cuenta.setNombre(nombreCuenta);
-          
+
           periodo = new Periodo();
           periodo.setFecha(String.valueOf((float) row.getCell(2).getNumericCellValue()));
           periodo.setValor((float) row.getCell(3).getNumericCellValue());
-          
+
           cuenta.getPeriodos().add(periodo);
           empresa.getCuentas().add(cuenta);
-        
+
         }
         getEmpresaDb().guardarEmpresa(empresa);
       }
@@ -191,7 +190,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     if (empresaDb != null) {
       return empresaDb;
     }
-    empresaDb = new EmpresaDbImpl();
+    empresaDb = new EmpresaDb();
     return empresaDb;
   }
 

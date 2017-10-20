@@ -20,7 +20,6 @@ import java.util.Map;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Condicion;
 import ar.org.utn.ddstpanual.model.metodologia.Filtro;
-
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
@@ -62,7 +61,7 @@ public class MetodologiaClassAdapter implements JsonSerializer<Metodologia>, Jso
       Condicion condicion = new Condicion();
       condicion.setFiltro(filtro);
       condicion.setIndicador(indicador);
-     // condicion.setValor(condicionJson.get("valor"));
+      // condicion.setValor(condicionJson.get("valor"));
       condiciones.add(condicion);
     }
 

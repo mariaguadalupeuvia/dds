@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
-import ar.org.utn.ddstpanual.db.impl.MetodologiaDbImpl;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -18,30 +17,30 @@ import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 import db.FixtureMetodologiaDB;
 
-public class MetodologiaDbTest implements WithGlobalEntityManager{
+public class MetodologiaDbTest implements WithGlobalEntityManager {
   MetodologiaDb metodologiaDb;
 
   FixtureMetodologiaDB fixture;
 
   @Before
   public void init() {
-    metodologiaDb = new MetodologiaDbImpl();
+    metodologiaDb = new MetodologiaDb();
     fixture = new FixtureMetodologiaDB();
   }
-  
+
   // Test guardar metodologia
   @Test
   public void testGuardarMetodologia() throws DbException {
 
-	    Indicador indicadorTest = new Indicador("IndicadorMetodologiaOrden", "{IndicadorA}+100");
-	    Condicion condicion1 = new Condicion(indicadorTest, Filtro.MAYOR, 100.0);
-	    ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
-	    condiciones.add(condicion1);
+    Indicador indicadorTest = new Indicador("IndicadorMetodologiaOrden", "{IndicadorA}+100");
+    Condicion condicion1 = new Condicion(indicadorTest, Filtro.MAYOR, 100.0);
+    ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
+    condiciones.add(condicion1);
 
-	    Orden ordenTest = new Orden(indicadorTest, "Ascendente");
-	    List<Orden> ordenes = new ArrayList<>();
-	    ordenes.add(ordenTest);
-	    metodologiaDb.guardarMetodologia(new Metodologia("MET1", condiciones, ordenes));
+    Orden ordenTest = new Orden(indicadorTest, "Ascendente");
+    List<Orden> ordenes = new ArrayList<>();
+    ordenes.add(ordenTest);
+    metodologiaDb.guardarMetodologia(new Metodologia("MET1", condiciones, ordenes));
   }
 
   @Test

@@ -1,74 +1,59 @@
 {{# partial "titulo" }}	
-	
-<title>Cuentas</title>
-
+	<title>Cuentas</title>
 {{/partial}}
-	
 
-{{#partial "contenido"}}
+{{#partial "contenido"}}	
+<div class="panel panel-default">
+	<div class="panel-heading">Empresa &gt; <b>Cuentas</b></div>
+  	<div class="panel-body">
+  		<form action="/cuentas" method="POST" class="form-inline">
+			{{#with empresas}}
+				<div class="form-group" style="margin-right: 20px;">
+		    		<select class="form-control" name="empresaSeleccionada" placeholder="Empresa">
+			    		{{#each empresas}}
+			 				<option>{{nombre}}</option>
+			  			{{/each}}
+		    		</select>
+		  		</div>
+		  		<div class="form-group" style="margin-right: 20px;">
+		  			<select class="form-control" name="periodoSeleccionado">
+			  			<option>2015</option>
+		  				<option>2016</option>
+						<option>2017</option>
+		  			</select>
+		  		</div>
+		  		<button type="submit" class="btn btn-success">Buscar</button>
+		  	{{/with}}
+	  	</form>
+	</div>
+</div>
 
-  <form action="/cuentas/ejecutar" method= "GET">
-
-    {{#with empresas}}
-    <h3>Seleccione:</h3>
-       <div class="row">
-					
-         <div class="col-md-2">
-					
-             <label for="empresaSeleccionada">Empresa</label>		
-				
-         </div>
-
-
-	<div class="col-md-2">
-				
-            <select class="form-control" name="empresaSeleccionada">
-				
-	       {{#each empresas}}
- 		  <option>{{nombre}}</option>
-  
- 	       {{/each}}									
-            </select>
-				
-        </div>
-
-      </div>
-		
-			
-
-       <div class="row">
-					
-         <div class="col-md-2">
-					
-             <label for="periodoSeleccionado">Periodo</label>		
-				
-         </div>
-
-
-	<div class="col-md-4">
-				
-            <select class="form-control" name="periodoSeleccionado">
-				
- 	       <option>2015</option>
-  
-	       <option>2016</option>
- 
-               <option>2017</option>
- 						
-            </select>
-				
-        </div>
-
-      
-        <div class="col-md-2">
-          <button type="submit" class="btn btn-success btn-lg">Ejecutar</button>
-        </div>
-
-      </div>
-
-     {{/with}}
-  </form>
-
+{{#with cuentas}}
+	<div class="panel panel-default">
+  		<div class="panel-body">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+			   			<th>Empresa</th>
+			       		<th>Cuenta</th>
+			   			<th>Fecha</th>
+			       		<th>Valor</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each cuentas}}
+						<tr>
+					   		<td>{{nombreEmpresa}}</td>
+					       	<td>{{nombreCuenta}}</td>
+					   		<td>{{fecha}}</td>
+					   		<td>{{valor}}</td>	
+						</tr>
+					{{/each}}
+				</tbody>	
+			</table>
+		</div>
+	</div>
+{{/with}}
 
 {{/partial}}
 {{>layout.hbs}}

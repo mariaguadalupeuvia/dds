@@ -10,8 +10,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import ar.org.utn.ddstpanual.db.IndicadorDb;
-import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
-import ar.org.utn.ddstpanual.db.impl.UsuarioDbImpl;
+import ar.org.utn.ddstpanual.db.UsuarioDb;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Usuario;
@@ -27,9 +26,9 @@ public class IndicadorDbTest {
 
   @Before
   public void init() throws DbException {
-    indicadorDb = new IndicadorDbImpl();
-    UsuarioDbImpl usuarioDb = new UsuarioDbImpl();
-    usuario = usuarioDb.obtenerUsuario("miguel");
+    indicadorDb = new IndicadorDb();
+    UsuarioDb usuarioDb = new UsuarioDb();
+    usuario = usuarioDb.obtenerUsuario("ivan");
 
     indicadorBusqueda1 = new Indicador("IndicadorBusqueda1", "[pasivoNoCorriente]*2", usuario.getId());
     indicadorBusqueda2 = new Indicador("IndicadorBusqueda2", "[pasivoNoCorriente]*{IndicadorBusqueda1}", usuario.getId());
@@ -58,11 +57,11 @@ public class IndicadorDbTest {
 
   // Test sobre los datos guardados
   @Test
-  public void testObtenerIndicadorDeUsuario() throws DbException {    
+  public void testObtenerIndicadorDeUsuario() throws DbException {
     if (!indicadorDb.exists(indicadorBusqueda1)) {
       indicadorDb.guardarIndicador(indicadorBusqueda1);
     }
-    
+
     if (!indicadorDb.exists(indicadorBusqueda2)) {
       indicadorDb.guardarIndicador(indicadorBusqueda2);
     }
@@ -70,7 +69,7 @@ public class IndicadorDbTest {
     ArrayList<Indicador> lista = new ArrayList<Indicador>();
     lista.add(indicadorBusqueda1);
     lista.add(indicadorBusqueda2);
-    
+
     assertTrue(indicadorDb.obtenerIndicadoresPorUsuario(usuario.getId()).containsAll(lista));
   }
 

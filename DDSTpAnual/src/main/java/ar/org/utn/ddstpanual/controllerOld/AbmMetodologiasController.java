@@ -87,19 +87,19 @@ public class AbmMetodologiasController implements WithGlobalEntityManager {
   public void inicializarVariables() {
 
     FixtureMetodologiaDB fixture = new FixtureMetodologiaDB();
-	    tiposCondiciones = fixture.getFiltros();
-	    tiposOrdenes = Arrays.asList("Ascendente", "Descendente");
-	    condiciones = new ArrayList<>();
-	    ordenes = new ArrayList<>();
-	    indicadores = entityManager().createQuery("from Indicador", Indicador.class).getResultList();
-	    indicadores2 = indicadores;
-	    indicadorCheckbox = null;
-	    indicadorOrdenCheckbox = null;
-	    tipoCondicionCheckbox = null;
-	    tipoOrdenCheckbox = null;
+    tiposCondiciones = fixture.getFiltros();
+    tiposOrdenes = Arrays.asList("Ascendente", "Descendente");
+    condiciones = new ArrayList<>();
+    ordenes = new ArrayList<>();
+    indicadores = entityManager().createQuery("from Indicador", Indicador.class).getResultList();
+    indicadores2 = indicadores;
+    indicadorCheckbox = null;
+    indicadorOrdenCheckbox = null;
+    tipoCondicionCheckbox = null;
+    tipoOrdenCheckbox = null;
 
-	    nombre = "";
-	    valor = 0.0;
-	    error = "";
-	  }
+    nombre = "";
+    valor = 0.0;
+    error = "";
+  }
 }

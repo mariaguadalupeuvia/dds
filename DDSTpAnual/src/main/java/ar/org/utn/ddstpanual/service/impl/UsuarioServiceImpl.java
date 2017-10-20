@@ -3,7 +3,6 @@ package ar.org.utn.ddstpanual.service.impl;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import ar.org.utn.ddstpanual.db.UsuarioDb;
-import ar.org.utn.ddstpanual.db.impl.UsuarioDbImpl;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Usuario;
@@ -31,7 +30,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     if (usuarioDb != null) {
       return usuarioDb;
     }
-    usuarioDb = new UsuarioDbImpl();
+    usuarioDb = new UsuarioDb();
     return usuarioDb;
   }
 

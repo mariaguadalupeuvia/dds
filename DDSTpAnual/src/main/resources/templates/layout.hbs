@@ -53,6 +53,16 @@
   </nav>
 
 <div class="container">
+	{{#if messageSuccess}}
+		<div class="alert alert-success">
+			{{messageSuccess}}
+		</div>
+	{{/if}}
+	{{#if messageError}}
+		<div class="alert alert-danger">
+		  {{messageError}}
+		</div>
+	{{/if}}
 	{{#block "contenido"}}
 	{{/block}}
 </div>

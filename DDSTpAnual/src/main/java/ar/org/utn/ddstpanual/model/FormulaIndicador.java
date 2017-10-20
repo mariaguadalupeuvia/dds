@@ -13,6 +13,6 @@ public @Data class FormulaIndicador {
 
   private String nombre;
   private String fecha;
-  private double valor;
+  private Double valor;
 
 }

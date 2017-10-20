@@ -659,10 +659,8 @@ public class formulaParser extends Parser {
       {
         setState(67);
         _localctx.INDICADOR = match(INDICADOR);
-        indicadores
-            .add((_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).substring(1,
-                (_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).length()
-                    - 2));
+        indicadores.add((_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).substring(1,
+            (_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).length() - 2));
       }
     } catch (final RecognitionException re) {
       _localctx.exception = re;

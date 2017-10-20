@@ -40,7 +40,7 @@ public class LogInController {
     }
 
   }
-  
+
   public static ModelAndView logout(Request req, Response res) {
     req.session().removeAttribute("currentUser");
     res.redirect("/login");

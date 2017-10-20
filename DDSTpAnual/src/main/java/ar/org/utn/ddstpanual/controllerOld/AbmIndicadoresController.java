@@ -7,7 +7,6 @@ import java.util.List;
 
 import ar.org.utn.ddstpanual.antlr.AntlrFormulaListener;
 import ar.org.utn.ddstpanual.db.IndicadorDb;
-import ar.org.utn.ddstpanual.db.impl.IndicadorDbImpl;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Indicador;
 import lombok.AllArgsConstructor;
@@ -24,32 +23,27 @@ public class AbmIndicadoresController {
   private String nombre;
   private String formula;
   private String error;
-  IndicadorDb indicadorDb = new IndicadorDbImpl();
-  
-  public void guardarIndicador() 
-  {
+  IndicadorDb indicadorDb = new IndicadorDb();
+
+  public void guardarIndicador() {
     error = "";
     try {
       final Indicador indicador = new Indicador(nombre, formula);
-      if (validarIndicador() ) 
-      {
-          indicador.sacarEspacios();
-          if (validarFormula(indicador.getFormula())) 
-          {
-            if (!indicadorDb.exists(indicador)) 
-            {
-            	indicadorDb.guardarIndicador(indicador);
-            	obtenerIndicadores();
-            } 
+      if (validarIndicador()) {
+        indicador.sacarEspacios();
+        if (validarFormula(indicador.getFormula())) {
+          if (!indicadorDb.exists(indicador)) {
+            indicadorDb.guardarIndicador(indicador);
+            obtenerIndicadores();
           }
+        }
       }
-    } catch (DbException e) 
-    {
-		e.printStackTrace();
-	}
+    } catch (DbException e) {
+      e.printStackTrace();
+    }
   }
-  
-  
+
+
   public void obtenerIndicadores() {
     try {
       indicadores = indicadorDb.obtenerIndicadores();
@@ -57,12 +51,12 @@ public class AbmIndicadoresController {
       error = "Se produjo un error al obtener los indicadores.";
     }
   }
-  
+
   private boolean validarFormula(String formula) {
-	    final AntlrFormulaListener entrada = new AntlrFormulaListener();
-	    return entrada.validarFormula(formula);
-	  }
-  
+    final AntlrFormulaListener entrada = new AntlrFormulaListener();
+    return entrada.validarFormula(formula);
+  }
+
   private boolean validarIndicador() {
     error = "";
 
@@ -92,12 +86,13 @@ public class AbmIndicadoresController {
     // TODO: Validacion sobre existencia de Indicadores/Cuentas existentes
     return true;
   }
-  
+
   public void inicializarVariables() {
     nombre = "";
     formula = "";
-    if(error == null) error = "";
+    if (error == null)
+      error = "";
     obtenerIndicadores();
   }
-  
+
 }
