@@ -29,7 +29,7 @@ public class MetodologiasController {
     }
     model.put("usuario", usuarioLoggeado);
     try {
-      List<Metodologia> metodologias = metodologiaDb.obtenerMetodologias();
+      List<Metodologia> metodologias = metodologiaDb.obtenerMetodologiasPorUsuario(usuarioLoggeado.getId());
       model.put("metodologias", metodologias);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
