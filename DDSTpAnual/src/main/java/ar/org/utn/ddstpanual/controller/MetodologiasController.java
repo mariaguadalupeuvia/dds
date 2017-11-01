@@ -49,14 +49,16 @@ public class MetodologiasController {
     String periodoSeleccionado = req.queryParams("periodoSeleccionado");
     try {
       Metodologia metodologia = metodologiaDb.obtenerMetodologia(metodologiaSeleccionada);
+      List<Metodologia> metodologias = metodologiaDb.obtenerMetodologiasPorUsuario(usuarioLoggeado.getId());
       List<Empresa> empresas = metodologia.ejecutarMetodologia(empresaDb.obtenerEmpresas(), new Periodo(periodoSeleccionado));
       model.put("empresas", empresas);
+      model.put("metodologias", metodologias);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
     } catch (ArbolException e) {
       model.put("messageError", "Ha ocurrido un error al calcular los indicadores");
     }
-    return new ModelAndView(model, "metodologias/ejecutado.hbs");
+    return new ModelAndView(model, "metodologias/listado.hbs");
   }
 
   public static ModelAndView crear(Request req, Response res) {

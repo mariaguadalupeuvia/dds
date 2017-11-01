@@ -1,1 +1,0 @@
-{"nombre":"MET2","condiciones":[{"indicador":{"nombre":"pasivoTotal","formula":"[pasivoCorriente]+[pasivoNoCorriente]"},"filtro":{"valor":2000000,"nombre":"Menor"}},{"indicador":{"nombre":"activoTotal","formula":"[activoCorriente]+[activoNoCorriente]"},"filtro":{"valor":4000,"nombre":"Mayor o igual"}}]}

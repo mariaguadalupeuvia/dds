@@ -12,9 +12,9 @@
 
 {{#partial "contenido"}}
 <div class="panel panel-default">
-	<div class="panel-heading">Indicador &gt; <b>Ejecutar Indicador</b></div>
+	<div class="panel-heading">Indicador &gt; <b>Ejecutar Indicadores</b></div>
   	<div class="panel-body">
-		<form action="/indicadores" method= "POST" class="form-inline">
+		<form action="/indicadores/ejecutar" method= "GET" class="form-inline">
 			<div class="form-group" style="margin-right: 20px;">
 	    		<select class="form-control" name="empresaSeleccionada" placeholder="Empresa">
     				{{#with empresas}}
@@ -41,16 +41,18 @@
 			<table class="table table-condensed">
 				<thead>
 					<tr>
-			   			<th>Nombre</th>
-				   		<th>Fecha</th>
+			   			<th>Indicador</th>
+			   			<th>Formula</th>
+				   		<th>Periodo</th>
 				   		<th>Valor</th>
 					</tr>
 				</thead>
 				<tbody>
 					{{#each indicadoresEvaluados}}
 						<tr>
-					   		<td>{{nombre}}</td>
-						   	<td>{{fecha}}</td>
+					   		<td>{{nombreIndicador}}</td>
+					   		<td>{{formulaIndicador}}</td>
+						   	<td>{{periodo}}</td>
 						   	<td>{{valor}}</td>
 						</tr>
 					{{/each}}

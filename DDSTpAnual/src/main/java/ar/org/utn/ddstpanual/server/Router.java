@@ -26,16 +26,15 @@ public class Router {
 
     Spark.get("/metodologias", MetodologiasController::listar, engine);
     Spark.get("/metodologias/ejecutar", MetodologiasController::ejecutar, engine);
-    Spark.post("/metodologias/crear", MetodologiasController::crear);
+    Spark.post("/metodologias/crear", MetodologiasController::crear, engine);
 
     Spark.get("/indicadores", IndicadoresController::listar, engine);
-    Spark.post("/indicadores", IndicadoresController::ejecutar, engine);
+    Spark.get("/indicadores/ejecutar", IndicadoresController::ejecutar, engine);
     Spark.get("/indicadores/nuevo", IndicadoresController::nuevo, engine);
-    Spark.post("/indicadores/nuevo", IndicadoresController::crear);
+    Spark.post("/indicadores/crear", IndicadoresController::crear, engine);
 
     Spark.get("/cuentas", CuentasController::listar, engine);
-    Spark.post("/cuentas", CuentasController::ejecutar, engine);
-    // Spark.get("/cuentas/ejecutar", CuentasController::ejecutar, engine);
+    Spark.get("/cuentas/buscar", CuentasController::ejecutar, engine);
   }
 
 }

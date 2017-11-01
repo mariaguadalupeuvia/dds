@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ar.org.utn.ddstpanual.archivo.EmpresaArchivo;
-import ar.org.utn.ddstpanual.archivo.impl.EmpresaArchivoImpl;
 import ar.org.utn.ddstpanual.db.EmpresaDb;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
@@ -22,66 +20,54 @@ import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.service.EmpresaService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class EmpresaServiceImpl implements EmpresaService {
-
-  EmpresaArchivo empresaArchivo;
 
   EmpresaDb empresaDb;
 
   @Override
   public void subirExcel(final String rutaArchivo) throws ServiceException {
     try {
+      Row row;
       final File file = new File(rutaArchivo);
       final FileInputStream fileStream = new FileInputStream(file);
-      // EmpresaExcel empresaExcel = new EmpresaExcel();
       final HSSFWorkbook workbook = new HSSFWorkbook(fileStream);
       final HSSFSheet sheet = workbook.getSheetAt(0);
       final Iterator<Row> rowIterator = sheet.iterator();
-      Row row;
       rowIterator.next();
-
       String nombreEmpresa = "";
       String nombreCuenta = "";
       String fecha = "";
-
       Empresa empresa = null;
       Cuenta cuenta = null;
       Periodo periodo = null;
-
       while (rowIterator.hasNext()) {
         row = rowIterator.next();
-
         nombreEmpresa = row.getCell(0).getStringCellValue();
         nombreCuenta = row.getCell(1).getStringCellValue();
         fecha = String.valueOf((float) row.getCell(2).getNumericCellValue());
-
         empresa = getEmpresaDb().obtenerEmpresa(nombreEmpresa);
-
         if (empresa != null) {
           cuenta = getEmpresaDb().obtenerCuenta(empresa.getId(), nombreCuenta);
-
           if (cuenta != null) {
             periodo = getEmpresaDb().obtenerPeriodo(cuenta.getId(), fecha);
-
             if (periodo != null) {
               periodo.setValor((float) row.getCell(3).getNumericCellValue());
             } else {
               periodo = new Periodo();
               periodo.setFecha(fecha);
               periodo.setValor((float) row.getCell(3).getNumericCellValue());
-
               cuenta.getPeriodos().add(periodo);
             }
           } else {
             cuenta = new Cuenta();
             cuenta.setPeriodos(new ArrayList<>());
             cuenta.setNombre(nombreCuenta);
-
             periodo = new Periodo();
             periodo.setFecha(fecha);
             periodo.setValor((float) row.getCell(3).getNumericCellValue());
-
             cuenta.getPeriodos().add(periodo);
             empresa.getCuentas().add(cuenta);
           }
@@ -89,25 +75,23 @@ public class EmpresaServiceImpl implements EmpresaService {
           empresa = new Empresa();
           empresa.setNombre(nombreEmpresa);
           empresa.setCuentas(new ArrayList<>());
-
           cuenta = new Cuenta();
           cuenta.setPeriodos(new ArrayList<>());
           cuenta.setNombre(nombreCuenta);
-
           periodo = new Periodo();
           periodo.setFecha(String.valueOf((float) row.getCell(2).getNumericCellValue()));
           periodo.setValor((float) row.getCell(3).getNumericCellValue());
-
           cuenta.getPeriodos().add(periodo);
           empresa.getCuentas().add(cuenta);
-
         }
         getEmpresaDb().guardarEmpresa(empresa);
       }
       workbook.close();
-    } catch (final IOException ex) {
+    } catch (final IOException e) {
+      log.error(e.getMessage());
       throw new ServiceException("Error al abrir el archivo.");
     } catch (final DbException e) {
+      log.error(e.getMessage());
       throw new ServiceException(e.getMessage());
     }
   }
@@ -118,6 +102,7 @@ public class EmpresaServiceImpl implements EmpresaService {
       final List<Empresa> empresas = getEmpresaDb().obtenerEmpresas();
       return empresas;
     } catch (final DbException e) {
+      log.error(e.getMessage());
       throw new ServiceException(e.getMessage());
     }
   }
@@ -159,7 +144,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     try {
       return getEmpresaDb().obtenerPeriodos();
     } catch (DbException e) {
-      // TODO Auto-generated catch block
+      log.error(e.getMessage());
       throw new ServiceException(e.getMessage());
     }
   }
@@ -168,22 +153,12 @@ public class EmpresaServiceImpl implements EmpresaService {
   public Empresa obtenerEmpresa(String nombre) throws ServiceException {
     Empresa empresa = new Empresa();
     try {
-      empresa = getEmpresaArchivo().obtenerEmpresa(nombre);
-      if (empresa == null) {
-        empresa = getEmpresaDb().obtenerEmpresa(nombre);
-      }
+      empresa = getEmpresaDb().obtenerEmpresa(nombre);
       return empresa;
     } catch (DbException e) {
+      log.error(e.getMessage());
       throw new ServiceException(e.getMessage());
     }
-  }
-
-  public EmpresaArchivo getEmpresaArchivo() {
-    if (empresaArchivo != null) {
-      return empresaArchivo;
-    }
-    empresaArchivo = new EmpresaArchivoImpl();
-    return empresaArchivo;
   }
 
   public EmpresaDb getEmpresaDb() {

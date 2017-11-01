@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public @Data class FormulaIndicador {
 
-  private String nombre;
-  private String fecha;
+  private String nombreIndicador;
+  private String formulaIndicador;
+  private String periodo;
   private Double valor;
 
 }

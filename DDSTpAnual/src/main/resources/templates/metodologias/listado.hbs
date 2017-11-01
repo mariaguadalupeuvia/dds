@@ -7,54 +7,52 @@
 
 {{#partial "contenido"}}
 
-  <form action="/metodologias/ejecutar" method= "GET">
+<div class="panel panel-default">
+	<div class="panel-heading">Metodologia &gt; <b>Ejecutar Metodologia</b></div>
+  	<div class="panel-body">
+		<form action="/metodologias/ejecutar" method= "GET" class="form-inline">
+			<div class="form-group" style="margin-right: 20px;">
+	    		<select class="form-control" name="metodologiaSeleccionada" placeholder="Metodologia">
+    				{{#with metodologias}}
+			    		{{#each metodologias}}
+			 				<option>{{nombre}}</option>
+			  			{{/each}}
+					{{/with}}
+	    		</select>
+	  		</div>
+	  		<div class="form-group" style="margin-right: 20px;">
+	  			<select class="form-control" name="periodoSeleccionado">
+		  			<option>2015</option>
+	  				<option>2016</option>
+					<option>2017</option>
+	  			</select>
+	  		</div>
+	  		<button type="submit" class="btn btn-success">Ejecutar</button>
+		</form>
+	</div>
+</div>	
+{{#with empresas}}
+	<div class="panel panel-default">
+  		<div class="panel-body">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+			   			<th>Identificador</th>
+				   		<th>Empresa</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each empresas}}
+						<tr>
+						   	<td>{{id}}</td>
+					   		<td>{{nombre}}</td>
+						</tr>
+					{{/each}}
+				</tbody>	
+			</table>
+		</div>
+	</div>
+{{/with}}
 
-    {{#with metodologias}}
-     <h3>Seleccione:</h3>
-       <div class="row"">
-					
-         <div class="col-md-2">
-					
-             <label for="metodologiaSeleccionada">Metodologia</label>		
-				
-         </div>
-	<div class="col-md-2">
-				
-            <select class="form-control" name="metodologiaSeleccionada">
-				
-	       {{#each metodologias}}
- 		  <option>{{nombre}}</option>
-  
- 	       {{/each}}									
-            </select>
-				
-        </div>
-      </div>
-	
-				
-      <div class="row">			
-         <div class="col-md-2">				
-             <label for="periodoSeleccionado">Periodo</label>		
-				
-         </div>
-	<div class="col-md-4">
-				
-            <select class="form-control" name="periodoSeleccionado">
-				
- 	       <option>2015</option>
-  
-	       <option>2016</option>
- 
-               <option>2017</option>
- 						
-            </select>
-				
-        </div>
-        <div class="col-md-2">	
-            <button type="submit" class="btn btn-success btn-lg">Ejecutar</button>
-        </div>
-      </div>
-     {{/with}}
-  </form>
 {{/partial}}
 {{>layout.hbs}}
