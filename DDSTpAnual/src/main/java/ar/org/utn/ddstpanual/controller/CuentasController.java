@@ -10,6 +10,7 @@ import ar.org.utn.ddstpanual.db.EmpresaDb;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.Usuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -28,7 +29,7 @@ public class CuentasController {
     model.put("usuario", usuarioLoggeado);
     try {
       String periodoSeleccionado = req.queryParams("periodoSeleccionado");
-      List<String> periodos = empresaDb.obtenerPeriodos();
+      List<Periodo> periodos = empresaDb.obtenerPeriodos();
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
       Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
       List<CuentaValor> cuentas = new ArrayList<>();
@@ -53,7 +54,7 @@ public class CuentasController {
     model.put("usuario", usuarioLoggeado);
     try {
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
-      List<String> periodos = empresaDb.obtenerPeriodos();
+      List<Periodo> periodos = empresaDb.obtenerPeriodos();
       model.put("periodos", periodos);
       model.put("empresas", empresas);
     } catch (DbException e) {

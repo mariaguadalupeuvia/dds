@@ -13,6 +13,7 @@ import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.FormulaIndicador;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.Usuario;
 import lombok.extern.slf4j.Slf4j;
 import spark.ModelAndView;
@@ -36,7 +37,7 @@ public class IndicadoresController {
     String periodoSeleccionado = req.queryParams("periodoSeleccionado");
     Double monto;
     try {
-      List<String> periodos = empresaDb.obtenerPeriodos();
+      List<Periodo> periodos = empresaDb.obtenerPeriodos();
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
       Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
       List<FormulaIndicador> indicadoresEvaluados = new ArrayList<>();
@@ -69,7 +70,7 @@ public class IndicadoresController {
     model.put("usuario", usuarioLoggeado);
     try {
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
-      List<String> periodos = empresaDb.obtenerPeriodos();
+      List<Periodo> periodos = empresaDb.obtenerPeriodos();
       model.put("periodos", periodos);
       model.put("empresas", empresas);
     } catch (DbException e) {
@@ -107,8 +108,6 @@ public class IndicadoresController {
     model.put("usuario", usuarioLoggeado);
     try {
       List<Indicador> indicadores = indicadorDb.obtenerIndicadores();
-      List<String> periodos = empresaDb.obtenerPeriodos();
-      model.put("periodos", periodos);
       model.put("indicadores", indicadores);
       String nombre = req.queryParams("nombre");
       String formula = req.queryParams("formula");

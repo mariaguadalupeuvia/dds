@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 import ar.org.utn.ddstpanual.db.EmpresaDb;
@@ -95,36 +94,6 @@ public class EmpresaService {
     empresa.getCuentas().add(cuenta);
     getEmpresaDb().guardarEmpresa(empresa);
   }
-
-  // public List<Empresa> obtenerEmpresas() throws ServiceException {
-  // try {
-  // final List<Empresa> empresas = getEmpresaDb().obtenerEmpresas();
-  // return empresas;
-  // } catch (final DbException e) {
-  // log.error(e.getMessage());
-  // throw new ServiceException(e.getMessage());
-  // }
-  // }
-
-  public List<String> obtenerPeriodos() throws ServiceException {
-    try {
-      return getEmpresaDb().obtenerPeriodos();
-    } catch (DbException e) {
-      log.error(e.getMessage());
-      throw new ServiceException(e.getMessage());
-    }
-  }
-
-  // public Empresa obtenerEmpresa(String nombre) throws ServiceException {
-  // Empresa empresa = new Empresa();
-  // try {
-  // empresa = getEmpresaDb().obtenerEmpresa(nombre);
-  // return empresa;
-  // } catch (DbException e) {
-  // log.error(e.getMessage());
-  // throw new ServiceException(e.getMessage());
-  // }
-  // }
 
   public EmpresaDb getEmpresaDb() {
     if (empresaDb != null) {

@@ -3,7 +3,6 @@ package ar.org.utn.ddstpanual.db;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -41,13 +40,19 @@ public class EmpresaDb implements WithGlobalEntityManager, TransactionalOps {
     return qry.getResultList();
   }
 
-  public List<String> obtenerPeriodos() throws DbException {
-    List<String> periodos = new ArrayList<>();
-    periodos.add("2015");
-    periodos.add("2016");
-    periodos.add("2017");
-    periodos.add("2018");
-    return periodos;
+  public List<Periodo> obtenerPeriodos() throws DbException {
+    try {
+      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+      CriteriaQuery<Periodo> cqry = cb.createQuery(Periodo.class);
+      Root<Periodo> root = cqry.from(Periodo.class);
+      cqry.multiselect(root.get("fecha"));
+      cqry.groupBy(root.get("fecha"));
+      TypedQuery<Periodo> qry = entityManager().createQuery(cqry);
+      return qry.getResultList();
+    } catch (Exception ex) {
+      log.error(ex.getMessage());
+      throw new DbException(ex.getMessage());
+    }
   }
 
   public Empresa obtenerEmpresa(String nombre) throws DbException {
