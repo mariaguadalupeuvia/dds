@@ -4,9 +4,7 @@
 
 {{/partial}}
 	
-
 {{#partial "contenido"}}
-
 <div class="panel panel-default">
 	<div class="panel-heading">Metodologia &gt; <b>Ejecutar Metodologia</b></div>
   	<div class="panel-body">
@@ -31,20 +29,33 @@
 		</form>
 	</div>
 </div>	
+
+{{#with metodologiaSeleccionada}}
+<div class="panel panel-default">
+	<div class="panel-heading">Metodologia <b>{{nombre}}</b></div>
+  	<div class="panel-body">
+			<h2 style="margin: 5px;"> Condiciones: </h2>
+			<ul type = disk>	
+				{{#each condiciones}}
+					<li><label> {{indicador.nombre}} <span class="label label-primary">{{indicador.formula}}</span> {{filtro}} a {{valor}}</label></li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>	
+{{/with}}
+
 {{#with empresas}}
 	<div class="panel panel-default">
   		<div class="panel-body">
 			<table class="table table-condensed">
 				<thead>
 					<tr>
-			   			<th>Identificador</th>
 				   		<th>Empresa</th>
 					</tr>
 				</thead>
 				<tbody>
 					{{#each empresas}}
 						<tr>
-						   	<td>{{id}}</td>
 					   		<td>{{nombre}}</td>
 						</tr>
 					{{/each}}

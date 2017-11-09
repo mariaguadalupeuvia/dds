@@ -68,14 +68,12 @@ public class Metodologia {
   }
 
   public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Periodo periodo) throws ArbolException {
-
     empresas = empresas.stream().filter(e -> {
       try {
         return cumpleCondiciones(e, periodo);
       } catch (ArbolException a) {
         return false;
       }
-
     }).collect(Collectors.toList());
 
     Collections.sort(empresas, (e1, e2) -> {

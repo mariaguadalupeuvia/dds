@@ -57,6 +57,7 @@ public class MetodologiasController {
       model.put("periodos", periodos);
       model.put("empresas", empresas);
       model.put("metodologias", metodologias);
+      model.put("metodologiaSeleccionada", metodologia);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
     } catch (ArbolException e) {
