@@ -36,6 +36,7 @@ public class IndicadoresController {
     String periodoSeleccionado = req.queryParams("periodoSeleccionado");
     Double monto;
     try {
+      List<String> periodos = empresaDb.obtenerPeriodos();
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
       Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
       List<FormulaIndicador> indicadoresEvaluados = new ArrayList<>();
@@ -45,6 +46,7 @@ public class IndicadoresController {
           indicadoresEvaluados.add(new FormulaIndicador(ind.getNombre(), ind.getFormula(), periodoSeleccionado, monto));
         }
       }
+      model.put("periodos", periodos);
       model.put("empresas", empresas);
       model.put("indicadoresEvaluados", indicadoresEvaluados);
     } catch (DbException e) {
@@ -67,6 +69,8 @@ public class IndicadoresController {
     model.put("usuario", usuarioLoggeado);
     try {
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
+      List<String> periodos = empresaDb.obtenerPeriodos();
+      model.put("periodos", periodos);
       model.put("empresas", empresas);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
@@ -103,6 +107,8 @@ public class IndicadoresController {
     model.put("usuario", usuarioLoggeado);
     try {
       List<Indicador> indicadores = indicadorDb.obtenerIndicadores();
+      List<String> periodos = empresaDb.obtenerPeriodos();
+      model.put("periodos", periodos);
       model.put("indicadores", indicadores);
       String nombre = req.queryParams("nombre");
       String formula = req.queryParams("formula");

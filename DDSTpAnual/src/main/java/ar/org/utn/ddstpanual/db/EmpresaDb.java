@@ -3,9 +3,15 @@ package ar.org.utn.ddstpanual.db;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Cuenta;
@@ -27,17 +33,33 @@ public class EmpresaDb implements WithGlobalEntityManager, TransactionalOps {
   }
 
   public List<Empresa> obtenerEmpresas() throws DbException {
-    return entityManager().createQuery("from Empresa", Empresa.class).getResultList();
+    CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+    CriteriaQuery<Empresa> cqry = cb.createQuery(Empresa.class);
+    Root<Empresa> root = cqry.from(Empresa.class);
+    cqry.select(root);
+    TypedQuery<Empresa> qry = entityManager().createQuery(cqry);
+    return qry.getResultList();
   }
 
-  public List<Periodo> obtenerPeriodos() throws DbException {
-    return entityManager().createQuery("from Periodo", Periodo.class).getResultList();
+  public List<String> obtenerPeriodos() throws DbException {
+    List<String> periodos = new ArrayList<>();
+    periodos.add("2015");
+    periodos.add("2016");
+    periodos.add("2017");
+    periodos.add("2018");
+    return periodos;
   }
 
   public Empresa obtenerEmpresa(String nombre) throws DbException {
     try {
-      return entityManager().createQuery("from " + Empresa.class.getName() + " where nombre = :nombre", Empresa.class)
-          .setParameter("nombre", nombre).getSingleResult();
+      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+      CriteriaQuery<Empresa> cqry = cb.createQuery(Empresa.class);
+      Root<Empresa> root = cqry.from(Empresa.class);
+      cqry.select(root);
+      Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombre);
+      cqry.where(pEqualsNombre);
+      TypedQuery<Empresa> qry = entityManager().createQuery(cqry);
+      return qry.getSingleResult();
     } catch (NoResultException ex) {
       return null;
     } catch (Exception ex) {
@@ -48,8 +70,16 @@ public class EmpresaDb implements WithGlobalEntityManager, TransactionalOps {
 
   public Cuenta obtenerCuenta(Integer idEmpresa, String nombreCuenta) throws DbException {
     try {
-      return entityManager().createQuery("from Cuenta where nombre = :nombre and empresa_id = :empresa_id", Cuenta.class)
-          .setParameter("nombre", nombreCuenta).setParameter("empresa_id", idEmpresa).getSingleResult();
+      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+      CriteriaQuery<Cuenta> cqry = cb.createQuery(Cuenta.class);
+      Root<Cuenta> root = cqry.from(Cuenta.class);
+      cqry.select(root);
+      Predicate pEqualsEmpresa = cb.equal(root.get("idEmpresa"), idEmpresa);
+      Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombreCuenta);
+      Predicate pAnd = cb.and(pEqualsEmpresa, pEqualsNombre);
+      cqry.where(pAnd);
+      TypedQuery<Cuenta> qry = entityManager().createQuery(cqry);
+      return qry.getSingleResult();
     } catch (NoResultException ex) {
       return null;
     } catch (Exception ex) {
@@ -60,8 +90,16 @@ public class EmpresaDb implements WithGlobalEntityManager, TransactionalOps {
 
   public Periodo obtenerPeriodo(Integer idCuenta, String fecha) throws DbException {
     try {
-      return entityManager().createQuery("from Periodo where fecha = :fecha and cuenta_id = :cuenta_id", Periodo.class)
-          .setParameter("fecha", fecha).setParameter("cuenta_id", idCuenta).getSingleResult();
+      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+      CriteriaQuery<Periodo> cqry = cb.createQuery(Periodo.class);
+      Root<Periodo> root = cqry.from(Periodo.class);
+      cqry.select(root);
+      Predicate pEqualsCuenta = cb.equal(root.get("idCuenta"), idCuenta);
+      Predicate pEqualsFecha = cb.equal(root.get("fecha"), fecha);
+      Predicate pAnd = cb.and(pEqualsFecha, pEqualsCuenta);
+      cqry.where(pAnd);
+      TypedQuery<Periodo> qry = entityManager().createQuery(cqry);
+      return qry.getSingleResult();
     } catch (NoResultException ex) {
       return null;
     } catch (Exception ex) {

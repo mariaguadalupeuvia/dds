@@ -6,14 +6,14 @@ import org.junit.Test;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.EmpresaExcel;
-import ar.org.utn.ddstpanual.service.impl.EmpresaServiceImpl;
+import ar.org.utn.ddstpanual.service.EmpresaService;
 
 public class EmpresaServiceTest {
-  EmpresaServiceImpl empresaService = null;
+  EmpresaService empresaService = null;
 
   @Before
   public void init() {
-    empresaService = new EmpresaServiceImpl();
+    empresaService = new EmpresaService();
   }
 
   public String iniciarArchivo(final String nombreArchivo) {

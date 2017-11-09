@@ -6,7 +6,6 @@ import java.util.Map;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Usuario;
 import ar.org.utn.ddstpanual.service.UsuarioService;
-import ar.org.utn.ddstpanual.service.impl.UsuarioServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import spark.ModelAndView;
 import spark.Request;
@@ -49,7 +48,7 @@ public class LogInController {
 
   public static UsuarioService getUsuarioService() {
     if (usuarioService == null) {
-      usuarioService = new UsuarioServiceImpl();
+      usuarioService = new UsuarioService();
     }
     return usuarioService;
   }

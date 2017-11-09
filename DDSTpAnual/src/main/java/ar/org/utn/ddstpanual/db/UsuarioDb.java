@@ -3,6 +3,12 @@ package ar.org.utn.ddstpanual.db;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Usuario;
 import lombok.extern.slf4j.Slf4j;
@@ -29,18 +35,22 @@ public class UsuarioDb implements WithGlobalEntityManager, TransactionalOps {
     withTransaction(() -> {
       entityManager().remove(usuario);
     });
-
   }
 
   public Usuario obtenerUsuario(String nombreUsuario) throws DbException {
     try {
-      Usuario usuarioDb = entityManager().createQuery("from Usuario u WHERE u.nombre LIKE :nombreUsuario", Usuario.class)
-          .setParameter("nombreUsuario", nombreUsuario).setMaxResults(1).getSingleResult();
-      return usuarioDb;
+      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+      CriteriaQuery<Usuario> cqry = cb.createQuery(Usuario.class);
+      Root<Usuario> root = cqry.from(Usuario.class);
+      cqry.select(root);
+      Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombreUsuario);
+      cqry.where(pEqualsNombre);
+      TypedQuery<Usuario> qry = entityManager().createQuery(cqry);
+      return qry.getSingleResult();
     } catch (Exception e) {
       log.error(e.getMessage());
+      throw new DbException(e.getMessage());
     }
-    return null;
   }
 
 }

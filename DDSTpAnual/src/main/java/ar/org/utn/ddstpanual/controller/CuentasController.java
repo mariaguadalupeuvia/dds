@@ -28,6 +28,7 @@ public class CuentasController {
     model.put("usuario", usuarioLoggeado);
     try {
       String periodoSeleccionado = req.queryParams("periodoSeleccionado");
+      List<String> periodos = empresaDb.obtenerPeriodos();
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
       Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
       List<CuentaValor> cuentas = new ArrayList<>();
@@ -35,6 +36,7 @@ public class CuentasController {
           empresa.obtenerValor(c.getNombre(), periodoSeleccionado)))).collect(Collectors.toList());
       model.put("cuentas", cuentas);
       model.put("empresas", empresas);
+      model.put("periodos", periodos);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
     }
@@ -51,6 +53,8 @@ public class CuentasController {
     model.put("usuario", usuarioLoggeado);
     try {
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
+      List<String> periodos = empresaDb.obtenerPeriodos();
+      model.put("periodos", periodos);
       model.put("empresas", empresas);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");

@@ -30,6 +30,8 @@ public class MetodologiasController {
     model.put("usuario", usuarioLoggeado);
     try {
       List<Metodologia> metodologias = metodologiaDb.obtenerMetodologiasPorUsuario(usuarioLoggeado.getId());
+      List<String> periodos = empresaDb.obtenerPeriodos();
+      model.put("periodos", periodos);
       model.put("metodologias", metodologias);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
@@ -51,6 +53,8 @@ public class MetodologiasController {
       Metodologia metodologia = metodologiaDb.obtenerMetodologia(metodologiaSeleccionada);
       List<Metodologia> metodologias = metodologiaDb.obtenerMetodologiasPorUsuario(usuarioLoggeado.getId());
       List<Empresa> empresas = metodologia.ejecutarMetodologia(empresaDb.obtenerEmpresas(), new Periodo(periodoSeleccionado));
+      List<String> periodos = empresaDb.obtenerPeriodos();
+      model.put("periodos", periodos);
       model.put("empresas", empresas);
       model.put("metodologias", metodologias);
     } catch (DbException e) {
