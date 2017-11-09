@@ -25,7 +25,7 @@
 		  			{{/each}}
 	  			</select>
 	  		</div>
-	  		<button type="submit" class="btn btn-success">Ejecutar</button>
+	  		<button type="submit" class="btn btn-primary">Ejecutar</button>
 		</form>
 	</div>
 </div>	
@@ -37,7 +37,7 @@
 			<h2 style="margin: 5px;"> Condiciones: </h2>
 			<ul type = disk>	
 				{{#each condiciones}}
-					<li><label> {{indicador.nombre}} <span class="label label-primary">{{indicador.formula}}</span> {{filtro}} a {{valor}}</label></li>
+					<li><label> {{indicador.nombre}} <span class="label label-default">{{indicador.formula}}</span> {{filtro}} a {{valor}}</label></li>
 				{{/each}}
 			</ul>
 		</div>
