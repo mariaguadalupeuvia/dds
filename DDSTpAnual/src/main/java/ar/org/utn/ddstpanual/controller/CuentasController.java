@@ -102,10 +102,9 @@ public class CuentasController {
     try {
       File dir = new File("src/main/resources/uploads/");
       dir.mkdirs();
-      File tmp = new File(dir, "");
       final Part filePart = req.raw().getPart("archivo");
       try (InputStream inputStream = filePart.getInputStream()) {
-        OutputStream outputStream = new FileOutputStream(tmp.getAbsolutePath() + "/" + filePart.getSubmittedFileName());
+        OutputStream outputStream = new FileOutputStream(dir.getAbsolutePath() + "/" + filePart.getSubmittedFileName());
         IOUtils.copy(inputStream, outputStream);
         outputStream.close();
         model.put("messageSuccess", "Archivo guardado correctamente.");

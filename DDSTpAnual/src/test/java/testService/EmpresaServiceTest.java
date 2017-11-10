@@ -25,17 +25,17 @@ public class EmpresaServiceTest {
   // Test sobre la carga del archivo
   @Test
   public void testSubirExcel() throws ServiceException {
-    empresaService.subirExcel(iniciarArchivo("CargarDatosEmpresas.xls"));
+    empresaService.subirArchivo(iniciarArchivo("CargarDatosEmpresas.xls"));
   }
 
   @Test(expected = ServiceException.class)
   public void testSubirArchivoInexistente() throws ServiceException {
-    empresaService.subirExcel(iniciarArchivo("Caso1"));
+    empresaService.subirArchivo(iniciarArchivo("Caso1"));
   }
 
   @Test(expected = ServiceException.class)
   public void testSubirArchivoNoExcel() throws ServiceException {
-    empresaService.subirExcel(iniciarArchivo("CargaCSV.csv"));
+    empresaService.subirArchivo(iniciarArchivo("CargaCSV.csv"));
   }
 
   // Test sobre la obtencion de datos del archivo

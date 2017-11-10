@@ -4,9 +4,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Optional;
@@ -24,12 +23,10 @@ public class EmpresaService {
 
   EmpresaDb empresaDb;
 
-  public void subirExcel(final String rutaArchivo) throws ServiceException {
+  public void subirArchivo(final InputStream inputStream) throws ServiceException {
     try {
       Row row;
-      final File file = new File(rutaArchivo);
-      final FileInputStream fileStream = new FileInputStream(file);
-      final HSSFWorkbook workbook = new HSSFWorkbook(fileStream);
+      final HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
       final HSSFSheet sheet = workbook.getSheetAt(0);
       final Iterator<Row> rowIterator = sheet.iterator();
       rowIterator.next();
