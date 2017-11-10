@@ -35,6 +35,8 @@ public class Router {
 
     Spark.get("/cuentas", CuentasController::listar, engine);
     Spark.get("/cuentas/buscar", CuentasController::ejecutar, engine);
+    Spark.get("/cuentas/upload", CuentasController::upload, engine);
+    Spark.post("/cuentas/upload", CuentasController::saveFile, engine);
   }
 
 }

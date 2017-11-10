@@ -1,7 +1,9 @@
 <html>
 <head>
-	<link rel="stylesheet"  href="../css/bootstrap.min.css">
+	{{#block "titulo"}}{{/block}}
+	<link rel="stylesheet"  href="../css/libs/bootstrap.min.css">
   	<link rel="stylesheet"  href="../css/style.css">
+  	{{#block "header"}}{{/block}}
 </head>
 <body>
 <nav id="barra-navegacion" class="navbar navbar-inverse">
@@ -16,6 +18,7 @@
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="/cuentas">Cuentas</a></li>
+          <li><a href="/cuentas/upload">Cargar cuentas</a></li>
         </ul>
       </li>
          <li class="dropdown">
@@ -71,8 +74,8 @@
     </p>
 </footer>
 
-<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="../js/libs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/libs/bootstrap.min.js"></script>
+{{#block "footer"}}{{/block}}
 </body>
 </html>
