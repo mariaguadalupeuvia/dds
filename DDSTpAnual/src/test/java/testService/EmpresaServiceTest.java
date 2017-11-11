@@ -3,9 +3,12 @@ package testService;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import ar.org.utn.ddstpanual.exception.ServiceException;
-import ar.org.utn.ddstpanual.model.Empresa;
-import ar.org.utn.ddstpanual.model.EmpresaExcel;
 import ar.org.utn.ddstpanual.service.EmpresaService;
 
 public class EmpresaServiceTest {
@@ -16,10 +19,18 @@ public class EmpresaServiceTest {
     empresaService = new EmpresaService();
   }
 
-  public String iniciarArchivo(final String nombreArchivo) {
+  public InputStream iniciarArchivo(final String nombreArchivo) throws ServiceException {
+    FileInputStream archivoInput;
     final String path = System.getProperty("user.dir");
     final String rutaArchivo = path + "\\src\\main\\resources\\test\\" + nombreArchivo;
-    return rutaArchivo;
+    File archivo = new File(rutaArchivo);
+    try {
+      archivoInput = new FileInputStream(archivo);
+    } catch (FileNotFoundException e) {
+      throw new ServiceException(e.getMessage());
+    }
+    
+    return archivoInput;
   }
 
   // Test sobre la carga del archivo
@@ -37,21 +48,4 @@ public class EmpresaServiceTest {
   public void testSubirArchivoNoExcel() throws ServiceException {
     empresaService.subirArchivo(iniciarArchivo("CargaCSV.csv"));
   }
-
-  // Test sobre la obtencion de datos del archivo
-  @Test
-  public void testObtenerDatosEmpresa() throws ServiceException {
-    Empresa empresaTest = new Empresa();
-
-    for (Empresa e : empresaService.obtenerEmpresas()) {
-      if (e.getNombre().equals("Tenaris")) {
-        empresaTest = e;
-      }
-    }
-
-    for (EmpresaExcel empresa : empresaService.buscar(empresaTest, null, null)) {
-      System.out.println(empresa.toString());
-    } ;
-  }
-
 }
