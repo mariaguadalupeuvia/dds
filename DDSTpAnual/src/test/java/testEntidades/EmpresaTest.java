@@ -2,13 +2,20 @@ package testEntidades;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
+
 public class EmpresaTest {
-
-  @Test
-  public void test() {
-    fail("Not yet implemented");
+  
+  @Before
+  public void init() {
+    
   }
-
+  
+  @Test
+  public void testPeriodoConFecha2013() {
+    //assertEquals("2013", fixture.periodo2013.getFecha());
+  }
+  
 }

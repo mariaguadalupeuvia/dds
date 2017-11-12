@@ -2,6 +2,7 @@ package ar.org.utn.ddstpanual.model;
 
 import org.uqbar.commons.utils.Observable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,11 +14,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name = "CUENTA")
 @Observable
+@NoArgsConstructor
 public @Data class Cuenta {
 
   @Id
@@ -28,7 +31,10 @@ public @Data class Cuenta {
   @JoinColumn(name = "cuenta_id")
   private List<Periodo> periodos;
 
-  public Cuenta() {}
+ public Cuenta(final String nombre){
+   this.nombre = nombre;
+   this.periodos = new ArrayList<Periodo>();
+ }
 
   public Cuenta(final String nombre, final List<Periodo> periodos) {
     this.nombre = nombre;
