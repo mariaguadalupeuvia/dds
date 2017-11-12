@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmpresaService {
 
-  EmpresaDb empresaDb;
+  private static EmpresaDb empresaDb = new EmpresaDb();;
 
   public void subirArchivo(final InputStream inputStream) throws ServiceException {
     try {
@@ -52,7 +52,7 @@ public class EmpresaService {
     Empresa empresa = null;
     Cuenta cuenta = null;
     Periodo periodo = null;
-    empresa = getEmpresaDb().obtenerEmpresa(nombreEmpresa);
+    empresa = empresaDb.obtenerEmpresa(nombreEmpresa);
     if (empresa != null) {
       Optional<Cuenta> optionalCuenta = empresa.getCuentas().stream().filter(c -> c.getNombre().equals(nombreCuenta)).findFirst();
       if (optionalCuenta.isPresent()) {
@@ -89,15 +89,7 @@ public class EmpresaService {
     empresa.getCuentas().remove(cuenta);
     cuenta.getPeriodos().add(periodo);
     empresa.getCuentas().add(cuenta);
-    getEmpresaDb().guardarEmpresa(empresa);
-  }
-
-  public EmpresaDb getEmpresaDb() {
-    if (empresaDb != null) {
-      return empresaDb;
-    }
-    empresaDb = new EmpresaDb();
-    return empresaDb;
+    empresaDb.guardarEmpresa(empresa);
   }
 
 }

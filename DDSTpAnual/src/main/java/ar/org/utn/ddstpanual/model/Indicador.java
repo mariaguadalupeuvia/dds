@@ -78,13 +78,11 @@ public @Data class Indicador {
   }
 
   public Double ejecutarIndicador(String fecha, Empresa empresa) throws ArbolException, DbException {
-    Double resultado;
     try {
-      resultado = util.obtenerValor(obtenerArbol(), fecha, empresa);
+      return util.obtenerValor(obtenerArbol(), fecha, empresa);
     } catch (ArbolException e) {
       throw new ArbolException(e.getMessage());
     }
-    return resultado;
   }
 
   private Arbol obtenerArbol() throws ArbolException {

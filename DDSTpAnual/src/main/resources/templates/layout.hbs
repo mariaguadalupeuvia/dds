@@ -1,8 +1,8 @@
 <html>
 <head>
 	{{#block "titulo"}}{{/block}}
-	<link rel="stylesheet"  href="../css/libs/bootstrap.min.css">
-  	<link rel="stylesheet"  href="../css/style.css">
+		<link rel="stylesheet"  href="../css/libs/bootstrap.min.css">
+	  	<link rel="stylesheet"  href="../css/style.css">
   	{{#block "header"}}{{/block}}
 </head>
 <body>
@@ -25,7 +25,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Indicadores
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="/indicadores/nuevo">ABM Indicador</a></li>
+          <li><a href="/indicadores/crear">ABM Indicador</a></li>
           <li><a href="/indicadores">Ejecutar Indicador</a></li>
         </ul>
       </li>
@@ -55,12 +55,12 @@
 
 <div class="container">
 	{{#if messageSuccess}}
-		<div class="alert alert-success">
+		<div class="alert alert-success alert-dismissable fade in">
 			{{messageSuccess}}
 		</div>
 	{{/if}}
 	{{#if messageError}}
-		<div class="alert alert-danger">
+		<div class="alert alert-danger alert-dismissable fade in">
 		  {{messageError}}
 		</div>
 	{{/if}}

@@ -19,10 +19,12 @@ import javax.servlet.http.Part;
 
 import ar.org.utn.ddstpanual.db.EmpresaDb;
 import ar.org.utn.ddstpanual.exception.DbException;
+import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.CuentaValor;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.Usuario;
+import ar.org.utn.ddstpanual.service.IndicadorPrecalculadoService;
 import lombok.extern.slf4j.Slf4j;
 import spark.ModelAndView;
 import spark.Request;
@@ -30,7 +32,9 @@ import spark.Response;
 
 @Slf4j
 public class CuentasController {
+
   private static EmpresaDb empresaDb = new EmpresaDb();
+  private static IndicadorPrecalculadoService indicadorPrecalculadoService = new IndicadorPrecalculadoService();
 
   public static ModelAndView ejecutar(Request req, Response res) {
     Map<String, Object> model = new HashMap<>();
@@ -111,6 +115,12 @@ public class CuentasController {
       } catch (IOException e) {
         log.error(e.getMessage());
         model.put("messageError", "No se ha podido copiar el archivo dentro del sistema.");
+      }
+      try {
+        indicadorPrecalculadoService.precalcularIndicadores();
+      } catch (ServiceException e) {
+        log.error(e.getMessage());
+        model.put("messageError", "Ocurrio un error al precalcular los indicadores.");
       }
     } catch (IOException e) {
       log.error(e.getMessage());

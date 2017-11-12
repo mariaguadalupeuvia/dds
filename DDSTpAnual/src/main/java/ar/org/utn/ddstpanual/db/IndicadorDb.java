@@ -62,42 +62,17 @@ public class IndicadorDb implements WithGlobalEntityManager, TransactionalOps {
   }
 
   public boolean exists(Indicador indicador) throws DbException {
-    return ((obtenerFormula(indicador.getNombre()).equals(indicador.getFormula()))
-        || (obtenerNombre(indicador.getFormula()).equals(indicador.getNombre())));
-  }
-
-  public String obtenerFormula(String nombre) throws DbException {
-    try {
-      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
-      CriteriaQuery<Indicador> cqry = cb.createQuery(Indicador.class);
-      Root<Indicador> root = cqry.from(Indicador.class);
-      cqry.select(root);
-      Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombre);
-      cqry.where(pEqualsNombre);
-      TypedQuery<Indicador> qry = entityManager().createQuery(cqry);
-      Indicador indicador = qry.getSingleResult();
-      return indicador.getFormula();
-    } catch (Exception e) {
-      log.error(e.getMessage());
-      throw new DbException(e.getMessage());
-    }
-  }
-
-  public String obtenerNombre(String formula) throws DbException {
-    try {
-      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
-      CriteriaQuery<Indicador> cqry = cb.createQuery(Indicador.class);
-      Root<Indicador> root = cqry.from(Indicador.class);
-      cqry.select(root);
-      Predicate pEqualsNombre = cb.equal(root.get("formula"), formula);
-      cqry.where(pEqualsNombre);
-      TypedQuery<Indicador> qry = entityManager().createQuery(cqry);
-      Indicador indicador = qry.getSingleResult();
-      return indicador.getNombre();
-    } catch (Exception e) {
-      log.error(e.getMessage());
-      throw new DbException(e.getMessage());
-    }
+    CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+    CriteriaQuery<Indicador> cqry = cb.createQuery(Indicador.class);
+    Root<Indicador> root = cqry.from(Indicador.class);
+    cqry.select(root);
+    Predicate pEqualsNombre = cb.equal(root.get("nombre"), indicador.getNombre());
+    Predicate pEqualsFormula = cb.equal(root.get("formula"), indicador.getFormula());
+    Predicate pOr = cb.or(pEqualsNombre, pEqualsFormula);
+    cqry.where(pOr);
+    TypedQuery<Indicador> qry = entityManager().createQuery(cqry);
+    List<Indicador> indicadores = qry.getResultList();
+    return !indicadores.isEmpty();
   }
 
   public Indicador obtenerIndicador(String nombreIndicador) throws DbException {
