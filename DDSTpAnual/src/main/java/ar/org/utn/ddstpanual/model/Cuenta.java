@@ -36,12 +36,11 @@ public @Data class Cuenta {
   }
 
   public double obtenerValor(final String fecha) {
-    double valor = 0;
-    for (final Periodo p : periodos) {
-      if (p.getFecha().equals(fecha))
-        valor = p.getValor();
-    }
-    return valor;
+    return periodos.stream()                        
+    .filter(p -> p.getFecha().equals(fecha))
+    .map(p -> p.getValor())
+    .findAny()                                      
+    .orElse(0.0);   
   }
 
   @Override

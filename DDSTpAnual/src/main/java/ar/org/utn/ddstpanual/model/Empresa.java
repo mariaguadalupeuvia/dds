@@ -38,12 +38,11 @@ public @Data class Empresa {
   }
 
   public double obtenerValor(final String nombreCuenta, final String periodo) {
-    double valor = 0;
-    for (final Cuenta cue : cuentas) {
-      if (cue.getNombre().equals(nombreCuenta))
-        valor = cue.obtenerValor(periodo);
-    }
-    return valor;
+    return cuentas.stream()
+        .filter(c -> c.getNombre().equals(nombreCuenta))
+        .map(c -> c.obtenerValor(periodo))
+        .findAny()
+        .orElse(0.0);
   }
 
   public List<Periodo> obtenerPeriodos() {
