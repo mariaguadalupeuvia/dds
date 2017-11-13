@@ -29,6 +29,11 @@ public @Data class Empresa {
   private List<Cuenta> cuentas;
   private String nombre;
 
+  public Empresa(String nombre) {
+    this.nombre = nombre;
+    this.cuentas = new ArrayList<Cuenta>();
+  }
+  
   public Empresa(String nombre, List<Cuenta> cuentas) {
     this.nombre = nombre;
     this.cuentas = cuentas;
@@ -37,18 +42,6 @@ public @Data class Empresa {
   public double obtenerValor(final String nombreCuenta, final String periodo) {
     return cuentas.stream().filter(c -> c.getNombre().equals(nombreCuenta))
         .map(c -> c.obtenerValor(periodo)).findAny().orElse(0.0);
-  }
-
-  public List<Periodo> obtenerPeriodos() {
-    final List<Periodo> periodos = new ArrayList<Periodo>();
-    for (final Cuenta c : cuentas) {
-      for (final Periodo per : c.getPeriodos()) {
-        if (!periodos.stream().anyMatch(p -> p.getFecha().equals(per.getFecha()))) {
-          periodos.add(per);
-        }
-      }
-    }
-    return periodos;
   }
 
   @Override
