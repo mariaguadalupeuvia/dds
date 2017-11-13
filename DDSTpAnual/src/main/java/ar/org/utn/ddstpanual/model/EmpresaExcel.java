@@ -1,12 +1,10 @@
 package ar.org.utn.ddstpanual.model;
 
-import org.uqbar.commons.utils.Observable;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Observable
-public @Data @NoArgsConstructor class EmpresaExcel {
+@NoArgsConstructor
+public @Data class EmpresaExcel {
   private String nombreEmpresa;
   private String nombreCuenta;
   private String fecha;

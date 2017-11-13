@@ -1,7 +1,5 @@
 package ar.org.utn.ddstpanual.model;
 
-import org.uqbar.commons.utils.Observable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Observable
 @Table(name = "PERIODO")
 @NoArgsConstructor
 public @Data class Periodo {

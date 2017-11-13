@@ -6,7 +6,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Empresa &gt; <b>Cuentas</b></div>
   	<div class="panel-body">
-  		<form action="/cuentas/buscar" method="GET" class="form-inline">
+  		<form action="/DondeInvierto/cuentas/buscar" method="GET" class="form-inline">
 			{{#with empresas}}
 				<div class="form-group" style="margin-right: 20px;">
 		    		<select class="form-control" name="empresaSeleccionada" placeholder="Empresa">
@@ -56,4 +56,4 @@
 {{/with}}
 
 {{/partial}}
-{{>layout.hbs}}
+{{>common/layout.hbs}}

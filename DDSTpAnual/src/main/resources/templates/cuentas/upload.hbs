@@ -6,7 +6,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Empresa &gt; <b>Subir archivo</b></div>
   	<div class="panel-body">
-  		<form action="/cuentas/upload" method="POST" enctype="multipart/form-data" class="form-inline" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+  		<form action="/DondeInvierto/cuentas/upload" method="POST" enctype="multipart/form-data" class="form-inline" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 	    	<div class="form-group" style="margin-right: 20px;">
 	    		<input type="file" id="archivo" name="archivo">
 	    	</div>
@@ -16,4 +16,4 @@
 </div>
 {{/partial}}
 
-{{>layout.hbs}}
+{{>common/layout.hbs}}

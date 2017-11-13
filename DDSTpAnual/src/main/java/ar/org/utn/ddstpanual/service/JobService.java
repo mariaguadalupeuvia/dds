@@ -30,8 +30,7 @@ public class JobService extends TimerTask {
   private void completeTask() {
     try {
       // 5 minutos
-      // Thread.sleep(300000);
-      Thread.sleep(20000);
+      Thread.sleep(300000);
       File directory = new File("src/main/resources/uploads/");
       directory.mkdirs();
       List<String> nombresArchivos = Arrays.asList(directory.list());

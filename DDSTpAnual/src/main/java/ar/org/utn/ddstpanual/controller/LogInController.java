@@ -27,7 +27,7 @@ public class LogInController {
       if (getUsuarioService().verificarUsuario(usuario)) {
         usuario = getUsuarioService().obtenerUsuario(usuario.getNombre());
         req.session().attribute("currentUser", usuario);
-        res.redirect("/home");
+        res.redirect("/DondeInvierto/home");
       } else {
         throw new ServiceException("El usuario no paso la verificación.");
       }

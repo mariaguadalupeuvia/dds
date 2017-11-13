@@ -47,7 +47,6 @@ public class IndicadoresController {
       final List<FormulaIndicador> indicadoresEvaluados = new ArrayList<>();
       for (final Indicador indicador : indicadorDb.obtenerIndicadoresPorUsuario(usuarioLoggeado.getId())) {
         monto = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(empresa, indicador, periodoSeleccionado).getValorIndicador();
-        // monto = indicador.ejecutarIndicador(periodoSeleccionado, empresa);
         if (monto >= 0) {
           indicadoresEvaluados.add(new FormulaIndicador(indicador.getNombre(), indicador.getFormula(), periodoSeleccionado, monto));
         }

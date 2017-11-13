@@ -8,7 +8,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Metodologia &gt; <b>Ejecutar Metodologia</b></div>
   	<div class="panel-body">
-		<form action="/metodologias/ejecutar" method= "GET" class="form-inline">
+		<form action="/DondeInvierto/metodologias/ejecutar" method= "GET" class="form-inline">
 			<div class="form-group" style="margin-right: 20px;">
 	    		<select class="form-control" name="metodologiaSeleccionada" placeholder="Metodologia">
     				{{#with metodologias}}
@@ -33,30 +33,48 @@
 {{#with metodologiaSeleccionada}}
 <div class="panel panel-default">
 	<div class="panel-heading">Metodologia <b>{{nombre}}</b></div>
-  	<div class="panel-body">
-			<h2 style="margin: 5px;"> Condiciones: </h2>
-			<ul type = disk>	
-				{{#each condiciones}}
-					<li><label> {{indicador.nombre}} <span class="label label-default">{{indicador.formula}}</span> {{filtro}} a {{valor}}</label></li>
-				{{/each}}
-			</ul>
+  		<div class="panel-body">
+  			<div class="col-md-6 col-sm-6">
+				<h2 style="margin: 5px;"> Condiciones: </h2>
+				<ul type = disk>	
+					{{#each condiciones}}
+						<li><label> {{indicador.nombre}} <span class="label label-default">{{indicador.formula}}</span> {{filtro}} a {{valor}}</label></li>
+					{{/each}}
+				</ul>
+			</div>
+			<div class="col-md-6 col-sm-6">
+				<h2 style="margin: 5px;"> Orden: </h2>
+				<ul type = disk>	
+					{{#each ordenes}}
+						<li><label> {{indicador.nombre}} <span class="label label-default">{{indicador.formula}}</span> {{tipoOrden}}</label></li>
+					{{/each}}
+				</ul>
+			</div>
 		</div>
 	</div>	
 {{/with}}
 
-{{#with empresas}}
+{{#with empresasMetodologias}}
 	<div class="panel panel-default">
   		<div class="panel-body">
 			<table class="table table-condensed">
 				<thead>
 					<tr>
 				   		<th>Empresa</th>
+				   		<th>Valores de indicadores</th>
 					</tr>
 				</thead>
 				<tbody>
-					{{#each empresas}}
+					{{#each empresasMetodologias}}
 						<tr>
-					   		<td>{{nombre}}</td>
+					   		<td>{{empresa.nombre}}</td>
+					   		<td>
+					   			<ul type = disk>	
+									{{#each indicadoresPrecalculados}}
+										<li><label> {{indicador.nombre}} = {{valorIndicador}}</label></li>
+									{{/each}}
+								</ul>
+					   		</td>
 						</tr>
 					{{/each}}
 				</tbody>	
@@ -66,4 +84,4 @@
 {{/with}}
 
 {{/partial}}
-{{>layout.hbs}}
+{{>common/layout.hbs}}

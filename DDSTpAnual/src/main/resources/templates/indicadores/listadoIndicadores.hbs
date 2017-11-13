@@ -14,7 +14,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Indicador &gt; <b>Ejecutar Indicadores</b></div>
   	<div class="panel-body">
-		<form action="/indicadores/ejecutar" method= "GET" class="form-inline">
+		<form action="/DondeInvierto/indicadores/ejecutar" method= "GET" class="form-inline">
 			<div class="form-group" style="margin-right: 20px;">
 	    		<select class="form-control" name="empresaSeleccionada" placeholder="Empresa">
     				{{#with empresas}}
@@ -62,4 +62,4 @@
 	</div>
 {{/with}}
 {{/partial}}
-{{>layout.hbs}}
+{{>common/layout.hbs}}

@@ -1,7 +1,5 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
-import org.uqbar.commons.utils.Observable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -10,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -20,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Observable
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -44,13 +40,11 @@ public class Condicion {
     this.filtro = filtro;
   }
 
-  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws ArbolException, DbException {
+  public boolean cumpleCondicion(Empresa empresa, Periodo periodo) throws DbException {
     try {
       return filtro.cumpleCondicion(this, empresa, periodo);
     } catch (FiltroException e) {
       return false;
-    } catch (ArbolException a) {
-      throw new ArbolException(a.getMessage());
     }
   }
 

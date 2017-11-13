@@ -1,7 +1,5 @@
 package ar.org.utn.ddstpanual.model;
 
-import org.uqbar.commons.utils.Observable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Observable
 @Table(name = "EMPRESA")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,11 +35,8 @@ public @Data class Empresa {
   }
 
   public double obtenerValor(final String nombreCuenta, final String periodo) {
-    return cuentas.stream()
-        .filter(c -> c.getNombre().equals(nombreCuenta))
-        .map(c -> c.obtenerValor(periodo))
-        .findAny()
-        .orElse(0.0);
+    return cuentas.stream().filter(c -> c.getNombre().equals(nombreCuenta))
+        .map(c -> c.obtenerValor(periodo)).findAny().orElse(0.0);
   }
 
   public List<Periodo> obtenerPeriodos() {

@@ -1,7 +1,6 @@
 package ar.org.utn.ddstpanual.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.uqbar.commons.utils.Observable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Observable
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -77,7 +75,8 @@ public @Data class Indicador {
     formula = StringUtils.remove(formula, " ");
   }
 
-  public Double ejecutarIndicador(String fecha, Empresa empresa) throws ArbolException, DbException {
+  public Double ejecutarIndicador(String fecha, Empresa empresa)
+      throws ArbolException, DbException {
     try {
       return util.obtenerValor(obtenerArbol(), fecha, empresa);
     } catch (ArbolException e) {

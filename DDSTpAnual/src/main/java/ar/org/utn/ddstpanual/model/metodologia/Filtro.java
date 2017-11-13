@@ -1,21 +1,19 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
-import org.uqbar.commons.utils.Observable;
-
 import java.time.Year;
 
-import ar.org.utn.ddstpanual.exception.ArbolException;
+import ar.org.utn.ddstpanual.db.IndicadorPrecalculadoDb;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.FiltroException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.Periodo;
 
-@Observable
 public enum Filtro {
 
-  CRECIENTE("Estrictamente creciente"), DECRECIENTE("Estrictamente decreciente"), IGUAL("Igual"), MAYOR("Mayor"), MENOR(
-      "Menor"), MENORIGUAL("Menor Igual"), MAYORIGUAL("Mayor igual");
+  CRECIENTE("Estrictamente creciente"), DECRECIENTE("Estrictamente decreciente"), IGUAL("Igual"), MAYOR("Mayor"), MENOR("Menor"), MENORIGUAL("Menor Igual"), MAYORIGUAL("Mayor igual");
+
+  private static IndicadorPrecalculadoDb indicadorPrecalculadoDb = new IndicadorPrecalculadoDb();
 
   private String nombre;
 
@@ -23,11 +21,9 @@ public enum Filtro {
     this.setNombre(nombre);
   }
 
-  public boolean cumpleCondicion(Condicion condicion, Empresa empresa, Periodo periodo)
-      throws FiltroException, ArbolException, DbException {
+  public boolean cumpleCondicion(Condicion condicion, Empresa empresa, Periodo periodo) throws FiltroException, DbException {
 
-    Double valorIndicador = condicion.getIndicador().ejecutarIndicador(periodo.getFecha(), empresa);
-
+    Double valorIndicador = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(empresa, condicion.getIndicador(), periodo.getFecha()).getValorIndicador();
     switch (this) {
       case CRECIENTE:
         return comparadorEstricto(condicion, empresa, periodo, true);
@@ -48,18 +44,12 @@ public enum Filtro {
     }
   }
 
-  public boolean comparadorEstricto(Condicion condicion, Empresa empresa, Periodo periodo, Boolean esCreciente)
-      throws ArbolException, DbException {
-
-    Year fechaPeriodoDesde = Year.now().minusYears(Math.round(condicion.getValor()));
+  public boolean comparadorEstricto(Condicion condicion, Empresa empresa, Periodo periodo, Boolean esCreciente) throws DbException {
+    Year fechaPeriodo = Year.now().minusYears(Math.round(condicion.getValor()));
     Indicador indicador = condicion.getIndicador();
-
-    Double valorIndicadorDesde = indicador.ejecutarIndicador(fechaPeriodoDesde.toString(), empresa);
-
-    fechaPeriodoDesde.plusYears(1);
-    while (fechaPeriodoDesde.isBefore(Year.now()) || fechaPeriodoDesde.equals(Year.now())) {
-      Double valorIndicador = indicador.ejecutarIndicador(fechaPeriodoDesde.toString(), empresa);
-
+    Double valorIndicadorDesde = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(empresa, indicador, fechaPeriodo.toString()).getValorIndicador();
+    while (fechaPeriodo.isBefore(Year.now()) || fechaPeriodo.equals(Year.now())) {
+      Double valorIndicador = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(empresa, indicador, fechaPeriodo.toString()).getValorIndicador();
       if (esCreciente) {
         if (valorIndicador < valorIndicadorDesde) {
           return false;
@@ -69,11 +59,9 @@ public enum Filtro {
           return false;
         }
       }
-
-      fechaPeriodoDesde.plusYears(1);
+      fechaPeriodo.plusYears(1);
     }
     return true;
-
   }
 
   @Override

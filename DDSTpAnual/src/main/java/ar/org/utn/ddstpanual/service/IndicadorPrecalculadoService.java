@@ -21,6 +21,7 @@ public class IndicadorPrecalculadoService {
 
   public void precalcularIndicadores() throws ServiceException {
     try {
+      indicadorPrecalculadoDb.borrarIndicadoresPrecalculados();
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
       List<Indicador> indicadores = indicadorDb.obtenerIndicadores();
       List<Periodo> periodos = empresaDb.obtenerPeriodos();

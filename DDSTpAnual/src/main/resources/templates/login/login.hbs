@@ -1,5 +1,14 @@
-{{#partial "contenido"}}
-	<form action="/login" method="POST" style="margin: 0 auto; max-width: 330px;">
+<html>
+<head>
+	{{#block "titulo"}}{{/block}}
+		<link rel="stylesheet"  href="../css/libs/bootstrap.min.css">
+	  	<link rel="stylesheet"  href="../css/style.css">
+		<link rel="stylesheet"  href="../DondeInvierto/css/libs/bootstrap.min.css">
+	  	<link rel="stylesheet"  href="../DondeInvierto/css/style.css">
+  	{{#block "header"}}{{/block}}
+</head>
+<body>
+	<form action="/DondeInvierto/login" method="POST" style="margin: 0 auto; max-width: 330px;">
 		<br/>
 		<br/>
 		<h2>Iniciar Sesión</h2>
@@ -13,9 +22,16 @@
 		<input class="btn btn-lg btn-primary btn-block" type="submit" value="Ingresar">
 		
 	</form>
-{{/partial}}
-{{>layout.hbs}}
 
-<script type="text/javascript">
-	$("#barra-navegacion").hide();
-</script>
+<footer class="footer">
+    <p class="text-center">
+      &copy; 2017 DondeInvierto.com
+    </p>
+</footer>
+
+<script type="text/javascript" src="../DondeInvierto/js/libs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../DondeInvierto/js/libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/libs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/libs/bootstrap.min.js"></script>
+</body>
+</html>

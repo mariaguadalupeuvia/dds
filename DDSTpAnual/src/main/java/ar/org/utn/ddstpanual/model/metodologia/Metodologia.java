@@ -1,7 +1,5 @@
 package ar.org.utn.ddstpanual.model.metodologia;
 
-import org.uqbar.commons.utils.Observable;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,8 +14,8 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import ar.org.utn.ddstpanual.db.IndicadorPrecalculadoDb;
 import ar.org.utn.ddstpanual.db.MetodologiaDb;
-import ar.org.utn.ddstpanual.exception.ArbolException;
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
@@ -27,7 +25,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Observable
 @Entity
 @Table(name = "METODOLOGIA")
 @AllArgsConstructor
@@ -51,7 +48,9 @@ public class Metodologia {
   private List<Orden> ordenes;
 
   @Transient
-  private MetodologiaDb metododologiaDb = new MetodologiaDb();
+  private static MetodologiaDb metododologiaDb = new MetodologiaDb();
+  @Transient
+  private static IndicadorPrecalculadoDb indicadorPrecalculadoDb = new IndicadorPrecalculadoDb();
 
   public Metodologia(String nombre, List<Condicion> condiciones, List<Orden> ordenes) {
     this.nombre = nombre;
@@ -67,13 +66,9 @@ public class Metodologia {
     }
   }
 
-  public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Periodo periodo) throws ArbolException {
+  public List<Empresa> ejecutarMetodologia(List<Empresa> empresas, Periodo periodo) {
     empresas = empresas.stream().filter(e -> {
-      try {
-        return cumpleCondiciones(e, periodo);
-      } catch (ArbolException a) {
-        return false;
-      }
+      return cumpleCondiciones(e, periodo);
     }).collect(Collectors.toList());
 
     Collections.sort(empresas, (e1, e2) -> {
@@ -89,25 +84,24 @@ public class Metodologia {
     return empresas;
   }
 
-  private Boolean cumpleCondiciones(Empresa empresa, Periodo periodo) throws ArbolException {
+  private Boolean cumpleCondiciones(Empresa empresa, Periodo periodo) {
     return condiciones.stream().allMatch(c -> {
       try {
         return c.cumpleCondicion(empresa, periodo);
-      } catch (ArbolException | DbException e) {
+      } catch (DbException e) {
         return false;
       }
     });
   }
 
-  private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per)
-      throws ServiceException, ArbolException, DbException {
+  private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException, DbException {
     int flag = 0;
 
     for (Orden orden : ordenes) {
       Indicador indicador = orden.getIndicador();
 
-      Double valorE1 = indicador.ejecutarIndicador(per.getFecha(), e1);
-      Double valorE2 = indicador.ejecutarIndicador(per.getFecha(), e2);
+      Double valorE1 = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(e1, indicador, per.getFecha()).getValorIndicador();
+      Double valorE2 = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(e2, indicador, per.getFecha()).getValorIndicador();
 
       if (orden.getTipoOrden().equals("Ascendente")) {
         flag = Double.compare(valorE1, valorE2);
