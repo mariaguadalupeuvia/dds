@@ -1,60 +1,90 @@
 package fixture;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import ar.org.utn.ddstpanual.model.Cuenta;
+import ar.org.utn.ddstpanual.model.Empresa;
 
 public class FixtureEmpresa {
-  FixtureCuenta fixture;
+  public Empresa empresaX;
+  public Empresa empresaY;
+  public Empresa empresaSinCuentas;
+  public Empresa empresaSinPeriodos;
+  
+  public FixtureEmpresa(){
+    FixtureCuenta fixtureC = new FixtureCuenta();
+    FixturePeriodo fixtureP = new FixturePeriodo();
+    
+    List<Cuenta> cuentasX = new ArrayList<Cuenta>();
+    cuentasX.add(
+        fixtureC.activoCorriente.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(1000),
+            fixtureP.periodo2016.BuilderPeriodo(2000),
+            fixtureP.periodo2017.BuilderPeriodo(3000)
+        ))
+    );
+    cuentasX.add(
+        fixtureC.pasivoCorriente.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(1500),
+            fixtureP.periodo2016.BuilderPeriodo(2500),
+            fixtureP.periodo2017.BuilderPeriodo(3500)
+        ))
+    );
+    cuentasX.add(
+        fixtureC.pasivoNoCorriente.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(500),
+            fixtureP.periodo2016.BuilderPeriodo(500),
+            fixtureP.periodo2017.BuilderPeriodo(500)
+        ))
+    );
+    cuentasX.add(
+        fixtureC.activoNoCorriente.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(3000),
+            fixtureP.periodo2016.BuilderPeriodo(5000),
+            fixtureP.periodo2017.BuilderPeriodo(4000)
+        ))
+    );
+    empresaX = new Empresa("EmpresaX", cuentasX);
 
-  @Before
-  public void init() {
-    fixture = new FixtureCuenta();
+    List<Cuenta> cuentasY = new ArrayList<Cuenta>();
+    cuentasY.add(
+        fixtureC.activoCorriente.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(1000),
+            fixtureP.periodo2016.BuilderPeriodo(2000),
+            fixtureP.periodo2017.BuilderPeriodo(3000)
+        ))
+    );
+    cuentasY.add(
+        fixtureC.ventas.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(9000),
+            fixtureP.periodo2016.BuilderPeriodo(10000),
+            fixtureP.periodo2017.BuilderPeriodo(8000)
+        ))
+    );
+    cuentasY.add(
+        fixtureC.beneficio.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(5000),
+            fixtureP.periodo2016.BuilderPeriodo(3000),
+            fixtureP.periodo2017.BuilderPeriodo(4500)
+        ))
+    );
+    cuentasY.add(
+        fixtureC.activoNoCorriente.BuilderCuenta(Arrays.asList(
+            fixtureP.periodo2015.BuilderPeriodo(300),
+            fixtureP.periodo2016.BuilderPeriodo(500),
+            fixtureP.periodo2017.BuilderPeriodo(400)
+        ))
+    );
+    empresaY = new Empresa("EmpresaY", cuentasY);
+    
+    empresaSinCuentas = new Empresa("EmpresaSinCuentas");
+    
+    List<Cuenta> cuentasSinPeriodo = new ArrayList<Cuenta>();
+    cuentasSinPeriodo.add(fixtureC.activoCorriente);
+    
+    empresaSinPeriodos = new Empresa("EmpresaZ", cuentasSinPeriodo);
   }
-
-  @Test
-  public void testCuentaConNombreCuentaA() {
-    assertEquals("CuentaA", fixture.cuentaA.getNombre());
-  }
-  // @Test
-  // public void testPeriodoConFecha2014() {
-  // assertEquals("2014", fixture.periodo2014.getFecha());
-  // }
-  // @Test
-  // public void testPeriodoConValor3000() {
-  // assertEquals(3000.0, fixture.periodo2013.getValor(), 0.0);
-  // }
-  // @Test
-  // public void testPeriodoConValor4000() {
-  // assertEquals(4000.0, fixture.periodo2014.getValor(), 0.0);
-  // }
-  // @Test
-  // public void testPeriodo2012SetFecha2015() {
-  // fixture.periodoSetFecha.setFecha("2015");
-  // assertEquals("2015", fixture.periodoSetFecha.getFecha());
-  // }
-  // @Test
-  // public void testPeriodoSetValor8000() {
-  // fixture.periodoSetFecha.setValor(8000);
-  // assertEquals(8000.0, fixture.periodoSetFecha.getValor(), 0.0);
-  // }
-  // @Test
-  // public void testPeriodoValorNulo() {
-  // assertEquals(0.0, fixture.periodoValorNulo.getValor(), 0.0);
-  // }
-  // @Test
-  // public void testPeriodoFechaNula() {
-  // assertNull(fixture.periodoValorNulo.getFecha());
-  // }
-  // @Test
-  // public void testPeriodo2013Igual() {
-  // Periodo periodo2013Equals = new Periodo("2013", 3000);
-  // assertTrue(fixture.periodo2013.equals(periodo2013Equals));
-  // }
-  // @Test
-  // public void testPeriodo2013NoesIguala2014() {
-  // Periodo periodo2014Equals = new Periodo("2014", 3000);
-  // assertFalse(fixture.periodo2013.equals(periodo2014Equals));
-  // }
+  
 }

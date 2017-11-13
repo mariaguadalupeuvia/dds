@@ -57,4 +57,8 @@ public @Data class Periodo {
     builder.append("valor : " + valor + "\n}");
     return builder.toString();
   }
+  
+  public Periodo BuilderPeriodo(float valor){
+    return new Periodo(this.fecha, valor);
+  }
 }

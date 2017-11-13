@@ -77,5 +77,9 @@ public @Data class Cuenta {
     builder.append("valores : " + periodos.toString() + "\n}");
     return builder.toString();
   }
+  
+  public Cuenta BuilderCuenta(List<Periodo> periodos){
+    return new Cuenta(this.nombre, periodos);
+  }
 
 }
