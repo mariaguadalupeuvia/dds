@@ -104,7 +104,7 @@ public class CuentasController {
 
     req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("C:/tmp"));
     try {
-      File dir = new File("src/main/resources/uploads/");
+      File dir = new File("/opt/uploads/");
       dir.mkdirs();
       final Part filePart = req.raw().getPart("archivo");
       try (InputStream inputStream = filePart.getInputStream()) {
