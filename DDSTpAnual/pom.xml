@@ -105,7 +105,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>DondeInvierto</finalName>
+		<finalName>DDSTpAnual</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
