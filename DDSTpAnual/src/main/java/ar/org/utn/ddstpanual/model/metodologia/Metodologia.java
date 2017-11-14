@@ -74,7 +74,7 @@ public class Metodologia {
     Collections.sort(empresas, (e1, e2) -> {
       int comp = 0;
       try {
-        comp = compararEmpresas(e1, e2, ordenes, periodo);
+        comp = compararEmpresas(e1, e2, periodo.getFecha());
       } catch (Exception e3) {
         e3.getMessage();
       }
@@ -93,15 +93,15 @@ public class Metodologia {
       }
     });
   }
-
-  private int compararEmpresas(Empresa e1, Empresa e2, List<Orden> ordenes, Periodo per) throws ServiceException, DbException {
+	
+  private int compararEmpresas(Empresa e1, Empresa e2, String periodo) throws ServiceException, DbException {
     int flag = 0;
 
-    for (Orden orden : ordenes) {
+    for (Orden orden : this.ordenes) {
       Indicador indicador = orden.getIndicador();
 
-      Double valorE1 = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(e1, indicador, per.getFecha()).getValorIndicador();
-      Double valorE2 = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(e2, indicador, per.getFecha()).getValorIndicador();
+      Double valorE1 = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(e1, indicador, periodo).getValorIndicador();
+      Double valorE2 = indicadorPrecalculadoDb.obtenerIndicadorPrecalculado(e2, indicador, periodo).getValorIndicador();
 
       if (orden.getTipoOrden().equals("Ascendente")) {
         flag = Double.compare(valorE1, valorE2);
