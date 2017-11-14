@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -31,11 +32,12 @@ public class JobService extends TimerTask {
     try {
       // 5 minutos
       Thread.sleep(300000);
-      File directory = new File("src/main/resources/uploads/");
+      File directory = new File("/opt/uploads/");
+      log.info("directory: {}", directory.getAbsolutePath());
       directory.mkdirs();
-      List<String> nombresArchivos = Arrays.asList(directory.list());
-      nombresArchivos = nombresArchivos.stream()
-          .filter(nombre -> !StringUtils.contains(nombre, "_done") && !StringUtils.contains(nombre, "_error")).collect(Collectors.toList());
+      List<String> nombresArchivos = new ArrayList<>();
+      nombresArchivos.addAll(Arrays.asList(directory.list()));
+      nombresArchivos = nombresArchivos.stream().filter(nombre -> !StringUtils.contains(nombre, "_done") && !StringUtils.contains(nombre, "_error")).collect(Collectors.toList());
       for (String nombreArchivo : nombresArchivos) {
         File archivo = new File(directory, nombreArchivo);
         try {
@@ -51,7 +53,7 @@ public class JobService extends TimerTask {
         }
       }
     } catch (InterruptedException e) {
-      log.error("Se produjo un error inesperado.");
+      log.error("todos putos.");
       e.printStackTrace();
     }
   }
