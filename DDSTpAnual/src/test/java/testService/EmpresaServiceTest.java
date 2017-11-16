@@ -29,7 +29,7 @@ public class EmpresaServiceTest {
     } catch (FileNotFoundException e) {
       throw new ServiceException(e.getMessage());
     }
-    
+
     return archivoInput;
   }
 

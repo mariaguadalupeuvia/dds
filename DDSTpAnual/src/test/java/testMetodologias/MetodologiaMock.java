@@ -9,42 +9,41 @@ import ar.org.utn.ddstpanual.model.Indicador;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
-public class MetodologiaMock 
-{
-	Metodologia metodologia = new Metodologia();
-	
-	public int compararEmpresas(Empresa e1, Empresa e2, String periodo) throws DbException  {
-		int flag = 0;
-     
-		for (Orden orden : metodologia.getOrdenes()) {
-			Indicador indicador = orden.getIndicador();
+public class MetodologiaMock {
+  Metodologia metodologia = new Metodologia();
 
-			Double valorE1;
-			try {
-				valorE1 = indicador.ejecutarIndicador(periodo, e1);
-				Double valorE2 =indicador.ejecutarIndicador(periodo, e2);
-				
-				if (orden.getTipoOrden().equals("Ascendente")) {
-					flag = Double.compare(valorE1, valorE2);
-				}
+  public int compararEmpresas(Empresa e1, Empresa e2, String periodo) throws DbException {
+    int flag = 0;
 
-				if (orden.getTipoOrden().equals("Descendente")) {
-					flag = Double.compare(valorE2, valorE1);
-				}
+    for (Orden orden : metodologia.getOrdenes()) {
+      Indicador indicador = orden.getIndicador();
 
-				if (flag != 0) {
-					break;
-				}
-				
-			} catch (ArbolException e) {
-				e.printStackTrace();
-			}
+      Double valorE1;
+      try {
+        valorE1 = indicador.ejecutarIndicador(periodo, e1);
+        Double valorE2 = indicador.ejecutarIndicador(periodo, e2);
 
-		}
-		return flag;
-	}
+        if (orden.getTipoOrden().equals("Ascendente")) {
+          flag = Double.compare(valorE1, valorE2);
+        }
 
-	public void setOrdenes(List<Orden> ordenes) {
-		metodologia.setOrdenes(ordenes);
-	}
+        if (orden.getTipoOrden().equals("Descendente")) {
+          flag = Double.compare(valorE2, valorE1);
+        }
+
+        if (flag != 0) {
+          break;
+        }
+
+      } catch (ArbolException e) {
+        e.printStackTrace();
+      }
+
+    }
+    return flag;
+  }
+
+  public void setOrdenes(List<Orden> ordenes) {
+    metodologia.setOrdenes(ordenes);
+  }
 }

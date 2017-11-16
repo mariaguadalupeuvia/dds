@@ -61,8 +61,8 @@ public class IndicadorNode extends Node {
 
     try {
       indicador = indicadorDb.obtenerIndicador(nombreIndicador.substring(1, nombreIndicador.length() - 1));
-      if (indicador.getFormula().equals("[]") || indicador.getFormula().isEmpty() || indicador.getFormula().equals("{}")
-          || indicador.getFormula() == null || indicador.getFormula().contains("nombreindicador")) {
+      if (indicador.getFormula().equals("[]") || indicador.getFormula().isEmpty() || indicador.getFormula().equals("{}") || indicador.getFormula() == null
+          || indicador.getFormula().contains("nombreindicador")) {
         throw new NodeException("No se encuentra la formula del indicador " + nombreIndicador + ". No puede calcularse su valor \n");
       }
       getIndicadorUtil().verificarAnalisisFormula();

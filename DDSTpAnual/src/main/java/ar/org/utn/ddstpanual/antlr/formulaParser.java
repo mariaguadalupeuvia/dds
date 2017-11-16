@@ -27,14 +27,11 @@ public class formulaParser extends Parser {
 
   protected static final DFA[] _decisionToDFA;
   protected static final PredictionContextCache _sharedContextCache = new PredictionContextCache();
-  public static final int SUMA = 1, RESTA = 2, MULT = 3, DIV = 4, LLAVE_IZQ = 5, LLAVE_DER = 6, COR_IZQ = 7, COR_DER = 8, PAREN_IZQ = 9,
-      PAREN_DER = 10, INDICADOR = 11, CUENTA = 12, NUM = 13, WS = 14;
-  public static final String[] tokenNames =
-      {"<INVALID>", "'+'", "'-'", "'*'", "'/'", "'{'", "'}'", "'['", "']'", "'('", "')'", "INDICADOR", "CUENTA", "NUM", "WS"};
-  public static final int RULE_start = 0, RULE_expresion = 1, RULE_operador_mult = 2, RULE_operador_aditivo = 3, RULE_operando = 4,
-      RULE_suma = 5, RULE_resta = 6, RULE_mult = 7, RULE_div = 8, RULE_indicador = 9, RULE_cuenta = 10, RULE_num = 11;
-  public static final String[] ruleNames =
-      {"start", "expresion", "operador_mult", "operador_aditivo", "operando", "suma", "resta", "mult", "div", "indicador", "cuenta", "num"};
+  public static final int SUMA = 1, RESTA = 2, MULT = 3, DIV = 4, LLAVE_IZQ = 5, LLAVE_DER = 6, COR_IZQ = 7, COR_DER = 8, PAREN_IZQ = 9, PAREN_DER = 10, INDICADOR = 11, CUENTA = 12, NUM = 13, WS = 14;
+  public static final String[] tokenNames = {"<INVALID>", "'+'", "'-'", "'*'", "'/'", "'{'", "'}'", "'['", "']'", "'('", "')'", "INDICADOR", "CUENTA", "NUM", "WS"};
+  public static final int RULE_start = 0, RULE_expresion = 1, RULE_operador_mult = 2, RULE_operador_aditivo = 3, RULE_operando = 4, RULE_suma = 5, RULE_resta = 6, RULE_mult = 7, RULE_div = 8,
+      RULE_indicador = 9, RULE_cuenta = 10, RULE_num = 11;
+  public static final String[] ruleNames = {"start", "expresion", "operador_mult", "operador_aditivo", "operando", "suma", "resta", "mult", "div", "indicador", "cuenta", "num"};
 
   @Override
   public String getGrammarFileName() {
@@ -659,8 +656,7 @@ public class formulaParser extends Parser {
       {
         setState(67);
         _localctx.INDICADOR = match(INDICADOR);
-        indicadores.add((_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).substring(1,
-            (_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).length() - 2));
+        indicadores.add((_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).substring(1, (_localctx.INDICADOR != null ? _localctx.INDICADOR.getText() : null).length() - 2));
       }
     } catch (final RecognitionException re) {
       _localctx.exception = re;
@@ -709,8 +705,7 @@ public class formulaParser extends Parser {
       {
         setState(70);
         _localctx.CUENTA = match(CUENTA);
-        cuentas.add((_localctx.CUENTA != null ? _localctx.CUENTA.getText() : null).substring(1,
-            (_localctx.CUENTA != null ? _localctx.CUENTA.getText() : null).length() - 2));
+        cuentas.add((_localctx.CUENTA != null ? _localctx.CUENTA.getText() : null).substring(1, (_localctx.CUENTA != null ? _localctx.CUENTA.getText() : null).length() - 2));
       }
     } catch (final RecognitionException re) {
       _localctx.exception = re;
@@ -768,24 +763,15 @@ public class formulaParser extends Parser {
     return _localctx;
   }
 
-  public static final String _serializedATN = "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20N\4\2\t\2\4\3\t"
-      + "\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"
-      + "\f\t\f\4\r\t\r\3\2\3\2\3\2\3\2\7\2\37\n\2\f\2\16\2\"\13\2\3\3\3\3\3\3"
-      + "\3\3\7\3(\n\3\f\3\16\3+\13\3\3\4\3\4\5\4/\n\4\3\5\3\5\5\5\63\n\5\3\6\3"
-      + "\6\3\6\3\6\3\6\3\6\3\6\5\6<\n\6\3\7\3\7\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3"
-      + "\13\3\13\3\f\3\f\3\f\3\r\3\r\3\r\2\2\16\2\4\6\b\n\f\16\20\22\24\26\30"
-      + "\2\2H\2\32\3\2\2\2\4#\3\2\2\2\6.\3\2\2\2\b\62\3\2\2\2\n;\3\2\2\2\f=\3"
-      + "\2\2\2\16?\3\2\2\2\20A\3\2\2\2\22C\3\2\2\2\24E\3\2\2\2\26H\3\2\2\2\30"
-      + "K\3\2\2\2\32 \5\4\3\2\33\34\5\b\5\2\34\35\5\4\3\2\35\37\3\2\2\2\36\33"
-      + "\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2 !\3\2\2\2!\3\3\2\2\2\" \3\2\2\2#)\5"
-      + "\n\6\2$%\5\6\4\2%&\5\n\6\2&(\3\2\2\2\'$\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)"
-      + "*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2,/\5\20\t\2-/\5\22\n\2.,\3\2\2\2.-\3\2\2"
-      + "\2/\7\3\2\2\2\60\63\5\f\7\2\61\63\5\16\b\2\62\60\3\2\2\2\62\61\3\2\2\2"
-      + "\63\t\3\2\2\2\64<\5\24\13\2\65<\5\26\f\2\66<\5\30\r\2\678\7\13\2\289\5"
-      + "\2\2\29:\7\f\2\2:<\3\2\2\2;\64\3\2\2\2;\65\3\2\2\2;\66\3\2\2\2;\67\3\2"
-      + "\2\2<\13\3\2\2\2=>\7\3\2\2>\r\3\2\2\2?@\7\4\2\2@\17\3\2\2\2AB\7\5\2\2"
-      + "B\21\3\2\2\2CD\7\6\2\2D\23\3\2\2\2EF\7\r\2\2FG\b\13\1\2G\25\3\2\2\2HI"
-      + "\7\16\2\2IJ\b\f\1\2J\27\3\2\2\2KL\7\17\2\2L\31\3\2\2\2\7 ).\62;";
+  public static final String _serializedATN = "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20N\4\2\t\2\4\3\t" + "\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"
+      + "\f\t\f\4\r\t\r\3\2\3\2\3\2\3\2\7\2\37\n\2\f\2\16\2\"\13\2\3\3\3\3\3\3" + "\3\3\7\3(\n\3\f\3\16\3+\13\3\3\4\3\4\5\4/\n\4\3\5\3\5\5\5\63\n\5\3\6\3"
+      + "\6\3\6\3\6\3\6\3\6\3\6\5\6<\n\6\3\7\3\7\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3" + "\13\3\13\3\f\3\f\3\f\3\r\3\r\3\r\2\2\16\2\4\6\b\n\f\16\20\22\24\26\30"
+      + "\2\2H\2\32\3\2\2\2\4#\3\2\2\2\6.\3\2\2\2\b\62\3\2\2\2\n;\3\2\2\2\f=\3" + "\2\2\2\16?\3\2\2\2\20A\3\2\2\2\22C\3\2\2\2\24E\3\2\2\2\26H\3\2\2\2\30"
+      + "K\3\2\2\2\32 \5\4\3\2\33\34\5\b\5\2\34\35\5\4\3\2\35\37\3\2\2\2\36\33" + "\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2 !\3\2\2\2!\3\3\2\2\2\" \3\2\2\2#)\5"
+      + "\n\6\2$%\5\6\4\2%&\5\n\6\2&(\3\2\2\2\'$\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)" + "*\3\2\2\2*\5\3\2\2\2+)\3\2\2\2,/\5\20\t\2-/\5\22\n\2.,\3\2\2\2.-\3\2\2"
+      + "\2/\7\3\2\2\2\60\63\5\f\7\2\61\63\5\16\b\2\62\60\3\2\2\2\62\61\3\2\2\2" + "\63\t\3\2\2\2\64<\5\24\13\2\65<\5\26\f\2\66<\5\30\r\2\678\7\13\2\289\5"
+      + "\2\2\29:\7\f\2\2:<\3\2\2\2;\64\3\2\2\2;\65\3\2\2\2;\66\3\2\2\2;\67\3\2" + "\2\2<\13\3\2\2\2=>\7\3\2\2>\r\3\2\2\2?@\7\4\2\2@\17\3\2\2\2AB\7\5\2\2"
+      + "B\21\3\2\2\2CD\7\6\2\2D\23\3\2\2\2EF\7\r\2\2FG\b\13\1\2G\25\3\2\2\2HI" + "\7\16\2\2IJ\b\f\1\2J\27\3\2\2\2KL\7\17\2\2L\31\3\2\2\2\7 ).\62;";
   public static final ATN _ATN = new ATNDeserializer().deserialize(_serializedATN.toCharArray());
   static {
     _decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];

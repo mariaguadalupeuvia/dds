@@ -26,16 +26,15 @@ public class MetodologiaDb implements WithGlobalEntityManager, TransactionalOps 
 
   public Metodologia obtenerMetodologia(String nombre) throws DbException {
     try {
-    	      return entityManager().createQuery("from Metodologia m WHERE m.nombre LIKE :nombre", Metodologia.class)
-    	          .setParameter("nombre", nombre).setMaxResults(1).getSingleResult();
-//      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
-//      CriteriaQuery<Metodologia> cqry = cb.createQuery(Metodologia.class);
-//      Root<Metodologia> root = cqry.from(Metodologia.class);
-//      cqry.select(root);
-//      Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombre);
-//      cqry.where(pEqualsNombre);
-//      TypedQuery<Metodologia> qry = entityManager().createQuery(cqry);
-//      return qry.getSingleResult();
+      return entityManager().createQuery("from Metodologia m WHERE m.nombre LIKE :nombre", Metodologia.class).setParameter("nombre", nombre).setMaxResults(1).getSingleResult();
+      // CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+      // CriteriaQuery<Metodologia> cqry = cb.createQuery(Metodologia.class);
+      // Root<Metodologia> root = cqry.from(Metodologia.class);
+      // cqry.select(root);
+      // Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombre);
+      // cqry.where(pEqualsNombre);
+      // TypedQuery<Metodologia> qry = entityManager().createQuery(cqry);
+      // return qry.getSingleResult();
     } catch (Exception e) {
       log.error(e.getMessage());
       throw new DbException(e.getMessage());

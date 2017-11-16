@@ -50,8 +50,8 @@ public class CuentasController {
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
       Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
       List<CuentaValor> cuentas = new ArrayList<>();
-      empresa.getCuentas().stream().map(c -> cuentas.add(new CuentaValor(empresa.getNombre(), c.getNombre(), periodoSeleccionado,
-          empresa.obtenerValor(c.getNombre(), periodoSeleccionado)))).collect(Collectors.toList());
+      empresa.getCuentas().stream().map(c -> cuentas.add(new CuentaValor(empresa.getNombre(), c.getNombre(), periodoSeleccionado, empresa.obtenerValor(c.getNombre(), periodoSeleccionado))))
+          .collect(Collectors.toList());
       model.put("cuentas", cuentas);
       model.put("empresas", empresas);
       model.put("periodos", periodos);

@@ -75,8 +75,7 @@ public @Data class Indicador {
     formula = StringUtils.remove(formula, " ");
   }
 
-  public Double ejecutarIndicador(String fecha, Empresa empresa)
-      throws ArbolException, DbException {
+  public Double ejecutarIndicador(String fecha, Empresa empresa) throws ArbolException, DbException {
     try {
       return util.obtenerValor(obtenerArbol(), fecha, empresa);
     } catch (ArbolException e) {

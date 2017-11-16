@@ -33,15 +33,14 @@ public @Data class Empresa {
     this.nombre = nombre;
     this.cuentas = new ArrayList<Cuenta>();
   }
-  
+
   public Empresa(String nombre, List<Cuenta> cuentas) {
     this.nombre = nombre;
     this.cuentas = cuentas;
   }
 
   public double obtenerValor(final String nombreCuenta, final String periodo) {
-    return cuentas.stream().filter(c -> c.getNombre().equals(nombreCuenta))
-        .map(c -> c.obtenerValor(periodo)).findAny().orElse(-1.0);
+    return cuentas.stream().filter(c -> c.getNombre().equals(nombreCuenta)).map(c -> c.obtenerValor(periodo)).findAny().orElse(-1.0);
   }
 
   @Override

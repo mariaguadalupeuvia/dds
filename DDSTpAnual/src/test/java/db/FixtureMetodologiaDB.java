@@ -36,8 +36,7 @@ public class FixtureMetodologiaDB extends AbstractPersistenceTest implements Wit
     List<Periodo> periodos2 = Arrays.asList(new Periodo("2015", 5000), new Periodo("2016", 10000), new Periodo("2017", 30000));
     List<Periodo> periodos3 = Arrays.asList(new Periodo("2015", 100000), new Periodo("2016", 10000), new Periodo("2017", 20000));
 
-    List<Cuenta> cuentas = Arrays.asList(new Cuenta("activoCorriente", periodos1), new Cuenta("pasivoTotal", periodos2),
-        new Cuenta("patrimonioNeto", periodos3));
+    List<Cuenta> cuentas = Arrays.asList(new Cuenta("activoCorriente", periodos1), new Cuenta("pasivoTotal", periodos2), new Cuenta("patrimonioNeto", periodos3));
     Empresa facebook = new Empresa("Facebook", cuentas);
 
     // empresa 2
@@ -45,8 +44,7 @@ public class FixtureMetodologiaDB extends AbstractPersistenceTest implements Wit
     List<Periodo> periodos5 = Arrays.asList(new Periodo("2015", 10000), new Periodo("2016", 20000), new Periodo("2017", 80000));
     List<Periodo> periodos6 = Arrays.asList(new Periodo("2015", 20000), new Periodo("2016", 40000), new Periodo("2017", 20000));
 
-    List<Cuenta> cuentas2 = Arrays.asList(new Cuenta("activoCorriente", periodos4), new Cuenta("pasivoTotal", periodos5),
-        new Cuenta("patrimonioNeto", periodos6));
+    List<Cuenta> cuentas2 = Arrays.asList(new Cuenta("activoCorriente", periodos4), new Cuenta("pasivoTotal", periodos5), new Cuenta("patrimonioNeto", periodos6));
     Empresa twitter = new Empresa("twitter", cuentas2);
 
     // empresa 3
@@ -54,8 +52,7 @@ public class FixtureMetodologiaDB extends AbstractPersistenceTest implements Wit
     List<Periodo> periodos8 = Arrays.asList(new Periodo("2015", 100), new Periodo("2016", 500));
     List<Periodo> periodos9 = Arrays.asList(new Periodo("2015", 100), new Periodo("2016", 500));
 
-    List<Cuenta> cuentas3 = Arrays.asList(new Cuenta("activoCorriente", periodos7), new Cuenta("pasivoTotal", periodos8),
-        new Cuenta("patrimonioNeto", periodos9));
+    List<Cuenta> cuentas3 = Arrays.asList(new Cuenta("activoCorriente", periodos7), new Cuenta("pasivoTotal", periodos8), new Cuenta("patrimonioNeto", periodos9));
     Empresa ebay = new Empresa("ebay", cuentas3);
 
     // empresa 4
@@ -70,8 +67,7 @@ public class FixtureMetodologiaDB extends AbstractPersistenceTest implements Wit
     List<Periodo> periodos14 = Arrays.asList(new Periodo("2016", 8000), new Periodo("2017", 10000));
     List<Periodo> periodos15 = Arrays.asList(new Periodo("2016", 100000), new Periodo("2017", 100000));
 
-    List<Cuenta> cuentas5 = Arrays.asList(new Cuenta("activoCorriente", periodos13), new Cuenta("pasivoTotal", periodos14),
-        new Cuenta("patrimonioNeto", periodos15));
+    List<Cuenta> cuentas5 = Arrays.asList(new Cuenta("activoCorriente", periodos13), new Cuenta("pasivoTotal", periodos14), new Cuenta("patrimonioNeto", periodos15));
     Empresa google = new Empresa("google", cuentas5);
 
     return Arrays.asList(facebook, twitter, ebay, yahoo, google);

@@ -93,7 +93,7 @@ public class Metodologia {
       }
     });
   }
-	
+
   private int compararEmpresas(Empresa e1, Empresa e2, String periodo) throws ServiceException, DbException {
     int flag = 0;
 

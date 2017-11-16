@@ -39,8 +39,7 @@ public @Data class Cuenta {
   }
 
   public double obtenerValor(final String fecha) {
-    return periodos.stream().filter(p -> p.getFecha().equals(fecha)).map(p -> p.getValor())
-        .findAny().orElse(0.0);
+    return periodos.stream().filter(p -> p.getFecha().equals(fecha)).map(p -> p.getValor()).findAny().orElse(0.0);
   }
 
   @Override
@@ -71,8 +70,8 @@ public @Data class Cuenta {
     builder.append("valores : " + periodos.toString() + "\n}");
     return builder.toString();
   }
-  
-  public Cuenta BuilderCuenta(List<Periodo> periodos){
+
+  public Cuenta BuilderCuenta(List<Periodo> periodos) {
     return new Cuenta(this.nombre, periodos);
   }
 
