@@ -52,6 +52,7 @@ public class ArbolUtil {
     double valor = 0;
     try {
       valor = arbol.getRoot().obtenerValor(fechaPeriodo, empresa);
+      valor = (valor >= 0) ? valor : -1;
     } catch (final NodeException e) {
       throw new ArbolException(e.getMessage());
     }

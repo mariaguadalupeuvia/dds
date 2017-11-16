@@ -41,7 +41,7 @@ public @Data class Empresa {
 
   public double obtenerValor(final String nombreCuenta, final String periodo) {
     return cuentas.stream().filter(c -> c.getNombre().equals(nombreCuenta))
-        .map(c -> c.obtenerValor(periodo)).findAny().orElse(0.0);
+        .map(c -> c.obtenerValor(periodo)).findAny().orElse(-1.0);
   }
 
   @Override
