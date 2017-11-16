@@ -79,7 +79,7 @@ public class EmpresaDb implements WithGlobalEntityManager, TransactionalOps {
       CriteriaQuery<Cuenta> cqry = cb.createQuery(Cuenta.class);
       Root<Cuenta> root = cqry.from(Cuenta.class);
       cqry.select(root);
-      Predicate pEqualsEmpresa = cb.equal(root.get("idEmpresa"), idEmpresa);
+      Predicate pEqualsEmpresa = cb.equal(root.get("empresa_id"), idEmpresa);
       Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombreCuenta);
       Predicate pAnd = cb.and(pEqualsEmpresa, pEqualsNombre);
       cqry.where(pAnd);
