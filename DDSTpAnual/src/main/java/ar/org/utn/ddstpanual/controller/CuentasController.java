@@ -46,18 +46,32 @@ public class CuentasController {
     model.put("usuario", usuarioLoggeado);
     try {
       String periodoSeleccionado = req.queryParams("periodoSeleccionado");
+      Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
       List<Periodo> periodos = empresaDb.obtenerPeriodos();
       List<Empresa> empresas = empresaDb.obtenerEmpresas();
-      Empresa empresa = empresaDb.obtenerEmpresa(req.queryParams("empresaSeleccionada"));
-      List<CuentaValor> cuentas = new ArrayList<>();
-      empresa.getCuentas().stream().map(c -> cuentas.add(new CuentaValor(empresa.getNombre(), c.getNombre(), periodoSeleccionado, empresa.obtenerValor(c.getNombre(), periodoSeleccionado))))
-          .collect(Collectors.toList());
-      model.put("cuentas", cuentas);
+      if (!periodos.stream().anyMatch(p -> p.getFecha().equals(periodoSeleccionado))) {
+        model.put("empresaSeleccionada", empresas.get(0).getNombre());
+        model.put("periodoSeleccionado", periodos.get(0).getFecha());
+        model.put("messageError", "El periodo ingresado no existe en las opciones.");
+      } else {
+        if (empresa != null) {
+          List<CuentaValor> cuentas = new ArrayList<>();
+          empresa.getCuentas().stream().map(c -> cuentas.add(new CuentaValor(empresa.getNombre(), c.getNombre(), periodoSeleccionado, empresa.obtenerValor(c.getNombre(), periodoSeleccionado))))
+              .collect(Collectors.toList());
+          model.put("cuentas", cuentas);
+          model.put("empresaSeleccionada", req.queryParams("empresaSeleccionada"));
+          model.put("periodoSeleccionado", periodoSeleccionado);
+        } else {
+          model.put("messageError", "La empresa ingresada es incorrecta.");
+          model.put("empresaSeleccionada", empresas.get(0).getNombre());
+          model.put("periodoSeleccionado", periodos.get(0).getFecha());
+        }
+      }
       model.put("empresas", empresas);
       model.put("periodos", periodos);
     } catch (DbException e) {
       log.error(e.getMessage());
-      model.put("messageError", "No se ha podido traer los datos de la base de datos");
+      model.put("messageError", "Se ha produdido un error al buscar los datos con los valores ingresados.");
     }
     return new ModelAndView(model, "cuentas/listadoCuentas.hbs");
   }
@@ -75,6 +89,8 @@ public class CuentasController {
       List<Periodo> periodos = empresaDb.obtenerPeriodos();
       model.put("periodos", periodos);
       model.put("empresas", empresas);
+      model.put("empresaSeleccionada", empresas.get(0).getNombre());
+      model.put("periodoSeleccionado", periodos.get(0).getFecha());
     } catch (DbException e) {
       log.error(e.getMessage());
       model.put("messageError", "No se ha podido traer los datos de la base de datos");

@@ -1,5 +1,7 @@
 package ar.org.utn.ddstpanual.controller;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +53,8 @@ public class IndicadoresController {
           indicadoresEvaluados.add(new FormulaIndicador(indicador.getNombre(), indicador.getFormula(), periodoSeleccionado, monto));
         }
       }
+      model.put("empresaSeleccionada", req.queryParams("empresaSeleccionada"));
+      model.put("periodoSeleccionado", periodoSeleccionado);
       model.put("periodos", periodos);
       model.put("empresas", empresas);
       model.put("indicadoresEvaluados", indicadoresEvaluados);
@@ -76,6 +80,8 @@ public class IndicadoresController {
     try {
       final List<Empresa> empresas = empresaDb.obtenerEmpresas();
       final List<Periodo> periodos = empresaDb.obtenerPeriodos();
+      model.put("empresaSeleccionada", empresas.get(0).getNombre());
+      model.put("periodoSeleccionado", periodos.get(0).getFecha());
       model.put("periodos", periodos);
       model.put("empresas", empresas);
     } catch (final DbException e) {
@@ -93,7 +99,7 @@ public class IndicadoresController {
     }
     model.put("usuario", usuarioLoggeado);
     try {
-      final List<Indicador> indicadores = indicadorDb.obtenerIndicadores();
+      final List<Indicador> indicadores = indicadorDb.obtenerIndicadoresPorUsuario(usuarioLoggeado.getId());
       model.put("indicadores", indicadores);
       return new ModelAndView(model, "indicadores/alta.hbs");
     } catch (final DbException e) {
@@ -114,24 +120,27 @@ public class IndicadoresController {
     try {
       final String nombre = req.queryParams("nombre");
       final String formula = req.queryParams("formula");
-      if (validarFormula(formula)) {
-        final Indicador indicador = new Indicador(nombre, formula, usuarioLoggeado.getId());
-        if (!indicadorDb.exists(indicador)) {
-          indicadorDb.guardarIndicador(indicador);
-          model.put("messageSuccess", "Se guardo correctamente el indicador " + req.queryParams("nombre"));
+      if (StringUtils.isNotEmpty(nombre) && StringUtils.isNotEmpty(formula)) {
+        if (validarFormula(formula)) {
+          final Indicador indicador = new Indicador(nombre, formula, usuarioLoggeado.getId());
+          if (!indicadorDb.exists(indicador)) {
+            indicadorDb.guardarIndicador(indicador);
+            model.put("messageSuccess", "Se guardo correctamente el indicador " + req.queryParams("nombre"));
+          } else {
+            model.put("messageError", "El indicador que quiere guardar ya existe.");
+          }
         } else {
-          model.put("messageError", "El indicador que quiere guardar ya existe.");
+          model.put("messageError", "La formula ingresada contiene un error sintactico.");
+        }
+        try {
+          indicadorPrecalculadoService.precalcularIndicadores();
+        } catch (ServiceException e) {
+          log.error(e.getMessage());
+          model.put("messageError", "Ocurrio un error al precalcular los indicadores.");
         }
       } else {
-        model.put("messageError", "La formula ingresada contiene un error sintactico.");
+        model.put("messageError", "Complete todos los campos del formulario.");
       }
-      try {
-        indicadorPrecalculadoService.precalcularIndicadores();
-      } catch (ServiceException e) {
-        log.error(e.getMessage());
-        model.put("messageError", "Ocurrio un error al precalcular los indicadores.");
-      }
-
       final List<Indicador> indicadores = indicadorDb.obtenerIndicadores();
       model.put("indicadores", indicadores);
       return new ModelAndView(model, "indicadores/alta.hbs");

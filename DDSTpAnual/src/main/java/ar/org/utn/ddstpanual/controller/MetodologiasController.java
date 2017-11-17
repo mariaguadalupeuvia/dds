@@ -40,6 +40,8 @@ public class MetodologiasController {
       List<Periodo> periodos = empresaDb.obtenerPeriodos();
       model.put("periodos", periodos);
       model.put("metodologias", metodologias);
+      model.put("metodologiaSeleccionada", metodologias.get(0).getNombre());
+      model.put("periodoSeleccionado", periodos.get(0).getFecha());
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
     }
@@ -57,25 +59,39 @@ public class MetodologiasController {
     String metodologiaSeleccionada = req.queryParams("metodologiaSeleccionada");
     String periodoSeleccionado = req.queryParams("periodoSeleccionado");
     try {
-      Metodologia metodologia = metodologiaDb.obtenerMetodologia(metodologiaSeleccionada);
-      List<Metodologia> metodologias = metodologiaDb.obtenerMetodologiasPorUsuario(usuarioLoggeado.getId());
-      List<Empresa> empresas = metodologia.ejecutarMetodologia(empresaDb.obtenerEmpresas(), new Periodo(periodoSeleccionado));
-      List<IndicadorPrecalculado> indicadoresPrecalculados = indicadorPrecalculadoDb.obtenerIndicadoresPrecalculados();
-
-      List<EmpresaMetodologia> empresasMetodologias = new ArrayList<>();
-      for (Empresa empresa : empresas) {
-        List<IndicadorPrecalculado> indisPre = indicadoresPrecalculados.stream().filter(indicadorPre -> empresa.equals(indicadorPre.getEmpresa())).collect(Collectors.toList());
-        indisPre = indisPre.stream().filter(indicadorPre -> contieneIndicador(metodologia.getCondiciones(), indicadorPre.getIndicador())).collect(Collectors.toList());
-        indisPre = indisPre.stream().filter(indicadorPre -> indicadorPre.getFecha().equals(periodoSeleccionado)).collect(Collectors.toList());
-        empresasMetodologias.add(new EmpresaMetodologia(empresa, indisPre));
-      }
       List<Periodo> periodos = empresaDb.obtenerPeriodos();
-      model.put("periodos", periodos);
-      model.put("empresasMetodologias", empresasMetodologias);
+      List<Metodologia> metodologias = metodologiaDb.obtenerMetodologiasPorUsuario(usuarioLoggeado.getId());
+      Metodologia metodologia = metodologiaDb.obtenerMetodologia(metodologiaSeleccionada);
+      if (metodologia != null) {
+        if (periodos.stream().anyMatch(p -> p.getFecha().equals(periodoSeleccionado))) {
+          List<Empresa> empresas = metodologia.ejecutarMetodologia(empresaDb.obtenerEmpresas(), new Periodo(periodoSeleccionado));
+          List<IndicadorPrecalculado> indicadoresPrecalculados = indicadorPrecalculadoDb.obtenerIndicadoresPrecalculados();
+
+          List<EmpresaMetodologia> empresasMetodologias = new ArrayList<>();
+          for (Empresa empresa : empresas) {
+            List<IndicadorPrecalculado> indisPre = indicadoresPrecalculados.stream().filter(indicadorPre -> empresa.equals(indicadorPre.getEmpresa())).collect(Collectors.toList());
+            indisPre = indisPre.stream().filter(indicadorPre -> contieneIndicador(metodologia.getCondiciones(), indicadorPre.getIndicador())).collect(Collectors.toList());
+            indisPre = indisPre.stream().filter(indicadorPre -> indicadorPre.getFecha().equals(periodoSeleccionado)).collect(Collectors.toList());
+            empresasMetodologias.add(new EmpresaMetodologia(empresa, indisPre));
+          }
+          model.put("empresasMetodologias", empresasMetodologias);
+          model.put("metodologiaSeleccionada", metodologiaSeleccionada);
+          model.put("metodologiaEncontrada", metodologia);
+          model.put("periodoSeleccionado", periodoSeleccionado);
+        } else {
+          model.put("metodologiaSeleccionada", metodologias.get(0).getNombre());
+          model.put("periodoSeleccionado", periodos.get(0).getFecha());
+          model.put("messageError", "El periodo ingresada no existe.");
+        }
+      } else {
+        model.put("metodologiaSeleccionada", metodologias.get(0).getNombre());
+        model.put("periodoSeleccionado", periodos.get(0).getFecha());
+        model.put("messageError", "La metodologia ingresada no existe.");
+      }
       model.put("metodologias", metodologias);
-      model.put("metodologiaSeleccionada", metodologia);
+      model.put("periodos", periodos);
     } catch (DbException e) {
-      model.put("messageError", "No se ha podido traer los datos de la base de datos");
+      model.put("messageError", "No se ha podido traer los datos de la base de datos.");
     }
     return new ModelAndView(model, "metodologias/listado.hbs");
   }
