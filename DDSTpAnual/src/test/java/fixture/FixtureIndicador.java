@@ -3,7 +3,9 @@ package fixture;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.org.utn.ddstpanual.db.IndicadorDb;
 import ar.org.utn.ddstpanual.db.UsuarioDb;
+import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Cuenta;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Indicador;
@@ -26,6 +28,7 @@ public class FixtureIndicador {
   public Indicador indErr;
   public UsuarioDb usuarioDb;
   public Usuario usuario;
+  public IndicadorDb indicadorDb;
 
 
   public void iniciarCuentas() {
@@ -64,8 +67,18 @@ public class FixtureIndicador {
     indTest3 = new Indicador("indTest3", "([CuentaPrb1]+[CuentaPrb2])*[CuentaPrb3]");
     indTest4 = new Indicador("indTest4", "([CuentaPrb1]+[CuentaPrb2])*[CuentaPrb]");
     indErr = new Indicador("indErr", "[CuentaPrb1]/{indErr}");
-
+  }
+  
+  public void cargarIndicadores() throws DbException {    
+    indicadorDb = new IndicadorDb();
+    
     usuarioDb = new UsuarioDb();
+    usuario = usuarioDb.obtenerUsuario("nico");
+    
+    indTest1 = new Indicador("indTest1", "([CuentaPrb1]+[CuentaPrb2])/[CuentaPrb3]",usuario.getId());
+    indTest2 = new Indicador("indTest2", "([CuentaPrb1]-[CuentaPrb2])/[CuentaPrb3]",usuario.getId());
+    indTest3 = new Indicador("indTest3", "([CuentaPrb1]+[CuentaPrb2])*[CuentaPrb3]",usuario.getId());
+    indTest4 = new Indicador("indTest4", "([CuentaPrb1]+[CuentaPrb2])*[CuentaPrb]",usuario.getId());
   }
 
 }
