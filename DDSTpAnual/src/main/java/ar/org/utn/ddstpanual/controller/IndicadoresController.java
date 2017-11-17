@@ -62,10 +62,6 @@ public class IndicadoresController {
       log.error(e.getMessage());
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
     }
-    // catch (ArbolException e) {
-    // log.error(e.getMessage());
-    // model.put("messageError", "No se ha podido traer los datos de la base de dato ARBOLs");
-    // }
     return new ModelAndView(model, "indicadores/listadoIndicadores.hbs");
   }
 
@@ -118,14 +114,14 @@ public class IndicadoresController {
     }
     model.put("usuario", usuarioLoggeado);
     try {
-      final String nombre = req.queryParams("nombre");
-      final String formula = req.queryParams("formula");
+      final String nombre = StringUtils.replace(req.queryParams("nombre"), " ", "");
+      final String formula = StringUtils.replace(req.queryParams("formula"), " ", "");
       if (StringUtils.isNotEmpty(nombre) && StringUtils.isNotEmpty(formula)) {
         if (validarFormula(formula)) {
           final Indicador indicador = new Indicador(nombre, formula, usuarioLoggeado.getId());
           if (!indicadorDb.exists(indicador)) {
             indicadorDb.guardarIndicador(indicador);
-            model.put("messageSuccess", "Se guardo correctamente el indicador " + req.queryParams("nombre"));
+            model.put("messageSuccess", "Se guardo correctamente el indicador " + nombre);
           } else {
             model.put("messageError", "El indicador que quiere guardar ya existe.");
           }
