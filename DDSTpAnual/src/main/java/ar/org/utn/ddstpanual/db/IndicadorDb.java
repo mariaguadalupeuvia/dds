@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 
 import ar.org.utn.ddstpanual.exception.DbException;
 import ar.org.utn.ddstpanual.model.Indicador;
+import ar.org.utn.ddstpanual.model.Usuario;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -61,15 +62,17 @@ public class IndicadorDb implements WithGlobalEntityManager, TransactionalOps {
     }
   }
 
-  public boolean exists(Indicador indicador) throws DbException {
+  public boolean exists(Indicador indicador, Usuario usuario) throws DbException {
     CriteriaBuilder cb = entityManager().getCriteriaBuilder();
     CriteriaQuery<Indicador> cqry = cb.createQuery(Indicador.class);
     Root<Indicador> root = cqry.from(Indicador.class);
     cqry.select(root);
     Predicate pEqualsNombre = cb.equal(root.get("nombre"), indicador.getNombre());
     Predicate pEqualsFormula = cb.equal(root.get("formula"), indicador.getFormula());
+    Predicate pEqualsUsuario = cb.equal(root.get("usuario_id"), usuario.getId());
     Predicate pOr = cb.or(pEqualsNombre, pEqualsFormula);
-    cqry.where(pOr);
+    Predicate pAnd = cb.and(pOr, pEqualsUsuario);
+    cqry.where(pAnd);
     TypedQuery<Indicador> qry = entityManager().createQuery(cqry);
     List<Indicador> indicadores = qry.getResultList();
     return !indicadores.isEmpty();

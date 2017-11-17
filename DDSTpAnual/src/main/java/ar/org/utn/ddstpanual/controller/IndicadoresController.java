@@ -119,7 +119,7 @@ public class IndicadoresController {
       if (StringUtils.isNotEmpty(nombre) && StringUtils.isNotEmpty(formula)) {
         if (validarFormula(formula)) {
           final Indicador indicador = new Indicador(nombre, formula, usuarioLoggeado.getId());
-          if (!indicadorDb.exists(indicador)) {
+          if (!indicadorDb.exists(indicador, usuarioLoggeado)) {
             indicadorDb.guardarIndicador(indicador);
             model.put("messageSuccess", "Se guardo correctamente el indicador " + nombre);
           } else {
@@ -137,7 +137,7 @@ public class IndicadoresController {
       } else {
         model.put("messageError", "Complete todos los campos del formulario.");
       }
-      final List<Indicador> indicadores = indicadorDb.obtenerIndicadores();
+      final List<Indicador> indicadores = indicadorDb.obtenerIndicadoresPorUsuario(usuarioLoggeado.getId());
       model.put("indicadores", indicadores);
       return new ModelAndView(model, "indicadores/alta.hbs");
     } catch (final DbException e) {

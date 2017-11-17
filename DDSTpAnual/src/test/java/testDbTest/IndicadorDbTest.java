@@ -39,7 +39,7 @@ public class IndicadorDbTest implements WithGlobalEntityManager {
 		entityManager().getTransaction().begin();
 		try {
 			entityManager().persist(fixture.indTest2);
-			assertTrue(fixture.indicadorDb.exists(fixture.indTest2));
+			assertTrue(fixture.indicadorDb.exists(fixture.indTest2, fixture.usuario));
 		} catch (DbException e) {
 			fail("Error al ejecutar el test");
 		} finally {
@@ -51,7 +51,7 @@ public class IndicadorDbTest implements WithGlobalEntityManager {
 	public void testNoExisteIndicador() {
 		entityManager().getTransaction().begin();
 		try {
-			assertFalse(fixture.indicadorDb.exists(fixture.indTest3));
+			assertFalse(fixture.indicadorDb.exists(fixture.indTest3, fixture.usuario));
 		} catch (DbException e) {
 			fail("Error al ejecutar el test");
 		} finally {
