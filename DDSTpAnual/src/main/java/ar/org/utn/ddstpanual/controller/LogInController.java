@@ -17,6 +17,11 @@ public class LogInController {
   private static UsuarioService usuarioService;
 
   public static ModelAndView login(Request req, Response res) {
+    // Importante para mantener el usuario en pantalla
+    final Usuario usuarioLoggeado = req.session().attribute("currentUser");
+    if (usuarioLoggeado != null) {
+      res.redirect("/DDSTpAnual/home");
+    }
     return new ModelAndView(null, "login/login.hbs");
   }
 
