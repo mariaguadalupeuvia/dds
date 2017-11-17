@@ -5,6 +5,7 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -26,15 +27,16 @@ public class MetodologiaDb implements WithGlobalEntityManager, TransactionalOps 
 
   public Metodologia obtenerMetodologia(String nombre) throws DbException {
     try {
-      return entityManager().createQuery("from Metodologia m WHERE m.nombre LIKE :nombre", Metodologia.class).setParameter("nombre", nombre).setMaxResults(1).getSingleResult();
-      // CriteriaBuilder cb = entityManager().getCriteriaBuilder();
-      // CriteriaQuery<Metodologia> cqry = cb.createQuery(Metodologia.class);
-      // Root<Metodologia> root = cqry.from(Metodologia.class);
-      // cqry.select(root);
-      // Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombre);
-      // cqry.where(pEqualsNombre);
-      // TypedQuery<Metodologia> qry = entityManager().createQuery(cqry);
-      // return qry.getSingleResult();
+      CriteriaBuilder cb = entityManager().getCriteriaBuilder();
+      CriteriaQuery<Metodologia> cqry = cb.createQuery(Metodologia.class);
+      Root<Metodologia> root = cqry.from(Metodologia.class);
+      cqry.select(root);
+      Predicate pEqualsNombre = cb.equal(root.get("nombre"), nombre);
+      cqry.where(pEqualsNombre);
+      TypedQuery<Metodologia> qry = entityManager().createQuery(cqry);
+      return qry.getSingleResult();
+    } catch (NoResultException e) {
+      return null;
     } catch (Exception e) {
       log.error(e.getMessage());
       throw new DbException(e.getMessage());
