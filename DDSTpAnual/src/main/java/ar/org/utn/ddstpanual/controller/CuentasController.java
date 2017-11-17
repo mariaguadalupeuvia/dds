@@ -55,6 +55,8 @@ public class CuentasController {
       model.put("cuentas", cuentas);
       model.put("empresas", empresas);
       model.put("periodos", periodos);
+      model.put("empresaSeleccionada", req.queryParams("empresaSeleccionada"));
+      model.put("periodoSeleccionado", periodoSeleccionado);
     } catch (DbException e) {
       log.error(e.getMessage());
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
@@ -75,6 +77,8 @@ public class CuentasController {
       List<Periodo> periodos = empresaDb.obtenerPeriodos();
       model.put("periodos", periodos);
       model.put("empresas", empresas);
+      model.put("empresaSeleccionada", empresas.get(0).getNombre());
+      model.put("periodoSeleccionado", periodos.get(0).getFecha());
     } catch (DbException e) {
       log.error(e.getMessage());
       model.put("messageError", "No se ha podido traer los datos de la base de datos");

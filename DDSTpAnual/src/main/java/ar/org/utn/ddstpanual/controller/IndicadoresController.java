@@ -51,6 +51,8 @@ public class IndicadoresController {
           indicadoresEvaluados.add(new FormulaIndicador(indicador.getNombre(), indicador.getFormula(), periodoSeleccionado, monto));
         }
       }
+      model.put("empresaSeleccionada", req.queryParams("empresaSeleccionada"));
+      model.put("periodoSeleccionado", periodoSeleccionado);
       model.put("periodos", periodos);
       model.put("empresas", empresas);
       model.put("indicadoresEvaluados", indicadoresEvaluados);
@@ -76,6 +78,8 @@ public class IndicadoresController {
     try {
       final List<Empresa> empresas = empresaDb.obtenerEmpresas();
       final List<Periodo> periodos = empresaDb.obtenerPeriodos();
+      model.put("empresaSeleccionada", empresas.get(0).getNombre());
+      model.put("periodoSeleccionado", periodos.get(0).getFecha());
       model.put("periodos", periodos);
       model.put("empresas", empresas);
     } catch (final DbException e) {

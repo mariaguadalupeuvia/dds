@@ -42,7 +42,7 @@ public class LogInController {
 
   public static ModelAndView logout(Request req, Response res) {
     req.session().removeAttribute("currentUser");
-    res.redirect("/login");
+    res.redirect("/DDSTpAnual/login");
     return null;
   }
 

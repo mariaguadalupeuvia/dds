@@ -40,6 +40,8 @@ public class MetodologiasController {
       List<Periodo> periodos = empresaDb.obtenerPeriodos();
       model.put("periodos", periodos);
       model.put("metodologias", metodologias);
+      model.put("metodologiaSeleccionada", metodologias.get(0).getNombre());
+      model.put("periodoSeleccionado", periodos.get(0).getFecha());
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
     }
@@ -73,7 +75,8 @@ public class MetodologiasController {
       model.put("periodos", periodos);
       model.put("empresasMetodologias", empresasMetodologias);
       model.put("metodologias", metodologias);
-      model.put("metodologiaSeleccionada", metodologia);
+      model.put("metodologiaSeleccionada", metodologiaSeleccionada);
+      model.put("periodoSeleccionado", periodoSeleccionado);
     } catch (DbException e) {
       model.put("messageError", "No se ha podido traer los datos de la base de datos");
     }

@@ -15,8 +15,10 @@
 	<div class="panel-heading">Indicador &gt; <b>Ejecutar Indicadores</b></div>
   	<div class="panel-body">
 		<form action="/DDSTpAnual/indicadores/ejecutar" method= "GET" class="form-inline">
+			<input type="hidden" id="empresaSeleccionada" value="{{empresaSeleccionada}}" />
+			<input type="hidden" id="periodoSeleccionado" value="{{periodoSeleccionado}}" /> 
 			<div class="form-group" style="margin-right: 20px;">
-	    		<select class="form-control" name="empresaSeleccionada" placeholder="Empresa">
+	    		<select id="empresas" class="form-control" name="empresaSeleccionada" placeholder="Empresa">
     				{{#with empresas}}
 			    		{{#each empresas}}
 			 				<option>{{nombre}}</option>
@@ -25,7 +27,7 @@
 	    		</select>
 	  		</div>
 	  		<div class="form-group" style="margin-right: 20px;">
-	  			<select class="form-control" name="periodoSeleccionado">
+	  			<select id="periodos" class="form-control" name="periodoSeleccionado">
 		  			{{#each periodos}}
 		 				<option>{{fecha}}</option>
 		  			{{/each}}
@@ -61,5 +63,9 @@
 		</div>
 	</div>
 {{/with}}
+{{/partial}}
+{{# partial "footer" }}
+	<script type="text/javascript" src="../DDSTpAnual/js/listadoIndicadores.js"></script>	
+	<script type="text/javascript" src="../js/listadoIndicadores.js"></script>	
 {{/partial}}
 {{>common/layout.hbs}}
