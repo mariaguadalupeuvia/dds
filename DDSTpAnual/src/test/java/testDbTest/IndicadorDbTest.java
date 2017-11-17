@@ -5,14 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import ar.org.utn.ddstpanual.exception.DbException;
-import ar.org.utn.ddstpanual.model.Indicador;
 import fixture.FixtureIndicador;
 
 public class IndicadorDbTest implements WithGlobalEntityManager {
@@ -27,11 +24,9 @@ public class IndicadorDbTest implements WithGlobalEntityManager {
 	// Test guardar indicador
 	@Test
 	public void testGuardar() {
+		entityManager().getTransaction().begin();
 		try {
-			entityManager().getTransaction().begin();
-			fixture.indicadorDb.guardarIndicador(fixture.indTest1);
-		} catch (DbException e) {
-			fail("Error al ejecutar el test");
+			entityManager().persist(fixture.indTest1);
 		} finally {
 			entityManager().getTransaction().rollback();
 		}
@@ -41,8 +36,9 @@ public class IndicadorDbTest implements WithGlobalEntityManager {
 	// Test sobre la existencia de datos
 	@Test
 	public void testExisteIndicador() {
+		entityManager().getTransaction().begin();
 		try {
-			fixture.indicadorDb.guardarIndicador(fixture.indTest2);
+			entityManager().persist(fixture.indTest2);
 			assertTrue(fixture.indicadorDb.exists(fixture.indTest2));
 		} catch (DbException e) {
 			fail("Error al ejecutar el test");
@@ -53,6 +49,7 @@ public class IndicadorDbTest implements WithGlobalEntityManager {
 
 	@Test
 	public void testNoExisteIndicador() {
+		entityManager().getTransaction().begin();
 		try {
 			assertFalse(fixture.indicadorDb.exists(fixture.indTest3));
 		} catch (DbException e) {
@@ -62,37 +59,35 @@ public class IndicadorDbTest implements WithGlobalEntityManager {
 		}
 	}
 
-	// Test sobre los datos guardados
-	@Test
-	public void testObtenerIndicadorDeUsuario() {
-		try {
-			if (!fixture.indicadorDb.exists(fixture.indTest1)) {
-				fixture.indicadorDb.guardarIndicador(fixture.indTest1);
-			}
-
-			if (!fixture.indicadorDb.exists(fixture.indTest2)) {
-				fixture.indicadorDb.guardarIndicador(fixture.indTest2);
-			}
-
-			ArrayList<Indicador> lista = new ArrayList<Indicador>();
-			lista.add(fixture.indTest1);
-			lista.add(fixture.indTest2);
-
-			assertTrue(fixture.indicadorDb.obtenerIndicadoresPorUsuario(fixture.usuario.getId()).containsAll(lista));
-		} catch (DbException e) {
-			fail("Error al ejecutar el test");
-		} finally {
-			entityManager().getTransaction().rollback();
-		}
-	}
-
-	@Test
-	public void testObtenerFormulaNoExistente() {
+	/*
+	 * /// Test sobre los datos guardados
+	 * 
+	 * @Test public void testObtenerIndicadorDeUsuario() {
+	 * entityManager().getTransaction().begin(); Indicador deuda = new
+	 * Indicador("deuda", "[patrimonioNeto]-[pasivoTotal]"); Indicador roe = new
+	 * Indicador("roe", "[activoCorriente]/[pasivoTotal]"); try {
+	 * entityManager().persist(fixture.indTest1);
+	 * entityManager().persist(fixture.indTest2);
+	 * entityManager().persist(fixture.indTest3);
+	 * entityManager().persist(fixture.indTest4); entityManager().persist(deuda);
+	 * entityManager().persist(roe);
+	 * 
+	 * ArrayList<Indicador> lista = new ArrayList<Indicador>();
+	 * lista.add(fixture.indTest1); lista.add(fixture.indTest2);
+	 * lista.add(fixture.indTest3); lista.add(fixture.indTest4); lista.add(deuda);
+	 * lista.add(roe);
+	 * 
+	 * assertEquals(lista,
+	 * fixture.indicadorDb.obtenerIndicadoresPorUsuario(fixture.usuario.getId())); }
+	 * catch (DbException e) { fail("Error al ejecutar el test"); } finally {
+	 * entityManager().getTransaction().rollback(); } }
+	 */
+	@Test(expected = DbException.class)
+	public void testObtenerFormulaNoExistente() throws DbException {
+		entityManager().getTransaction().begin();
 		try {
 			assertEquals("([CuentaPrb1]+[CuentaPrb2])*[CuentaPrb]",
 					fixture.indicadorDb.obtenerIndicador(fixture.indTest4.getNombre()).getFormula());
-		} catch (DbException e) {
-			fail("Error al ejecutar el test");
 		} finally {
 			entityManager().getTransaction().rollback();
 		}
