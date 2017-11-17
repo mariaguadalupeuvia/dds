@@ -93,7 +93,7 @@ public class IndicadoresController {
     }
     model.put("usuario", usuarioLoggeado);
     try {
-      final List<Indicador> indicadores = indicadorDb.obtenerIndicadores();
+      final List<Indicador> indicadores = indicadorDb.obtenerIndicadoresPorUsuario(usuarioLoggeado.getId());
       model.put("indicadores", indicadores);
       return new ModelAndView(model, "indicadores/alta.hbs");
     } catch (final DbException e) {
