@@ -1,4 +1,4 @@
-package db;
+package fixture;
 
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -17,7 +17,7 @@ import ar.org.utn.ddstpanual.model.metodologia.Filtro;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
 import ar.org.utn.ddstpanual.model.metodologia.Orden;
 
-public class FixtureMetodologiaDB extends AbstractPersistenceTest implements WithGlobalEntityManager {
+public class FixtureMetodologia extends AbstractPersistenceTest implements WithGlobalEntityManager {
   @Test
   public void persistirFixture() {
     try {

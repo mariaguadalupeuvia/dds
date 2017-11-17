@@ -1,4 +1,4 @@
-package testService;
+package testMetodologias;
 
 import static org.junit.Assert.assertTrue;
 
@@ -14,12 +14,12 @@ import ar.org.utn.ddstpanual.exception.ServiceException;
 import ar.org.utn.ddstpanual.model.Empresa;
 import ar.org.utn.ddstpanual.model.Periodo;
 import ar.org.utn.ddstpanual.model.metodologia.Metodologia;
-import db.FixtureMetodologiaDB;
+import fixture.FixtureMetodologia;
 
 public class MetodologiaTest implements WithGlobalEntityManager {
   Metodologia metodologia = null;
   List<Empresa> empresas = null;
-  FixtureMetodologiaDB fixture = new FixtureMetodologiaDB();
+  FixtureMetodologia fixture = new FixtureMetodologia();
   private MetodologiaDb metododologiaDb = new MetodologiaDb();
 
   @Before
